@@ -1,0 +1,74 @@
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    line-height: 1.5;
+}
+body{
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+    background: rgba( 71, 147, 227, 1);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-wrapper {
+    overflow-x:auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table, td, th {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+th {
+    background-color: lightgreen;
+}
+
+tbody td {
+    background-color: aquamarine;
+}
+
+table {
+    max-width: 100%;
+    max-height: auto;
+}
+
+td {
+    padding: 5px;
+}
+
+input {
+    background-color: lightcyan;
+}
+
+input[type='number']{
+    min-width: 100px;
+} 
+
+summary, p {
+    font-size: small;
+}
+
+
+.api {
+    text-align: left;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+.results {
+    border: none;
+    background-color: lightgray; 
+}
+
+.sub {
+    margin:auto;
+    display:block;
+}
+
