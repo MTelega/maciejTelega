@@ -2,9 +2,8 @@
 <html lang="en">
 
     <head>
-
         <meta charset="UTF-8">
-        <title>Project1</title>
+        <title>Gazetteer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <meta name="author" content="Maciej Telega">
         <meta name="description" content="">
@@ -12,12 +11,32 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
-        
-
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <script src="http://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="vendors/leaflet-providers/leaflet-providers.js"></script>
     </head>     
-    <body id="top">
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Gazetteer</a>
+                <form class="d-flex">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Select country</option>
+                        <option>---------------------</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </form>
+            </div>
+        </nav>
 
-        <div class="container"></div>
+        
+        <div id="map"></div>
 
         <!--Preloader-->
       <div class="preloader"></div>
