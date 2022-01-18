@@ -20,13 +20,16 @@ map.on('locationfound', onLocationFound);
 
 $('#select').click(function() {
   $.ajax({
-      url: "../php/countrySelector.php",
+      url: "php/countrySelector.php",
       type: 'GET',
       dataType: 'json',
       success: function(result) {
           console.log(JSON.stringify(result));
           if (result.status.name == "ok") {
-            $('#select').append(`<option value="${data.features.properties.iso_a2}">${data.features.properties.name}</option>`);
+            for(let i = 0; i < result.data.length; i++){
+              $('#select').append(`<option value="${result.data[i].properties.name}">${result.data[i].properties.name}</option>`);
+            }
+           // $('#select').append(`<option value="${result.data.properties.name}">${result.data.properties.name}</option>`);
           }
       },
       error: function(jqXHR, textStatus, errorThrown) {
