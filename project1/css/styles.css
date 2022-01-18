@@ -1,3 +1,7 @@
 #map { 
-    height: 100% !important;
+    width:100%;
+    height: calc(100% - 56px);
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
 }

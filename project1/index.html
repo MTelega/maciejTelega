@@ -21,27 +21,26 @@
         <script src="vendors/leaflet-providers/leaflet-providers.js"></script>
     </head>     
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">Gazetteer</a>
                 <form class="d-flex">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Select country</option>
-                        <option>---------------------</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select" name="select" id="select">
                       </select>
                 </form>
             </div>
         </nav>
-
         
-        <div id="map"></div>
+        <div class="container">
+            <div id="map"></div>
+        </div>
+        
 
         <!--Preloader-->
       <div class="preloader"></div>
 
         <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
+        <script src="vendors/jquery/jquery.jsonselect.min.js"></script>
         <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
         <script src="js/script.js"></script>
 
