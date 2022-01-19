@@ -1,4 +1,4 @@
-var map = L.map('map').setView([51.505, -0.09], 13);
+var map = L.map('map');
 
 L.tileLayer.provider('Jawg.Streets', {
     variant: 'jawg-terrain',
@@ -8,28 +8,27 @@ L.tileLayer.provider('Jawg.Streets', {
 map.locate({setView: true, maxZoom: 16});
 
 function onLocationFound(e) {
-  var radius = e.accuracy;
-
   L.marker(e.latlng).addTo(map)
-      .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-  L.circle(e.latlng, radius).addTo(map);
 }
 
 map.on('locationfound', onLocationFound);
 
-$('#select').click(function() {
+$(function() {
   $.ajax({
       url: "php/countrySelector.php",
       type: 'GET',
       dataType: 'json',
       success: function(result) {
-          console.log(JSON.stringify(result));
+
           if (result.status.name == "ok") {
             for(let i = 0; i < result.data.length; i++){
-              $('#select').append(`<option value="${result.data[i].properties.name}">${result.data[i].properties.name}</option>`);
-            }
-           // $('#select').append(`<option value="${result.data.properties.name}">${result.data.properties.name}</option>`);
+              $('#select').append(`<option value="${result.data[i].properties.iso_a2}">${result.data[i].properties.name}</option>`);
+              var select = $('select');
+              select.html(select.find('option').sort(function(x, y) {
+                return $(x).text() > $(y).text() ? 1 : -1;
+              }));
+            };
+             $('#select').prepend(`<option value="" selected>Select Countries</option>`);
           }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -39,3 +38,4 @@ $('#select').click(function() {
       }
   });
 });
+
