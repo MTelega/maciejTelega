@@ -5,14 +5,6 @@ L.tileLayer.provider('Jawg.Streets', {
     accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
 }).addTo(map);
 
-map.locate({setView: true, maxZoom: 16});
-
-function onLocationFound(e) {
-  L.marker(e.latlng).addTo(map)
-}
-
-map.on('locationfound', onLocationFound);
-
 $(function() {
   $.ajax({
       url: "php/countrySelector.php",
