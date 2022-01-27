@@ -1,10 +1,3 @@
-var map = L.map('map');
-
-L.tileLayer.provider('Jawg.Streets', {
-    variant: 'jawg-terrain',
-    accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
-}).addTo(map);
-
 $(function() {
   $.ajax({
       url: "php/countrySelector.php",
@@ -20,7 +13,7 @@ $(function() {
                 return $(x).text() > $(y).text() ? 1 : -1;
               }));
             };
-             $('#select').prepend(`<option value="" selected>Select Countries</option>`);
+             $('#select').prepend(`<option value="" selected>Select Country</option>`);
           }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -30,4 +23,13 @@ $(function() {
       }
   });
 });
+
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer.provider('Jawg.Streets', {
+    variant: 'jawg-terrain',
+    accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
+}).addTo(map);
+
+
 
