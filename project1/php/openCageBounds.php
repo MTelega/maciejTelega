@@ -7,7 +7,7 @@ $configs = include('config.php');
 
 $executionStartTime = microtime(true);
 
-$url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $_REQUEST['lat'] . '+' . $_REQUEST['lng'] . '&key=' . $configs['openCageApi'] . '&pretty=1&no_annotations=1';
+$url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $_REQUEST['country'] . '&key=' . $configs['openCageApi'] . '&pretty=1&no_annotations=1';
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -24,7 +24,7 @@ $output['status']['code'] = "200";
 $output['status']['name'] = "ok";
 $output['status']['description'] = "success";
 $output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-$output['data'] = $decode['results'][0]['components'];
+$output['data'] = $decode['results'][0]['bounds'];
 
 header('Content-Type: application/json; charset=UTF-8');
 
