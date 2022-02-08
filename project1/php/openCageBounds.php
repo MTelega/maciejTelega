@@ -7,7 +7,7 @@ $configs = include('config.php');
 
 $executionStartTime = microtime(true);
 
-$url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $_REQUEST['country'] . '&key=' . $configs['openCageApi'] . '&pretty=1&no_annotations=1';
+$url = 'https://api.opencagedata.com/geocode/v1/json?q=' . $_REQUEST['country'] . '&countrycode=' . $_REQUEST['countryCode'] . '&key=' . $configs['openCageApi'] . '&pretty=1&no_annotations=1';
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

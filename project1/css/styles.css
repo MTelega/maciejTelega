@@ -13,11 +13,7 @@ html, body {
     z-index: 0;
 }
 
-#info_text {
-    background-color:ghostwhite;
-    height: auto;
-    width: auto;
-    opacity: .8;
-    margin-top: 20px;
-    margin-left: 20px;
+.mapOverlay {
+    top: 60px;
 }
+

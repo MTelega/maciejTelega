@@ -21,13 +21,46 @@
               <img src="css/images/logo.png" alt="logo" class="navbar-brand d-none d-sm-block">
                 <form class="d-flex">
                     <select class="form-select" name="select" id="select">
-                        <option value="">----------------</option>
+                        <option value="" disabled>----------------</option>
                       </select>
                 </form>
             </div>
         </nav>
-        
-        <div id="map"></div>
+
+            <div id="map"></div>
+
+            <div class="modal fade opacity-75 mapOverlay" id="countryInfo" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="countryInfoLabel">Country Info</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 id='demographic' class="h-1">Demographic</h5>
+                        <img src='' alt=''><br>
+                        <p id='name'></p>
+                        <p id='languages'></p>
+                        <p id='population'></p>
+                        <p id='currency'></p><br>
+                        <h5 id='geographic'>Geographic</h5>
+                        <p id='capitol'></p>
+                        <p id='continent'></p>
+                        <p id='area'></p>
+                        <p id='lat'></p>
+                        <p id='lon'></p><br>
+                        <h5 id='forecast'>Weather Forecast</h5>
+                        <p id='weather'></p>
+                        <div id='w-fidget'></div>
+                        <p id='air'></p><br>
+                        <h5 id='exchange'>Money Exchange Rate</h5>
+                        <p id='rate'></p><br>
+                        <h5 id='news'>News</h5>
+                        <h5 id='wiki-links'>Wikipedia Links</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
         
         <!--Preloader-->
       <div class="preloader"></div>
