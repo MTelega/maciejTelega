@@ -115,7 +115,6 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 $('#select').change(function() {
-  $('#countryInfo').modal('show');
   L.geoJson().removeLayer(geoJsonCountry);
   var optionSelected = $(this).find("option:selected");
   var valueSelected  = optionSelected.val();
@@ -143,7 +142,6 @@ $('#select').change(function() {
         countryCode: valueSelected
     },
     success: function(result) {
-      console.log(JSON.stringify(result));
         if (result.status.name == "ok") {
           const northeast = [result['data']['northeast']['lat'], result['data']['northeast']['lng']],
                 southwest = [result['data']['southwest']['lat'], result['data']['southwest']['lng']];
@@ -171,11 +169,48 @@ $.ajax({
       }
   },
   error: function(jqXHR, textStatus, errorThrown) {
-      // your error code
       console.log(errorThrown);
       console.log(textStatus);      
   }
 });
+//flag image
+  const flagUrl = 'https://countryflagsapi.com/png/' + valueSelected;
+  $('#flagImg').attr('src', flagUrl);
+  $('#flagImg').attr('alt', textSelected + ' flag');
+
+//demographic and geographic info
+  $.ajax({
+    url: "php/restCountries.php",
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      countryCode:   valueSelected,
+    },
+    success: function(result) {
+      if (result.status.name == "ok") {
+      $('#official').html(result['data'][0]['name']['official']);
+      $('#name').html(result['data'][0]['name']['common']);
+      $('#name').html(result['data'][0]['name']['common']);
+      $('#lang').html(Object.values(result['data'][0]['languages']).join(', '));
+      $('#popul').html(result['data'][0]['population']);
+      Object.keys(result['data'][0]["currencies"]).forEach(function(key) {
+        $('#curr').html(result['data'][0]["currencies"][key].name + " " + result['data'][0]["currencies"][key].symbol);
+      });
+      $('#capital').html(result['data'][0]['capital']);
+      $('#continent').html(result['data'][0]['continents']);
+      $('#area').html(result['data'][0]['area']);
+      $('#lat').html(result['data'][0]['latlng'][0]);
+      $('#lng').html(result['data'][0]['latlng'][1]);
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+        // your error code
+        console.log(errorThrown, textStatus);
+        console.warn(jqXHR.responseText)
+    }
+});
+//modal on
+  $('#countryInfo').modal('show');
 });
 
 
