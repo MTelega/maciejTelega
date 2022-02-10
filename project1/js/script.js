@@ -115,10 +115,13 @@ navigator.geolocation.getCurrentPosition((position) => {
 });
 
 $('#select').change(function() {
-  L.geoJson().removeLayer(geoJsonCountry);
+
   var optionSelected = $(this).find("option:selected");
   var valueSelected  = optionSelected.val();
   var textSelected   = optionSelected.text();
+  var lat;
+  var lng; 
+
   if(textSelected == 'Bosnia and Herz.'){
     textSelected = 'Bosnia and Herzegovina';
   } else if (textSelected == 'Central African Rep.'){
@@ -201,6 +204,33 @@ $.ajax({
       $('#area').html(result['data'][0]['area']);
       $('#lat').html(result['data'][0]['latlng'][0]);
       $('#lng').html(result['data'][0]['latlng'][1]);
+
+      $.ajax({
+        url: "php/openWeather.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          lat: result['data'][0]['latlng'][0],
+          lng: result['data'][0]['latlng'][1]
+        },
+        success: function(result) {
+          console.log(JSON.stringify(result));
+          if (result.status.name == "ok") {
+            $('#description').html(result['data']['weather'][0]['description']);
+            $('#temp').html(result['data']['main']['temp']);
+            $('#feelTemp').html(result['data']['main']['feels_like']);
+            $('#pressure').html(result['data']['main']['pressure']);
+            $('#humid').html(result['data']['main']['humidity']);
+            $('#wind').html(result['data']['wind']['speed']);
+            $('#clouds').html(result['data']['clouds']['all']);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+            console.log(errorThrown, textStatus);
+            console.warn(jqXHR.responseText)
+        }
+      }); 
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -209,6 +239,7 @@ $.ajax({
         console.warn(jqXHR.responseText)
     }
 });
+
 //modal on
   $('#countryInfo').modal('show');
 });

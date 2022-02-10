@@ -17,3 +17,8 @@ html, body {
     top: 60px;
 }
 
+#flagImg {
+    height: 160px;
+    width: auto;
+}
+
