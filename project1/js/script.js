@@ -119,8 +119,6 @@ $('#select').change(function() {
   var optionSelected = $(this).find("option:selected");
   var valueSelected  = optionSelected.val();
   var textSelected   = optionSelected.text();
-  var lat;
-  var lng; 
 
   if(textSelected == 'Bosnia and Herz.'){
     textSelected = 'Bosnia and Herzegovina';
@@ -182,6 +180,7 @@ $.ajax({
   $('#flagImg').attr('alt', textSelected + ' flag');
 
 //demographic and geographic info
+
   $.ajax({
     url: "php/restCountries.php",
     type: 'POST',
@@ -190,20 +189,23 @@ $.ajax({
       countryCode:   valueSelected,
     },
     success: function(result) {
+      console.log(JSON.stringify(result['data'][0]["currencies"]));
       if (result.status.name == "ok") {
       $('#official').html(result['data'][0]['name']['official']);
-      $('#name').html(result['data'][0]['name']['common']);
-      $('#name').html(result['data'][0]['name']['common']);
+      $('#name, #countryInfoLabel').html(result['data'][0]['name']['common']);
       $('#lang').html(Object.values(result['data'][0]['languages']).join(', '));
       $('#popul').html(result['data'][0]['population']);
       Object.keys(result['data'][0]["currencies"]).forEach(function(key) {
         $('#curr').html(result['data'][0]["currencies"][key].name + " " + result['data'][0]["currencies"][key].symbol);
-      });
+        $('#currencyName').html(result['data'][0]["currencies"][key].name);});
+        $('#currencySymbol').html(Object.keys(result['data'][0]["currencies"]));
       $('#capital').html(result['data'][0]['capital']);
       $('#continent').html(result['data'][0]['continents']);
       $('#area').html(result['data'][0]['area']);
       $('#lat').html(result['data'][0]['latlng'][0]);
       $('#lng').html(result['data'][0]['latlng'][1]);
+
+//weather data
 
       $.ajax({
         url: "php/openWeather.php",
@@ -214,7 +216,6 @@ $.ajax({
           lng: result['data'][0]['latlng'][1]
         },
         success: function(result) {
-          console.log(JSON.stringify(result));
           if (result.status.name == "ok") {
             $('#description').html(result['data']['weather'][0]['description']);
             $('#temp').html(result['data']['main']['temp']);
@@ -226,11 +227,52 @@ $.ajax({
           }
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown, textStatus);
+            console.warn(jqXHR.responseText)
+        }
+      }); 
+      $.ajax({
+        url: "php/airPollution.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          lat: result['data'][0]['latlng'][0],
+          lng: result['data'][0]['latlng'][1]
+        },
+        success: function(result) {
+         // console.log(JSON.stringify(result));
+          if (result.status.name == "ok") {
+           const index = result['data']['list'][0]['main']['aqi'];
+           if (index == 1) {
+             $('#aqi').html('Good');
+           } else if (index == 2) {
+            $('#aqi').html('Fair');
+           } else if (index == 3) {
+            $('#aqi').html('Moderate');
+           } else if (index == 4) {
+            $('#aqi').html('Poor');
+           } else if (index == 5) {
+            $('#aqi').html('Very poor');
+           } else {
+            $('#aqi').html('No data found');
+           }
+           $('#co').html(result['data']['list'][0]['components']['co']);
+           $('#no').html(result['data']['list'][0]['components']['no']);
+           $('#no2').html(result['data']['list'][0]['components']['no2']);
+           $('#o3').html(result['data']['list'][0]['components']['o3']);
+           $('#so2').html(result['data']['list'][0]['components']['so2']);
+           $('#pm25').html(result['data']['list'][0]['components']['pm2_5']);
+           $('#pm10').html(result['data']['list'][0]['components']['pm10']);
+           $('#nh3').html(result['data']['list'][0]['components']['nh3']);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
             // your error code
             console.log(errorThrown, textStatus);
             console.warn(jqXHR.responseText)
         }
       }); 
+
       }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -240,9 +282,38 @@ $.ajax({
     }
 });
 
+// News
+
+$.ajax({
+  url: "php/news.php",
+  type: 'POST',
+  dataType: 'json',
+  data: {
+    country: encodeURIComponent(textSelected),
+  },
+  success: function(result) {
+    console.log(JSON.stringify(result['data']['articles'][0]));
+    if (result.status.name == "ok") {
+      $('#firstNewsTitle').html(result['data']['articles'][0]['title']);
+      $('#secondNewsTitle').html(result['data']['articles'][1]['title']);
+      $('#thirdNewsTitle').html(result['data']['articles'][2]['title']);
+
+      $('#firstNewsImg').attr('src', result['data']['articles'][0]['urlToImage']);
+      $('#secondNewsImg').attr('src', result['data']['articles'][1]['urlToImage']);
+      $('#thirdNewsImg').attr('src', result['data']['articles'][2]['urlToImage']);
+
+      $('#firstNews').attr('href', result['data']['articles'][0]['url']);
+      $('#secondNews').attr('href', result['data']['articles'][1]['url']);
+      $('#thirdNews').attr('href', result['data']['articles'][2]['url']);
+    }
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+      console.log(errorThrown, textStatus);
+      console.warn(jqXHR.responseText)
+  }
+}); 
 //modal on
   $('#countryInfo').modal('show');
 });
-
-
 });

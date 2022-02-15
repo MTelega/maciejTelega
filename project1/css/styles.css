@@ -22,3 +22,10 @@ html, body {
     width: auto;
 }
 
+span {
+    font-weight: normal !important;
+}
+
+.card {
+    height: 270px;
+}
