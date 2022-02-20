@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+
   $('#countryInfo').modal({show: false});
 //select list 
 $(function() {
@@ -10,7 +11,7 @@ $(function() {
           if (result.status.name == "ok") {
             for(let i = 0; i < result.data.length; i++){
               $('#select').append(`<option value="${result.data[i].properties.iso_a2}">${result.data[i].properties.name}</option>`);
-              var select = $('select');
+              const select = $('select');
               select.html(select.find('option').sort(function(x, y) {
                 return $(x).text() > $(y).text() ? 1 : -1;
               }));
@@ -27,27 +28,28 @@ $(function() {
 });
 
 //map
-var mapOptions = {
+const mapOptions = {
   zoom: 10,
   zoomControl: false
 }
 
-var map = L.map('map', mapOptions);
+const map = L.map('map', mapOptions);
 
 // zoom control options
-var zoomOptions = {
+const zoomOptions = {
   zoomInText: '+',
   zoomOutText: '-',
   position: 'bottomright'
 };
 // Creating zoom control
-var zoom = L.control.zoom(zoomOptions);
+const zoom = L.control.zoom(zoomOptions);
 zoom.addTo(map);
 
 L.tileLayer.provider('Jawg.Streets', {
     variant: 'jawg-terrain',
     accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
 }).addTo(map);
+
 
 let currentCountry;
 var geoJsonCountry;
@@ -116,9 +118,9 @@ navigator.geolocation.getCurrentPosition((position) => {
 
 $('#select').change(function() {
 
-  var optionSelected = $(this).find("option:selected");
-  var valueSelected  = optionSelected.val();
-  var textSelected   = optionSelected.text();
+  let optionSelected = $(this).find("option:selected");
+  let valueSelected  = optionSelected.val();
+  let textSelected   = optionSelected.text();
 
   if(textSelected == 'Bosnia and Herz.'){
     textSelected = 'Bosnia and Herzegovina';
@@ -132,6 +134,8 @@ $('#select').change(function() {
     textSelected == 'Laos';
   } else if (textSelected == 'N. Cyprus') {
     textSelected = 'Cyprus';
+  } else if (textSelected == 'W. Sahara') {
+    textSelected = 'Western Sahara'
   }
 
   $.ajax({
@@ -195,10 +199,11 @@ $.ajax({
       $('#name, #countryInfoLabel').html(result['data'][0]['name']['common']);
       $('#lang').html(Object.values(result['data'][0]['languages']).join(', '));
       $('#popul').html(result['data'][0]['population']);
-      Object.keys(result['data'][0]["currencies"]).forEach(function(key) {
-        $('#curr').html(result['data'][0]["currencies"][key].name + " " + result['data'][0]["currencies"][key].symbol);
-        $('#currencyName').html(result['data'][0]["currencies"][key].name);});
-        $('#currencySymbol').html(Object.keys(result['data'][0]["currencies"]));
+        let currenciesString = '';
+      Object.keys(result['data'][0]['currencies']).forEach(function(key) {
+          currenciesString += result['data'][0]['currencies'][key]['name'] + ' ' + result['data'][0]['currencies'][key]['symbol'] + ', ';
+        });
+      $('#curr').html(currenciesString.slice(0, -2));
       $('#capital').html(result['data'][0]['capital']);
       $('#continent').html(result['data'][0]['continents']);
       $('#area').html(result['data'][0]['area']);
@@ -292,7 +297,6 @@ $.ajax({
     country: encodeURIComponent(textSelected),
   },
   success: function(result) {
-    console.log(JSON.stringify(result['data']['articles'][0]));
     if (result.status.name == "ok") {
       $('#firstNewsTitle').html(result['data']['articles'][0]['title']);
       $('#secondNewsTitle').html(result['data']['articles'][1]['title']);
@@ -313,7 +317,33 @@ $.ajax({
       console.warn(jqXHR.responseText)
   }
 }); 
+
+$.ajax({
+  url: "php/geonamesWiki.php",
+  type: 'POST',
+  dataType: 'json',
+  data: {
+    country: encodeURIComponent(textSelected),
+  },
+  success: function(result) {
+    if (result.status.name == "ok") {
+      $('#wikiLinkOne').attr('href', result['data'][0]['wikipediaUrl']);
+      $('#wikiLinkTwo').attr('href', result['data'][1]['wikipediaUrl']);
+      $('#wikiLinkThree').attr('href', result['data'][2]['wikipediaUrl']);
+      $('#wikiLinkOne').html(result['data'][0]['title']);
+      $('#wikiLinkTwo').html(result['data'][1]['title']);
+      $('#wikiLinkThree').html(result['data'][2]['title']);
+    }
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+      console.log(errorThrown, textStatus);
+      console.warn(jqXHR.responseText)
+  }
+}); 
+
 //modal on
   $('#countryInfo').modal('show');
 });
 });
+
