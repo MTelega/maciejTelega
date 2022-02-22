@@ -5,7 +5,8 @@ $( document ).ready(function() {
   //map
 const mapOptions = {
   zoom: 10,
-  zoomControl: false
+  zoomControl: false,
+  center: [51.5002, -0.126236]
 }
 
 const map = L.map('map', mapOptions);
@@ -415,10 +416,11 @@ $.ajax({
     country: encodeURIComponent(textSelected),
   },
   success: function(result) {
+    console.log(result);
     if (result.status.name == "ok") {
-      $('#wikiLinkOne').attr('href', result['data'][0]['wikipediaUrl']);
-      $('#wikiLinkTwo').attr('href', result['data'][1]['wikipediaUrl']);
-      $('#wikiLinkThree').attr('href', result['data'][2]['wikipediaUrl']);
+      $('#wikiLinkOne').attr('href', 'https://' + result['data'][0]['wikipediaUrl']);
+      $('#wikiLinkTwo').attr('href', 'https://' + result['data'][1]['wikipediaUrl']);
+      $('#wikiLinkThree').attr('href', 'https://' + result['data'][2]['wikipediaUrl']);
       $('#wikiLinkOne').html(result['data'][0]['title']);
       $('#wikiLinkTwo').html(result['data'][1]['title']);
       $('#wikiLinkThree').html(result['data'][2]['title']);
