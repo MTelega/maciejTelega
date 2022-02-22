@@ -14,9 +14,10 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
+        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet.loader.css"/>
     </head>     
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-success bg-gradient">
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient">
             <div class="container-fluid">
               <img src="css/images/logo.png" alt="logo" class="navbar-brand d-none d-sm-block">
                 <form class="d-flex">
@@ -42,7 +43,7 @@
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                              Demographic
+                              Geographic
                             </button>
                           </h2>
                           <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionModa">
@@ -50,9 +51,12 @@
                               <ul class="fw-bold">
                                 <li>Official Name: <span id="official"></span></li>
                                 <li>Common Name: <span id="name"></span></li>
-                                <li>Language: <span id="lang"></span></li>
-                                <li>Population: <span id="popul"></span></li>
-                                <li>Currency: <span id="curr"></span></li>
+                                <li>Capital: <span id="capital"></span></li>
+                                <li>Continent: <span id="continent"></span></li>
+                                <li>Area (km<sup>2</sup>): <span id="area"></span></li>
+                                <li>Latitude: <span id="lat"></span></li>
+                                <li>Longitude: <span id="lng"></span></li>
+                                <li>Neighbours: <span id="noNeighbours"></span> <ul id="neighbours" class="fw-normal"></ul></li>
                               </ul>
                             </div>
                           </div>
@@ -60,17 +64,16 @@
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Geographic
+                              Demographic
                             </button>
                           </h2>
                           <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionModal">
                             <div class="accordion-body">
                               <ul class="fw-bold">
-                                <li>Capital: <span id="capital"></span></li>
-                                <li>Continent: <span id="continent"></span></li>
-                                <li>Area (km<sup>2</sup>): <span id="area"></span></li>
-                                <li>Latitude: <span id="lat"></span></li>
-                                <li>Longitude: <span id="lng"></span></li>
+                                <li>Population: <span id="popul"></span></li>
+                                <li>Language: <span id="lang"></span></li>
+                                <li>Currency: <span id="curr"></span></li>
+                                <li>Income level: <span id="income"></span></li>
                               </ul>
                             </div>
                           </div>
@@ -116,13 +119,49 @@
                         <div class="accordion-item">
                           <h2 class="accordion-header" id="headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                              Currency Exchange
+                              Earthquakes
                             </button>
                           </h2>
                           <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionModal">
                             <div class="accordion-body">
-                              <p>Currency: <span id="currencyName"></span> (<span id="currencySymbol"></span>)</p>
-
+                              <p id="noDataEarthquakes" class="fw-bold d-none">No Data Available for this Country/Region</p>
+                              <div id="earthquakes" class="fw-bold">
+                                <ul id="eq0">
+                                  <li>Date and time: <span id="eDate0"></span></li>
+                                  <li>Magnitude: <span id="mag0"></span></li>
+                                  <li>Depth: <span id="depth0"></span><span>km</span></li>
+                                  <li>Latitude: <span id="eLat0"></span></li>
+                                  <li>Longitude: <span id="eLng0"></span></li>
+                                </ul>
+                                <ul id="eq1">
+                                  <li>Date and time: <span id="eDate1"></span></li>
+                                  <li>Magnitude: <span id="mag1"></span></li>
+                                  <li>Depth: <span id="depth1"></span><span>km</span></li>
+                                  <li>Latitude: <span id="eLat1"></span></li>
+                                  <li>Longitude: <span id="eLng1"></span></li>
+                                </ul>
+                                <ul id="eq2">
+                                  <li>Date and time: <span id="eDate2"></span></li>
+                                  <li>Magnitude: <span id="mag2"></span></li>
+                                  <li>Depth: <span id="depth2"></span><span>km</span></li>
+                                  <li>Latitude: <span id="eLat2"></span></li>
+                                  <li>Longitude: <span id="eLng2"></span></li>
+                                </ul>
+                                <ul id="eq3">
+                                  <li>Date and time: <span id="eDate3"></span></li>
+                                  <li>Magnitude: <span id="mag3"></span></li>
+                                  <li>Depth: <span id="depth3"></span><span>km</span></li>
+                                  <li>Latitude: <span id="eLat3"></span></li>
+                                  <li>Longitude: <span id="eLng3"></span></li>
+                                </ul>
+                                <ul id="eq4">
+                                  <li>Date and time: <span id="eDate4"></span></li>
+                                  <li>Magnitude: <span id="mag4"></span></li>
+                                  <li>Depth: <span id="depth4"></span><span>km</span></li>
+                                  <li>Latitude: <span id="eLat4"></span></li>
+                                  <li>Longitude: <span id="eLng4"></span></li>
+                                </ul>
+                              </div>
                             </div>  
                           </div>
                         </div>
@@ -195,9 +234,9 @@
                   </div>
                 </div>
               </div>
+
         
         <!--Preloader-->
-
 
         <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
         <script src="vendors/jquery/jquery.jsonselect.min.js"></script>
@@ -207,6 +246,7 @@
         crossorigin=""></script>
         <script src="http://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
         <script src="vendors/leaflet-providers/leaflet-providers.js"></script>
+        <script src="vendors/leaflet-providers/leaflet.loader.js"></script>
         <script src="js/script.js"></script>
 
 

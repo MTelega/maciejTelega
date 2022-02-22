@@ -1,0 +1,8 @@
+.leaflet-control-loader {
+	z-index: 2000;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	border-radius: 10px;
+	background: url('../../css/images/loader.gif') center center no-repeat rgb(31, 216, 185);
+}

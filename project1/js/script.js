@@ -1,6 +1,34 @@
 $( document ).ready(function() {
-
+  
   $('#countryInfo').modal({show: false});
+
+  //map
+const mapOptions = {
+  zoom: 10,
+  zoomControl: false
+}
+
+const map = L.map('map', mapOptions);
+
+const controlLoader = L.control.loader().addTo(map);
+controlLoader.show();
+// zoom control options
+const zoomOptions = {
+  zoomInText: '+',
+  zoomOutText: '-',
+  position: 'bottomright'
+};
+// Creating zoom control
+const zoom = L.control.zoom(zoomOptions);
+zoom.addTo(map);
+
+L.tileLayer.provider('Jawg.Streets', {
+    variant: 'jawg-terrain',
+    accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
+}).addTo(map);
+
+let currentCountry;
+let geoJsonCountry;
 //select list 
 $(function() {
   $.ajax({
@@ -26,33 +54,6 @@ $(function() {
       }
   });
 });
-
-//map
-const mapOptions = {
-  zoom: 10,
-  zoomControl: false
-}
-
-const map = L.map('map', mapOptions);
-
-// zoom control options
-const zoomOptions = {
-  zoomInText: '+',
-  zoomOutText: '-',
-  position: 'bottomright'
-};
-// Creating zoom control
-const zoom = L.control.zoom(zoomOptions);
-zoom.addTo(map);
-
-L.tileLayer.provider('Jawg.Streets', {
-    variant: 'jawg-terrain',
-    accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
-}).addTo(map);
-
-
-let currentCountry;
-var geoJsonCountry;
 
 //country borders on start
 navigator.geolocation.getCurrentPosition((position) => {
@@ -97,6 +98,7 @@ navigator.geolocation.getCurrentPosition((position) => {
                   if(result['data'][i]['properties']['name'] == currentCountry){
                     geoJsonCountry = result['data'][i];
                     L.geoJson(geoJsonCountry).addTo(map);
+                    controlLoader.hide();
                   }
                 }
               }
@@ -107,6 +109,25 @@ navigator.geolocation.getCurrentPosition((position) => {
               console.log(textStatus);      
           }
       });
+      //capital city marker
+      $.ajax({
+        url: "php/income.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          countryCode: result['data']['ISO_3166-1_alpha-2']
+        },
+        success: function(result) {
+          if (result.status.name == "ok") {
+            let marker = L.marker([result['data'][1][0]['latitude'], result['data'][1][0]['longitude']]).addTo(map);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // your error code
+            console.log(errorThrown, textStatus);
+            console.warn(jqXHR.responseText)
+        }
+      }); 
         }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -135,28 +156,72 @@ $('#select').change(function() {
   } else if (textSelected == 'N. Cyprus') {
     textSelected = 'Cyprus';
   } else if (textSelected == 'W. Sahara') {
-    textSelected = 'Western Sahara'
+    textSelected = 'Western Sahara';
+  } else if (textSelected == 'Czech Rep.') {
+    textSelected = 'Czech Republic';
+  } else if (textSelected == 'Dominican Rep.') {
+    textSelected = 'Dominican Republic';
   }
+  
+  //bounds
 
-  $.ajax({
-    url: "php/openCageBounds.php",
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        country:   encodeURIComponent(textSelected),
-        countryCode: valueSelected
-    },
-    success: function(result) {
-        if (result.status.name == "ok") {
-          const northeast = [result['data']['northeast']['lat'], result['data']['northeast']['lng']],
-                southwest = [result['data']['southwest']['lat'], result['data']['southwest']['lng']];
-                map.fitBounds([northeast, southwest]);
-        }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        // your error code
-        console.log(errorThrown, textStatus);
-    }
+$.ajax({
+  url: "php/openCageBounds.php",
+  type: 'POST',
+  dataType: 'json',
+  data: {
+      country:   encodeURIComponent(textSelected),
+      countryCode: valueSelected
+  },
+  success: function(result) {
+      if (result.status.name == "ok") {
+        const northeast = [result['data']['northeast']['lat'], result['data']['northeast']['lng']],
+              southwest = [result['data']['southwest']['lat'], result['data']['southwest']['lng']];
+              map.fitBounds([northeast, southwest]);
+
+        //earthquakes
+
+        $.ajax({
+          url: "php/earthquakes.php",
+          type: 'POST',
+          dataType: 'json',
+          data: {
+            north: result['data']['northeast']['lat'],
+            south: result['data']['northeast']['lng'],
+            east: result['data']['southwest']['lat'],
+            west: result['data']['southwest']['lng']
+          },
+          success: function(result) {
+            if (result.status.name == "ok") {
+              if(result['data']['earthquakes'].length == 0){
+                $('#earthquakes, #eq0, #eq1, #eq2, #eq3, #eq4').addClass('d-none');
+                $('#noDataEarthquakes').removeClass('d-none');
+              } else {
+                $('#noDataEarthquakes').addClass('d-none');
+                $('#eq0, #eq1, #eq2, #eq3, #eq4').addClass('d-none');
+                $('#earthquakes').removeClass('d-none');
+                for(let i = 0; i < result['data']['earthquakes'].length; i++) {
+                  $('#eq' + i).removeClass('d-none');
+                  $('#eDate' + i).html(result['data']['earthquakes'][i]['datetime']);
+                  $('#mag' + i).html(result['data']['earthquakes'][i]['magnitude']);
+                  $('#depth' + i).html(result['data']['earthquakes'][i]['depth']);
+                  $('#eLat' + i).html(result['data']['earthquakes'][i]['lat']);
+                  $('#eLng' + i).html(result['data']['earthquakes'][i]['lng']);
+                }
+              }
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown, textStatus);
+          }
+        }); 
+
+      }
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+      console.log(errorThrown, textStatus);
+  }
 });
 
 $.ajax({
@@ -167,7 +232,7 @@ $.ajax({
       if (result.status.name == "ok") {
         for(let i = 0; i < result['data'].length; i++){
           if(result['data'][i]['properties']['iso_a2'] == valueSelected){
-            var geoJsonCountry = result['data'][i];
+            let geoJsonCountry = result['data'][i];
             L.geoJson(geoJsonCountry).addTo(map);
           }
         }
@@ -193,7 +258,6 @@ $.ajax({
       countryCode:   valueSelected,
     },
     success: function(result) {
-      console.log(JSON.stringify(result['data'][0]["currencies"]));
       if (result.status.name == "ok") {
       $('#official').html(result['data'][0]['name']['official']);
       $('#name, #countryInfoLabel').html(result['data'][0]['name']['common']);
@@ -207,8 +271,6 @@ $.ajax({
       $('#capital').html(result['data'][0]['capital']);
       $('#continent').html(result['data'][0]['continents']);
       $('#area').html(result['data'][0]['area']);
-      $('#lat').html(result['data'][0]['latlng'][0]);
-      $('#lng').html(result['data'][0]['latlng'][1]);
 
 //weather data
 
@@ -223,8 +285,8 @@ $.ajax({
         success: function(result) {
           if (result.status.name == "ok") {
             $('#description').html(result['data']['weather'][0]['description']);
-            $('#temp').html(result['data']['main']['temp']);
-            $('#feelTemp').html(result['data']['main']['feels_like']);
+            $('#temp').html(Math.round(result['data']['main']['temp'] * 10) / 10);
+            $('#feelTemp').html(Math.round(result['data']['main']['feels_like'] * 10) / 10);
             $('#pressure').html(result['data']['main']['pressure']);
             $('#humid').html(result['data']['main']['humidity']);
             $('#wind').html(result['data']['wind']['speed']);
@@ -236,6 +298,8 @@ $.ajax({
             console.warn(jqXHR.responseText)
         }
       }); 
+
+
       $.ajax({
         url: "php/airPollution.php",
         type: 'POST',
@@ -245,7 +309,6 @@ $.ajax({
           lng: result['data'][0]['latlng'][1]
         },
         success: function(result) {
-         // console.log(JSON.stringify(result));
           if (result.status.name == "ok") {
            const index = result['data']['list'][0]['main']['aqi'];
            if (index == 1) {
@@ -318,6 +381,32 @@ $.ajax({
   }
 }); 
 
+//income and lat/lng of capital city
+
+$.ajax({
+  url: "php/income.php",
+  type: 'POST',
+  dataType: 'json',
+  data: {
+    countryCode: valueSelected,
+  },
+  success: function(result) {
+    if (result.status.name == "ok") {
+      $('#income').html(result['data'][1][0]['incomeLevel']['value']);
+      $('#lat').html(result['data'][1][0]['latitude']);
+      $('#lng').html(result['data'][1][0]['longitude']);
+      let marker = L.marker([result['data'][1][0]['latitude'], result['data'][1][0]['longitude']]).addTo(map);
+      }
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+      console.log(errorThrown, textStatus);
+      console.warn(jqXHR.responseText)
+  }
+}); 
+
+//wikipedia links
+
 $.ajax({
   url: "php/geonamesWiki.php",
   type: 'POST',
@@ -333,6 +422,36 @@ $.ajax({
       $('#wikiLinkOne').html(result['data'][0]['title']);
       $('#wikiLinkTwo').html(result['data'][1]['title']);
       $('#wikiLinkThree').html(result['data'][2]['title']);
+    }
+  },
+  error: function(jqXHR, textStatus, errorThrown) {
+      // your error code
+      console.log(errorThrown, textStatus);
+      console.warn(jqXHR.responseText)
+  }
+}); 
+
+//neighbours
+
+$.ajax({
+  url: "php/neighbours.php",
+  type: 'POST',
+  dataType: 'json',
+  data: {
+    countryCode: valueSelected,
+  },
+  success: function(result) {
+    if (result.status.name == "ok") {
+      if(result['data'].length == 0){
+        $('#neighbours').html('');
+        $('#noNeighbours').html('none');
+      } else {
+        $('#neighbours').html('');
+        $('#noNeighbours').html('');
+        for(let i = 0; i < result['data'].length; i++) {
+          $('#neighbours').append('<li>' + result['data'][i]['name'] + '</li>');
+        }
+      }
     }
   },
   error: function(jqXHR, textStatus, errorThrown) {
