@@ -30,26 +30,7 @@ span {
     height: 270px;
 }
 
-select {
-
-    -webkit-transition: none !important;
-    
-    -moz-transition: none !important;
-    
-    -o-transition: none !important;
-    
-    transition: none !important;
-    
-    }
-    
-    option {
-    
-    -webkit-transition: none !important;
-    
-    -moz-transition: none !important;
-    
-    -o-transition: none !important;
-    
-    transition: none !important;
-    
-    }
+.star {
+    height: 16px;
+    width: 16px;
+}

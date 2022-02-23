@@ -28,6 +28,8 @@ L.tileLayer.provider('Jawg.Streets', {
     accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
 }).addTo(map);
 
+let ctlEasyButton;
+
 let currentCountry;
 let geoJsonCountry;
 //select list 
@@ -416,7 +418,6 @@ $.ajax({
     country: encodeURIComponent(textSelected),
   },
   success: function(result) {
-    console.log(result);
     if (result.status.name == "ok") {
       $('#wikiLinkOne').attr('href', 'https://' + result['data'][0]['wikipediaUrl']);
       $('#wikiLinkTwo').attr('href', 'https://' + result['data'][1]['wikipediaUrl']);
@@ -465,6 +466,21 @@ $.ajax({
 
 //modal on
   $('#countryInfo').modal('show');
+
+  if(typeof(ctlEasyButton) == 'undefined') {
+    ctlEasyButton = L.easyButton({
+      position: 'bottomright',
+      states: [{
+      stateName: 'show-modal',
+      icon: '<img class="star" src="css/images/info-icon.png" alt="info icon">',
+      title: 'show modal',
+      onClick: function() {
+        $('#countryInfo').modal('show');
+      }
+    }]
+    }).addTo(map);
+  }
+
 });
 });
 
