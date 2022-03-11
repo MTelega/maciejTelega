@@ -5,10 +5,41 @@ body {
 html, body {
     height: 100%;
     width: 100%;
+    overscroll-behavior: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+.nav{
+    max-height: 66px !important;
+}
+
+table {
+    background: none;
+}
+
+.card {
+    height: 270px;
+}
+
+.card-img-top {
+    height: 60%;
+    width: 100%;
+    object-fit: cover;
+}
+
+#flagImg {
+    height: 160px;
+    width: auto;
+}
+
+#weatherCond {
+    font-size: small;
+}
+
+/*Leaflet CSS */
+
 #map {
-    height: calc(100% - 56px);
+    height: calc(100% - 66px);
     width: 100%;
     z-index: 0;
 }
@@ -17,20 +48,155 @@ html, body {
     top: 60px;
 }
 
-#flagImg {
-    height: 160px;
-    width: auto;
+.easy-button-container {
+    border: none !important;
 }
 
-span {
-    font-weight: normal !important;
+.easy-button-button {
+    border-radius: 50% !important;
+    border: 2px solid black !important; 
+    height: 40px !important;
+    width: 40px !important;
 }
 
-.card {
-    height: 270px;
+.easy-button-button span {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
-.star {
-    height: 16px;
-    width: 16px;
+.leaflet-control-zoom {
+    margin-left: 13px !important;
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    background-color: #ffc107 !important;
+}
+
+#city-button {
+    background-color: #ef9227 !important;
+}
+
+#eq-button {
+    background-color: #a23337 !important;
+}
+
+#info-button {
+    background-color: #3ef2cb !important;
+}
+
+#weather-button {
+    background-color: #4a8aff !important;
+}
+
+#air-button {
+    background-color: #7383a0 !important;
+}
+
+#news-button {
+    background-color: #9a2ce8 !important;
+}
+
+#reserve-button {
+    background-color: #006838 !important;
+}
+
+#airport-button {
+    background-color: #440444 !important;
+    color: white;
+}
+
+.eqCluster, .cityCluster, .resCluster, .airportCluster{
+    height: 35px !important;
+    width: 35px !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    font-size: large !important;
+    background-color: #a23337 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.cityCluster {
+    background-color: orange !important;
+    border: 5px solid #ef9227;
+}
+
+.eqCluster {
+    background-color: red !important;
+    border: 5px solid #a23337;
+    color: white !important;
+}
+
+.resCluster {
+    background-color: green !important;
+    border: 5px solid #006838;
+    color: white !important;
+}
+
+.airportCluster {
+    background-color: purple !important;
+    border: 5px solid #440444;
+    color: white !important;
+}
+
+.eqCluster span, .cityCluster span {
+    margin: auto !important;
+    font-size: large;
+
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background-color: #3ef2cb !important;
+}
+
+.leaflet-div-icon {
+    background: none !important;
+    border: none !important;
+}
+
+/* -------------------------------------------------- */
+
+
+/*Modal backgrounds*/
+
+.info {
+    background-image: url(images/info-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.weather {
+    background-image: url(images/weather-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.air {
+    background-image: url(images/airq-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.news {
+    background-image: url(images/news-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* ------------------------------------------------ */
+
+@media (max-width: 360px) { 
+    .navbar-brand {
+        display: none !important;
+    }
+    #select-form {
+        margin: auto !important;
+    }
 }

@@ -11,15 +11,18 @@
         <link rel="shortcut icon" href="css/images/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
-        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet.css"/>
+        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet/leaflet.css"/>
         <link rel="stylesheet" href="vendors/leaflet-providers/leaflet.loader.css"/>
-        <link rel="stylesheet" href="vendors/leaflet-providers/easy-button.css">
+        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet-easybutton/src/easy-button.css">
+        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet.markercluster/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="vendors/leaflet-providers/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css">
+        <script src="https://kit.fontawesome.com/3cc597722e.js" crossorigin="anonymous"></script>
     </head>     
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-warning bg-gradient">
             <div class="container-fluid">
-              <img src="css/images/logo.png" alt="logo" class="navbar-brand d-none d-sm-block">
-                <form class="d-flex">
+              <img src="css/images/logo.png" alt="logo" class="navbar-brand m-0">
+                <form class="d-block" id="select-form">
                     <select class="form-select" name="select" id="select">
                         <option value="" disabled>----------------</option>
                       </select>
@@ -29,221 +32,264 @@
 
             <div id="map"></div>
 
-            <div class="modal fade opacity-75 mapOverlay" id="countryInfo" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="countryInfoLabel"></h4>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <img id="flagImg" class="mx-auto d-block border border-2" src="" alt="">
-                      <div class="accordion" id="accordionModal">
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                              Geographic
-                            </button>
-                          </h2>
-                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionModa">
-                            <div class="accordion-body">
-                              <ul class="fw-bold">
-                                <li>Official Name: <span id="official"></span></li>
-                                <li>Common Name: <span id="name"></span></li>
-                                <li>Capital: <span id="capital"></span></li>
-                                <li>Continent: <span id="continent"></span></li>
-                                <li>Area (km<sup>2</sup>): <span id="area"></span></li>
-                                <li>Latitude: <span id="lat"></span></li>
-                                <li>Longitude: <span id="lng"></span></li>
-                                <li>Neighbours: <span id="noNeighbours"></span> <ul id="neighbours" class="fw-normal"></ul></li>
-                              </ul>
+            <div class="modal fade mapOverlay" id="infoModal" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content info">
+                  <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body p-1">
+                    <table class="table text-center table-sm align-middle fs-6">
+                      <thead>
+                        <tr>
+                          <th id="official" scope="row" colspan="2"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row" colspan="2"><img id="flagImg" class="mx-auto d-block border border-2 mb-1" src="" alt=""></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Common Name</th>
+                          <td id="name"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Capital</th>
+                          <td class="capital"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Lat/Lng</th>
+                          <td><span id="lat"></span>/<span id="lng"></span></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Continent</th>
+                          <td id="continent"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Area (km<sup>2</sup>)</th>
+                          <td id="area"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Population</th>
+                          <td id="popul"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Language</th>
+                          <td id="lang"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Currency</th>
+                          <td><span id="curr"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Income level</th>
+                          <td id="income"></td>
+                        </tr>
+                        <tr>
+                          <th><i class="fa-brands fa-wikipedia-w fa-lg"></i></th>
+                          <td><a class="link-dark" id="wikiLinkOne" href="" target="_blank"></a></td>
+                        </tr>
+                  </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="modal fade mapOverlay" id="weatherModal" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content weather">
+                  <div class="modal-header border-0 p-2">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body p-2">
+                    <table class="table text-center table-sm align-middle fs-6">
+                      <thead>
+                    <tr>
+                      <th scope="row" colspan="5">Current weather in <span class="capital"></span></th>
+                    </tr>
+                  </thead>
+                  <tbody class="fw-bold">
+                    <tr>
+                      <th colspan="2" scope="row"><span id="temp"></span><sup>o</sup>C</th>
+                      <th rowspan="2"><img class="img-fluid" id="weatherIcon" src="" alt="weather icon"></th>
+                      <th colspan="2"><span id="description"></span></th>
+                    </tr>
+                    <tr>
+                      <td scope="row"><sub>max</sub><span id="maxTemp"></span><sup>o</sup>C</td>
+                      <td><sub>min</sub><span id="minTemp"></span><sup>o</sup>C</td>
+                      <td colspan="2"><sub>Feels like </sub><span id="feelTemp"></span><sup>o</sup>C</td>
+                    </tr>
+                    <tr id="weatherCond">
+                      <td scope="row">Humidity<br><span id="humid"></span><span>%</span></td>
+                      <td>Pressure<br><span id="pressure"></span><span>hPa</span></td>
+                      <td>Wind<br><span id="wind"></span><span>m/s</span></td>
+                      <td>Clouds<br><span id="clouds"></span><span>%</span></td>
+                      <td>Visibility<br><span id="vis"></span>m</td>
+                    </tr>
+                  </tbody>
+                  </table>
+
+                  <table class="table text-center align-middle">
+                    <thead>
+                  <tr>
+                    <th scope="row" colspan="4">5-day forecast</span></th>
+                  </tr>
+                </thead>
+                <tbody class="fw-bold">
+                  <tr>
+                    <th id="day1" scope="row"></th>
+                    <td><img class="img-fluid" id="weatherIconDay1" src="" alt="weather icon"></td>
+                    <td><span id="tempDay1"></span><sup>o</sup>C</td>
+                    <td><span id="tempNight1"></span><sup>o</sup>C</td>
+                  </tr>
+                  <tr>
+                    <th id="day2" scope="row"></th>
+                    <td><img class="img-fluid" id="weatherIconDay2" src="" alt="weather icon"></td>
+                    <td><span id="tempDay2"></span><sup>o</sup>C</td>
+                    <td><span id="tempNight2"></span><sup>o</sup>C</td>
+                  </tr>
+                  <tr>
+                    <th id="day3" scope="row"></th>
+                    <td><img class="img-fluid" id="weatherIconDay3" src="" alt="weather icon"></td>
+                    <td><span id="tempDay3"></span><sup>o</sup>C</td>
+                    <td><span id="tempNight3"></span><sup>o</sup>C</td>
+                  </tr>
+                  <tr>
+                    <th id="day4" scope="row"></th>
+                    <td><img class="img-fluid" id="weatherIconDay4" src="" alt="weather icon"></td>
+                    <td><span id="tempDay4"></span><sup>o</sup>C</td>
+                    <td><span id="tempNight4"></span><sup>o</sup>C</td>
+                  </tr>
+                  <tr>
+                    <th id="day5" scope="row"></th>
+                    <td><img class="img-fluid" id="weatherIconDay5" src="" alt="weather icon"></td>
+                    <td><span id="tempDay5"></span><sup>o</sup>C</td>
+                    <td><span id="tempNight5"></span><sup>o</sup>C</td>
+                  </tr>
+                </tbody>
+                </table>
+      
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade mapOverlay" id="aqModal" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content air">
+                  <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body p-1">
+                    <table class="table text-center table-sm align-middle fs-6">
+                      <thead>
+                        <tr>
+                          <th id="official" scope="row" colspan="4">Air Pollution</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row" colspan="2">Air quality</th>
+                          <td id="aqi" colspan="2"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row"  colspan="4">Pollutant concentration in μg/m</th>
+                        </tr>
+                        <tr>
+                          <th scope="row">CO</th>
+                          <th>NO</th>
+                          <th>NO<sub>2</sub></th>
+                          <th>O<sub>3</sub></th>
+                        </tr>
+                        <tr>
+                          <td id="co" scope="row"></td>
+                          <td id="no"></td>
+                          <td id="no2"></td>
+                          <td id="o3"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">SO<sub>2</sub>: </th>
+                          <th>PM<sub>10</sub></th>
+                          <th>PM<sub>25</sub></th>
+                          <th>NH<sub>3</sub></th>
+                        </tr>
+                        <tr>
+                          <td id="so2" scope="row">Continent</td>
+                          <td id="pm10"></td>
+                          <td id="pm25"></td>
+                          <td id="nh3"></td>
+                        </tr>
+                  </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="modal fade mapOverlay" id="newsModal" tabindex="-1" aria-labelledby="countryInfoLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content news">
+                  <div class="modal-header text-light">
+                    <h4 class="modal-title">News</h4>
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="carouselExampleCaptions" class="carousel carousel-light slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <a id="firstNews" class="text-decoration-none text-black" href="" target="_blank"><div class="card shadow d-block w-75  mx-auto" >
+                            <img class="card-img-top img-fluid" id="firstNewsImg" src="" alt="news image">
+                            <div class="card-body">
+                              <p class="card-text text-center" id="firstNewsTitle"></p>
                             </div>
-                          </div>
+                          </div></a>
                         </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                              Demographic
-                            </button>
-                          </h2>
-                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionModal">
-                            <div class="accordion-body">
-                              <ul class="fw-bold">
-                                <li>Population: <span id="popul"></span></li>
-                                <li>Language: <span id="lang"></span></li>
-                                <li>Currency: <span id="curr"></span></li>
-                                <li>Income level: <span id="income"></span></li>
-                              </ul>
+                        <div class="carousel-item">
+                          <a id="secondNews" class="text-decoration-none text-black" href="" target="_blank"><div class="card shadow d-block w-75  mx-auto" >
+                            <img class="card-img-top img-fluid" id="secondNewsImg" src="" alt="news image">
+                            <div class="card-body">
+                              <p class="card-text text-center" id="secondNewsTitle"></p>
                             </div>
-                          </div>
+                          </div></a>
                         </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                              Weather
-                            </button>
-                          </h2>
-                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionModal">
-                            <div class="accordion-body">
-                              <p class="fw-bold">Current Weather:</p>
-                              <ul class="fw-bold">
-                                <li>Description: <span id="description"></span></li>
-                                <li>Temperature: <span id="temp"></span> <span><sup>o</sup>C</span></li>
-                                <li>Feels like: <span id="feelTemp"></span> <span><sup>o</sup>C</span></li>
-                                <li>Pressure: <span id="pressure"></span><span>hPa</span></li>
-                                <li>Humidity: <span id="humid"></span><span>%</span></li>
-                                <li>Wind speed: <span id="wind"></span><span>m/s</span></li>
-                                <li>Clouds: <span id="clouds"></span><span>%</span></li>
-                              </ul>
-                              <br>
-                              <p class="fw-bold">Air Pollution</p>
-                              <ul class="fw-bold">
-                                <li>Air quality: <span id="aqi"></span></li>
-                                <li>Pollutant concentration in μg/m<sup>3</sup>:
-                                  <ul class="fw-normal">
-                                    <li>CO: <span id="co"></span></li>
-                                    <li>NO: <span id="no"></span></li>
-                                    <li>NO<sub>2</sub>: <span id="no2"></span></li>
-                                    <li>O<sub>3</sub>: <span id="o3"></span></li>
-                                    <li>SO<sub>2</sub>: <span id="so2"></span></li>
-                                    <li>PM<sub>10</sub>: <span id="pm10"></span></li>
-                                    <li>PM<sub>25</sub>: <span id="pm25"></span></li>
-                                    <li>NH<sub>3</sub>: <span id="nh3"></span></li>
-                                  </ul>
-                                </li>
-                              </ul>
+                        <div class="carousel-item">
+                          <a id="thirdNews" class="text-decoration-none text-black" href="" target="_blank"><div class="card shadow d-block w-75 mx-auto" >
+                            <img class="card-img-top img-fluid h-5" id="thirdNewsImg" src="" alt="news image">
+                            <div class="card-body">
+                              <p class="card-text text-center" id="thirdNewsTitle"></p>
                             </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                              Earthquakes
-                            </button>
-                          </h2>
-                          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionModal">
-                            <div class="accordion-body">
-                              <p id="noDataEarthquakes" class="fw-bold d-none">No Data Available for this Country/Region</p>
-                              <div id="earthquakes" class="fw-bold">
-                                <ul id="eq0">
-                                  <li>Date and time: <span id="eDate0"></span></li>
-                                  <li>Magnitude: <span id="mag0"></span></li>
-                                  <li>Depth: <span id="depth0"></span><span>km</span></li>
-                                  <li>Latitude: <span id="eLat0"></span></li>
-                                  <li>Longitude: <span id="eLng0"></span></li>
-                                </ul>
-                                <ul id="eq1">
-                                  <li>Date and time: <span id="eDate1"></span></li>
-                                  <li>Magnitude: <span id="mag1"></span></li>
-                                  <li>Depth: <span id="depth1"></span><span>km</span></li>
-                                  <li>Latitude: <span id="eLat1"></span></li>
-                                  <li>Longitude: <span id="eLng1"></span></li>
-                                </ul>
-                                <ul id="eq2">
-                                  <li>Date and time: <span id="eDate2"></span></li>
-                                  <li>Magnitude: <span id="mag2"></span></li>
-                                  <li>Depth: <span id="depth2"></span><span>km</span></li>
-                                  <li>Latitude: <span id="eLat2"></span></li>
-                                  <li>Longitude: <span id="eLng2"></span></li>
-                                </ul>
-                                <ul id="eq3">
-                                  <li>Date and time: <span id="eDate3"></span></li>
-                                  <li>Magnitude: <span id="mag3"></span></li>
-                                  <li>Depth: <span id="depth3"></span><span>km</span></li>
-                                  <li>Latitude: <span id="eLat3"></span></li>
-                                  <li>Longitude: <span id="eLng3"></span></li>
-                                </ul>
-                                <ul id="eq4">
-                                  <li>Date and time: <span id="eDate4"></span></li>
-                                  <li>Magnitude: <span id="mag4"></span></li>
-                                  <li>Depth: <span id="depth4"></span><span>km</span></li>
-                                  <li>Latitude: <span id="eLat4"></span></li>
-                                  <li>Longitude: <span id="eLng4"></span></li>
-                                </ul>
-                              </div>
-                            </div>  
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                              News
-                            </button>
-                          </h2>
-                          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionModal">
-                            <div class="accordion-body">
-                              <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                  <div class="carousel-item active">
-                                    <div class="card shadow d-block w-75  mx-auto" >
-                                      <a id="firstNews" href="" target="_blank"><img class="card-img-top" id="firstNewsImg" src="" class="d-block w-100" alt="news image"></a>
-                                      <div class="card-body">
-                                        <p class="card-text" id="firstNewsTitle"></p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="carousel-item">
-                                    <div class="card shadow d-block w-75  mx-auto" >
-                                      <a id="secondNews" href="" target="_blank"><img class="card-img-top" id="secondNewsImg" src="" class="d-block w-100" alt="news image"></a>
-                                      <div class="card-body">
-                                        <p class="card-text" id="secondNewsTitle"></p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="carousel-item">
-                                    <div class="card shadow d-block w-75  mx-auto" >
-                                      <a id="thirdNews" href="" target="_blank"><img class="card-img-top" id="thirdNewsImg" src="" class="d-block w-100" alt="news image"></a>
-                                      <div class="card-body">
-                                        <p class="card-text" id="thirdNewsTitle"></p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="accordion-item">
-                          <h2 class="accordion-header" id="headingSix">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                              Wikipedia Links
-                            </button>
-                          </h2>
-                          <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionModal">
-                            <div class="accordion-body">
-                              <ul>
-                                <li><a class="link-dark" id="wikiLinkOne" href="" target="_blank"></a></li>
-                                <li><a class="link-dark" id="wikiLinkTwo" href="" target="_blank"></a></li>  
-                                <li><a class="link-dark" id="wikiLinkThree" href="" target="_blank"></a></li>
-                              </ul>
-                              
-                            </div>
-                          </div>
+                          </div></a>
                         </div>
                       </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-
+            </div>
         
         <!--Preloader-->
 
         <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
         <script src="vendors/jquery/jquery.jsonselect.min.js"></script>
         <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
-        <script src="vendors/leaflet-providers/leaflet.js"></script>
+        <script src="vendors/leaflet-providers/leaflet/leaflet.js"></script>
         <script src="vendors/leaflet-providers/leaflet-providers.js"></script>
         <script src="vendors/leaflet-providers/leaflet.loader.js"></script>
-        <script src="vendors/leaflet-providers/easy-button.js"></script>
+        <script src="vendors/leaflet-providers/leaflet-easybutton/src/easy-button.js"></script>
+        <script src="vendors/leaflet-providers/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+        <script src="vendors/leaflet-providers/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js"></script>
         <script src="js/script.js"></script>
 
 
