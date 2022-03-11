@@ -164,6 +164,8 @@ function getInfo(countryName, alphaCode) {
                     earthquakesGroup.addLayer(L.marker([eq['lat'], eq['lng']], {icon: eqMarker}).bindPopup(`<span class="fw-bold">Earthquake</span> <br> Date: ${eq['datetime']} <br> Magnitude: ${eq['magnitude']} <br> Depth: ${eq['depth']} km <br> Latitude: ${eq['lat']} <br> Longitude: ${eq['lng']}`));
                   });
 
+                  map.addLayer(earthquakesGroup);
+
                 if(typeof(ctlEqButton) == 'undefined') {
                   ctlEqButton = L.easyButton({
                     id: 'eq-button',
@@ -244,6 +246,8 @@ function getInfo(countryName, alphaCode) {
             }          
           })
 
+          map.addLayer(citiesGroup);
+
           if(typeof(ctlCityButton) == 'undefined') {
             ctlCityButton = L.easyButton({
               id: 'city-button',
@@ -286,6 +290,8 @@ function getInfo(countryName, alphaCode) {
               reserveGroup.addLayer(L.marker([reserve['lat'], reserve['lng']], {icon: reserveMarker})
               .bindPopup(`<span class="fw-bold">${reserve['name']}</span> <br> ${reserve['fcodeName']} <br> Latitude: ${reserve['lat']} <br> Longitude: ${reserve['lng']}`));          
             })
+
+            map.addLayer(reserveGroup);
           
           if(typeof(ctlReserveButton) == 'undefined') {
             ctlReserveButton = L.easyButton({
@@ -334,6 +340,8 @@ function getInfo(countryName, alphaCode) {
               airportGroup.addLayer(L.marker([airport['lat'], airport['lng']], {icon: airportMarker})
               .bindPopup(`<span class="fw-bold">${airport['name']}</span> <br> ${airport['fcodeName']} <br> Latitude: ${airport['lat']} <br> Longitude: ${airport['lng']}`));          
             })
+
+            map.addLayer(airportGroup);
          
           if(typeof(ctlAirportButton) == 'undefined') {
             ctlAirportButton = L.easyButton({
@@ -686,6 +694,8 @@ navigator.geolocation.getCurrentPosition((position) => {
     success: function(result) {
         if (result.status.name == "ok") {
           getInfo(result['data']['country'], result['data']['ISO_3166-1_alpha-2']);
+
+          $("#select").val(result['data']['ISO_3166-1_alpha-2']);
         }
     },
     error: function(jqXHR, textStatus, errorThrown) {
