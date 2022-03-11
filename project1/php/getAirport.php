@@ -7,7 +7,7 @@ $configs = include('config.php');
 
 $executionStartTime = microtime(true);
 
-$url = 'http://api.geonames.org/searchJSON?q=airport&country=' . $_REQUEST['countryCode'] . '&lang=en&featureCode=AIRP&maxRows=20&username=' . $configs['geonamesUserName'];
+$url = 'http://api.geonames.org/searchJSON?q=airport&country=' . $_REQUEST['countryCode'] . '&lang=en&featureCode=AIRP&maxRows=10&username=' . $configs['geonamesUserName'];
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
