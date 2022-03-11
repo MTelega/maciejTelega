@@ -243,7 +243,6 @@ function getInfo(countryName, alphaCode) {
               .bindPopup(`<span class="fw-bold">${city['name']}</span> <br> Population: ${city['population']} <br> Latitude: ${city['lat']} <br> Longitude: ${city['lng']}`));
             }          
           })
-          map.addLayer(citiesGroup);
 
           if(typeof(ctlCityButton) == 'undefined') {
             ctlCityButton = L.easyButton({
@@ -335,7 +334,7 @@ function getInfo(countryName, alphaCode) {
               airportGroup.addLayer(L.marker([airport['lat'], airport['lng']], {icon: airportMarker})
               .bindPopup(`<span class="fw-bold">${airport['name']}</span> <br> ${airport['fcodeName']} <br> Latitude: ${airport['lat']} <br> Longitude: ${airport['lng']}`));          
             })
-          map.addLayer(airportGroup);
+         
           if(typeof(ctlAirportButton) == 'undefined') {
             ctlAirportButton = L.easyButton({
               id: 'airport-button',
@@ -480,6 +479,8 @@ function getInfo(countryName, alphaCode) {
               console.warn(jqXHR.responseText)
           }
         }); 
+
+        // weather forecast
 
         $.ajax({
           url: "php/getWeatherForecast.php",
