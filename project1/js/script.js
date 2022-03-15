@@ -177,19 +177,19 @@ function getInfo(countryName, alphaCode) {
                     onClick: function() {
                       if (map.hasLayer(earthquakesGroup)){
                         map.removeLayer(earthquakesGroup);
-                        $('#eq-button').addClass('eq-button-off');
-                        $('#eq-button').removeClass('markersOn');
+                        $('#eq-button').removeClass('eq-button-on');
+                        $('#eq-button').addClass('markers-off');
                       } else {
                         map.addLayer(earthquakesGroup);
-                        $('#eq-button').removeClass('eq-button-off');
-                        $('#eq-button').addClass('markersOn');
+                        $('#eq-button').addClass('eq-button-on');
+                        $('#eq-button').removeClass('markers-off');
                       }
                     }
                   }]
                   }).addTo(map);
-                  $('#eq-button').addClass('markersOn');
+                  $('#eq-button').addClass('eq-button-on');
                 }
-              } else {
+              } else if (typeof(ctlEqButton) == 'object') {
                 map.removeControl(ctlEqButton);
                 ctlEqButton = undefined;
               }
@@ -264,17 +264,17 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(citiesGroup)){
                   map.removeLayer(citiesGroup);
-                  $('#city-button').removeClass('markersOn');
-                  $('#city-button').addClass('city-button-off');
+                  $('#city-button').removeClass('city-button-on');
+                  $('#city-button').addClass('markers-off');
                 } else {
                   map.addLayer(citiesGroup);
-                  $('#city-button').removeClass('city-button-off');
-                  $('#city-button').addClass('markersOn');
+                  $('#city-button').addClass('city-button-on');
+                  $('#city-button').removeClass('markers-off');
                 }
               }
             }]
             }).addTo(map);
-            $('#city-button').addClass('markersOn');
+            $('#city-button').addClass('city-button-on');
           }
             }
     },
@@ -314,19 +314,19 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(reserveGroup)){
                   map.removeLayer(reserveGroup);
-                  $('#reserve-button').removeClass('markersOn');
-                  $('#reserve-button').addClass('reserve-button-off');
+                  $('#reserve-button').removeClass('reserve-button-on');
+                  $('#reserve-button').addClass('markers-off');
                 } else {
                   map.addLayer(reserveGroup);
-                  $('#reserve-button').removeClass('reserve-button-off');
-                  $('#reserve-button').addClass('markersOn');
+                  $('#reserve-button').removeClass('markers-off');
+                  $('#reserve-button').addClass('reserve-button-on');
                 }
               }
             }]
             }).addTo(map);
-            $('#reserve-button').addClass('markersOn');
+            $('#reserve-button').addClass('reserve-button-on');
           }
-        } else {
+        } else if (typeof(ctlReserveButton) == 'object') {
           map.removeControl(ctlReserveButton);
           ctlReserveButton = undefined;
         }
@@ -368,19 +368,19 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(airportGroup)){
                   map.removeLayer(airportGroup);
-                  $('#airport-button').removeClass('markersOn');
-                  $('#airport-button').addClass('airport-button-off');
+                  $('#airport-button').addClass('markers-off');
+                  $('#airport-button').removeClass('airport-button-on');
                 } else {
                   map.addLayer(airportGroup);
-                  $('#airport-button').removeClass('airport-button-off');
-                  $('#airport-button').addClass('markersOn');
+                  $('#airport-button').addClass('airport-button-on');
+                  $('#airport-button').removeClass('markers-off');
                 }
               }
             }]
             }).addTo(map);
-            $('#airport-button').addClass('markersOn');
+            $('#airport-button').addClass('airport-button-on');
           }
-        } else {
+        } else if (typeof(ctlAirportButton) == 'object')  {
           map.removeControl(ctlAirportButton);
           ctlAirportButton = undefined;
         }

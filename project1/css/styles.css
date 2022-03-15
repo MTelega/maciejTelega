@@ -73,12 +73,12 @@ table {
     background-color: #ffc107 !important;
 }
 
-.city-button-off {
+.city-button-on {
     background-color: #ef9227 !important;
     color: white !important;
 }
 
-.eq-button-off {
+.eq-button-on {
     background-color: #a23337 !important;
     color: white !important;
 }
@@ -99,17 +99,17 @@ table {
     background-color: #9a2ce8 !important;
 }
 
-.reserve-button-off {
+.reserve-button-on {
     background-color: #006838 !important;
     color: white !important;
 }
 
-.airport-button-off {
+.airport-button-on {
     background-color: #440444 !important;
     color: white !important;
 }
 
-.markersOn {
+.markers-off {
     background-color: #b1b1b1 !important; 
     color: #464646 !important;
 }
