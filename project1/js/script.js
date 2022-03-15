@@ -2,9 +2,9 @@ $( document ).ready(function() {
 
   //map
 const mapOptions = {
-  zoom: 10,
+  zoom: 4,
   zoomControl: false,
-  center: [51.5002, -0.126236]
+  center: [54.5260, 15.2551]
 }
 
 const map = L.map('map', mapOptions);
@@ -22,6 +22,7 @@ zoom.addTo(map);
 
 L.tileLayer.provider('Jawg.Streets', {
     variant: 'jawg-terrain',
+    noWrap: true,
     accessToken: '6oG0Hxo13keGOII2LHv78deYiRkASGVGTynxQ9fiKZRXiHRR6Xo9dWQXy7X1G0T8'
 }).addTo(map);
 
@@ -176,12 +177,17 @@ function getInfo(countryName, alphaCode) {
                     onClick: function() {
                       if (map.hasLayer(earthquakesGroup)){
                         map.removeLayer(earthquakesGroup);
+                        $('#eq-button').addClass('eq-button-off');
+                        $('#eq-button').removeClass('markersOn');
                       } else {
                         map.addLayer(earthquakesGroup);
+                        $('#eq-button').removeClass('eq-button-off');
+                        $('#eq-button').addClass('markersOn');
                       }
                     }
                   }]
                   }).addTo(map);
+                  $('#eq-button').addClass('markersOn');
                 }
               } else {
                 map.removeControl(ctlEqButton);
@@ -258,12 +264,17 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(citiesGroup)){
                   map.removeLayer(citiesGroup);
+                  $('#city-button').removeClass('markersOn');
+                  $('#city-button').addClass('city-button-off');
                 } else {
                   map.addLayer(citiesGroup);
+                  $('#city-button').removeClass('city-button-off');
+                  $('#city-button').addClass('markersOn');
                 }
               }
             }]
             }).addTo(map);
+            $('#city-button').addClass('markersOn');
           }
             }
     },
@@ -303,12 +314,17 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(reserveGroup)){
                   map.removeLayer(reserveGroup);
+                  $('#reserve-button').removeClass('markersOn');
+                  $('#reserve-button').addClass('reserve-button-off');
                 } else {
                   map.addLayer(reserveGroup);
+                  $('#reserve-button').removeClass('reserve-button-off');
+                  $('#reserve-button').addClass('markersOn');
                 }
               }
             }]
             }).addTo(map);
+            $('#reserve-button').addClass('markersOn');
           }
         } else {
           map.removeControl(ctlReserveButton);
@@ -334,7 +350,6 @@ function getInfo(countryName, alphaCode) {
   },
     success: function(result) {
         if (result.status.name == "ok") {
-          console.log(result);
           if (result['data'].length >= 1){
             result['data'].forEach(airport => {
               airportGroup.addLayer(L.marker([airport['lat'], airport['lng']], {icon: airportMarker})
@@ -353,12 +368,17 @@ function getInfo(countryName, alphaCode) {
               onClick: function() {
                 if (map.hasLayer(airportGroup)){
                   map.removeLayer(airportGroup);
+                  $('#airport-button').removeClass('markersOn');
+                  $('#airport-button').addClass('airport-button-off');
                 } else {
                   map.addLayer(airportGroup);
+                  $('#airport-button').removeClass('airport-button-off');
+                  $('#airport-button').addClass('markersOn');
                 }
               }
             }]
             }).addTo(map);
+            $('#airport-button').addClass('markersOn');
           }
         } else {
           map.removeControl(ctlAirportButton);
@@ -412,7 +432,7 @@ function getInfo(countryName, alphaCode) {
   });
   
   // News
-  
+   
   $.ajax({
     url: "php/getNews.php",
     type: 'POST',
@@ -478,7 +498,7 @@ function getInfo(countryName, alphaCode) {
               $('#wind').html(result['data']['wind']['speed']);
               $('#clouds').html(result['data']['clouds']['all']);
               $('#vis').html(result['data']['visibility']);
-              let weatherIconUrl = `http://openweathermap.org/img/wn/${result['data']['weather'][0]['icon']}@2x.png`;
+              let weatherIconUrl = `https://openweathermap.org/img/wn/${result['data']['weather'][0]['icon']}@2x.png`;
               $('#weatherIcon').attr('src', weatherIconUrl);
             }
           },
@@ -532,7 +552,7 @@ function getInfo(countryName, alphaCode) {
                 $(`#day${i}`).html(dayOfTheWeek(result['data'][i]['dt']))
                 $(`#tempDay${i}`).html(Math.round(result['data'][i]['temp']['day'] * 10) / 10);
                 $(`#tempNight${i}`).html(Math.round(result['data'][i]['temp']['night'] * 10) / 10);
-                let weatherIconUrl = `http://openweathermap.org/img/wn/${result['data'][i]['weather'][0]['icon']}.png`;
+                let weatherIconUrl = `https://openweathermap.org/img/wn/${result['data'][i]['weather'][0]['icon']}.png`;
               $(`#weatherIconDay${i}`).attr('src', weatherIconUrl);
               }
             }
@@ -682,7 +702,15 @@ function getInfo(countryName, alphaCode) {
 
 //on start
 
-navigator.geolocation.getCurrentPosition((position) => {
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, geoError);
+  } else { 
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
   $.ajax({
     url: "php/openCage.php",
     type: 'POST',
@@ -703,7 +731,15 @@ navigator.geolocation.getCurrentPosition((position) => {
         console.log(errorThrown, textStatus);
     }
 });
-});
+}
+
+function geoError(error) {
+    if(error) {
+      controlLoader.hide();
+  }
+}
+
+getLocation();
 
 //on select 
 
@@ -735,11 +771,27 @@ $('#select').change(function() {
   
   //bounds and layer remove
 
-  map.removeLayer(layer);
-  citiesGroup.clearLayers();
-  earthquakesGroup.clearLayers();
-  reserveGroup.clearLayers(); 
-  airportGroup.clearLayers();
+  if (map.hasLayer(layer)) {
+   map.removeLayer(layer);
+  }
+
+  if (map.hasLayer(citiesGroup)) {
+    citiesGroup.clearLayers();
+  }
+  
+  if (map.hasLayer(earthquakesGroup)) {
+    earthquakesGroup.clearLayers();
+  }
+  
+  if (map.hasLayer(reserveGroup)) {
+    reserveGroup.clearLayers();
+  }
+
+  if (map.hasLayer(airportGroup)) {
+    airportGroup.clearLayers();
+  }
+  
+  
 
   getInfo(textSelected, valueSelected);
 

@@ -73,12 +73,14 @@ table {
     background-color: #ffc107 !important;
 }
 
-#city-button {
+.city-button-off {
     background-color: #ef9227 !important;
+    color: white !important;
 }
 
-#eq-button {
+.eq-button-off {
     background-color: #a23337 !important;
+    color: white !important;
 }
 
 #info-button {
@@ -97,13 +99,19 @@ table {
     background-color: #9a2ce8 !important;
 }
 
-#reserve-button {
+.reserve-button-off {
     background-color: #006838 !important;
+    color: white !important;
 }
 
-#airport-button {
+.airport-button-off {
     background-color: #440444 !important;
-    color: white;
+    color: white !important;
+}
+
+.markersOn {
+    background-color: #b1b1b1 !important; 
+    color: #464646 !important;
 }
 
 .eqCluster, .cityCluster, .resCluster, .airportCluster{
