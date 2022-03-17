@@ -38,6 +38,7 @@ let ctlAirButton;
 let ctlReserveButton;
 let ctlAirportButton;
 
+
 let citiesGroup = L.markerClusterGroup({
 	iconCreateFunction: function(cluster) {
 		return L.divIcon({ html: '<div class="cityCluster"><span>' + cluster.getChildCount() + '</span></div>' });
@@ -130,39 +131,49 @@ function getInfo(countryName, alphaCode) {
 
   country = encodeURIComponent(countryName);
   countryCode = alphaCode; 
+  
+  // country border
 
   $.ajax({
-    url: "php/getBounds.php",
+    url: "php/getCountryBorder.php",
     type: 'POST',
     dataType: 'json',
     data: {
-        country:   country,
-        countryCode: countryCode
-    },
+      countryCode: countryCode
+  },
     success: function(result) {
         if (result.status.name == "ok") {
-          const northeast = [result['data']['northeast']['lat'], result['data']['northeast']['lng']],
-                southwest = [result['data']['southwest']['lat'], result['data']['southwest']['lng']];
-                map.fitBounds([northeast, southwest]);
-                
+            layer = L.geoJson(result['data'] , {
+              color: 'black',
+              dashArray: '10',
+              fillColor: 'white',
+              fillOpacity: 0.5, 
+          }).addTo(map);
+          map.fitBounds(layer.getBounds());
+          let bounds = layer.getBounds();
 
           //earthquakes
-  
+          
           $.ajax({
             url: "php/getEarthquakes.php",
             type: 'POST',
             dataType: 'json',
             data: {
-              north: result['data']['northeast']['lat'],
-              south: result['data']['southwest']['lat'],
-              east: result['data']['northeast']['lng'],
-              west: result['data']['southwest']['lng']
+              north: bounds._northEast.lat,
+              south: bounds._southWest.lat,
+              east: bounds._northEast.lng,
+              west: bounds._southWest.lng
             },
             success: function(result) {
               if (result.status.name == "ok") {
                 if (result['data'].length >= 1){
                   result['data'].forEach( eq => {
-                    earthquakesGroup.addLayer(L.marker([eq['lat'], eq['lng']], {icon: eqMarker}).bindPopup(`<span class="fw-bold">Earthquake</span> <br> Date: ${eq['datetime']} <br> Magnitude: ${eq['magnitude']} <br> Depth: ${eq['depth']} km <br> Latitude: ${eq['lat']} <br> Longitude: ${eq['lng']}`));
+                    let options = {
+                      year: 'numeric', month: 'long', day: 'numeric',
+                      hour: 'numeric', minute: 'numeric', second: 'numeric',
+                      hour12: true
+                    };
+                    earthquakesGroup.addLayer(L.marker([eq['lat'], eq['lng']], {icon: eqMarker}).bindPopup(`<span class="fw-bold">Earthquake</span> <br> Date: ${new Intl.DateTimeFormat('en-GB', options).format(Date.parse(eq['datetime']))} <br> Magnitude: ${eq['magnitude']} <br> Depth: ${eq['depth']} km <br> Coordinates: <br> ${eq['lat']}, ${eq['lng']}`));
                   });
 
                   map.addLayer(earthquakesGroup);
@@ -199,27 +210,6 @@ function getInfo(countryName, alphaCode) {
               console.log(errorThrown, textStatus);
             }
           }); 
-  
-        }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        // your error code
-        console.log(errorThrown, textStatus);
-    }
-  });
-  
-  // country border
-
-  $.ajax({
-    url: "php/getCountryBorder.php",
-    type: 'POST',
-    dataType: 'json',
-    data: {
-      countryCode: countryCode
-  },
-    success: function(result) {
-        if (result.status.name == "ok") {
-            layer = L.geoJson(result['data']).addTo(map);
             }
     },
     error: function(jqXHR, textStatus, errorThrown) {
@@ -244,11 +234,11 @@ function getInfo(countryName, alphaCode) {
           result['data'].forEach(city => {
             if (city['fcodeName'] === 'capital of a political entity'){
               citiesGroup.addLayer(L.marker([city['lat'], city['lng']], {icon: capCityMarker})
-      .bindPopup(`<span class="fw-bold">${city['name']}</span> <br> Capital of ${city['countryName']} <br> Population: ${city['population']} <br> Latitude: ${city['lat']} <br> Longitude: ${city['lng']}`)
+      .bindPopup(`<span class="fw-bold">${city['name']}</span> <br> Capital of ${city['countryName']} <br> Population: ${new Intl.NumberFormat('en-GB').format(city['population'])} <br> Coordinates: <br> ${city['lat']}, ${city['lng']}`)
       .openPopup());
             } else {
               citiesGroup.addLayer(L.marker([city['lat'], city['lng']], {icon: cityMarker})
-              .bindPopup(`<span class="fw-bold">${city['name']}</span> <br> Population: ${city['population']} <br> Latitude: ${city['lat']} <br> Longitude: ${city['lng']}`));
+              .bindPopup(`<span class="fw-bold">${city['name']}</span> <br> Population: ${new Intl.NumberFormat('en-GB').format(city['population'])} <br>  Coordinates: <br> ${city['lat']}, ${city['lng']}`));
             }          
           })
 
@@ -299,7 +289,7 @@ function getInfo(countryName, alphaCode) {
           if (result['data'].length >= 1){
             result['data'].forEach(reserve => {
               reserveGroup.addLayer(L.marker([reserve['lat'], reserve['lng']], {icon: reserveMarker})
-              .bindPopup(`<span class="fw-bold">${reserve['name']}</span> <br> ${reserve['fcodeName']} <br> Latitude: ${reserve['lat']} <br> Longitude: ${reserve['lng']}`));          
+              .bindPopup(`<span class="fw-bold">${reserve['name']}</span> <br> ${reserve['fcodeName']} <br> Coordinates: <br> ${reserve['lat']}, ${reserve['lng']}`));          
             })
 
             map.addLayer(reserveGroup);
@@ -338,6 +328,8 @@ function getInfo(countryName, alphaCode) {
         console.log(textStatus);      
     }
   });
+
+
   
   // airport markers, layer and easy button
 
@@ -353,7 +345,7 @@ function getInfo(countryName, alphaCode) {
           if (result['data'].length >= 1){
             result['data'].forEach(airport => {
               airportGroup.addLayer(L.marker([airport['lat'], airport['lng']], {icon: airportMarker})
-              .bindPopup(`<span class="fw-bold">${airport['name']}</span> <br> ${airport['fcodeName']} <br> Latitude: ${airport['lat']} <br> Longitude: ${airport['lng']}`));          
+              .bindPopup(`<span class="fw-bold">${airport['name']}</span> <br> ${airport['fcodeName']} <br> Coordinates: <br> ${airport['lat']}, ${airport['lng']}`));          
             })
 
             map.addLayer(airportGroup);
@@ -413,7 +405,7 @@ function getInfo(countryName, alphaCode) {
         $('#official').html(result['data'][0]['name']['official']);
         $('#name, #countryInfoLabel').html(result['data'][0]['name']['common']);
         $('#lang').html(Object.values(result['data'][0]['languages']).join(', '));
-        $('#popul').html(result['data'][0]['population']);
+        $('#popul').html(new Intl.NumberFormat('en-GB').format(result['data'][0]['population']));
           let currenciesString = '';
         Object.keys(result['data'][0]['currencies']).forEach(function(key) {
             currenciesString += result['data'][0]['currencies'][key]['name'] + ' ' + result['data'][0]['currencies'][key]['symbol'] + ', ';
@@ -421,7 +413,7 @@ function getInfo(countryName, alphaCode) {
         $('#curr').html(currenciesString.slice(0, -2));
         $('.capital').html(result['data'][0]['capital']);
         $('#continent').html(result['data'][0]['continents']);
-        $('#area').html(result['data'][0]['area']);
+        $('#area').html(new Intl.NumberFormat('en-GB').format(result['data'][0]['area']));
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -489,15 +481,15 @@ function getInfo(countryName, alphaCode) {
           success: function(result) {
             if (result.status.name == "ok") {
               $('#description').html(result['data']['weather'][0]['description']);
-              $('#temp').html(Math.round(result['data']['main']['temp'] * 10) / 10);
-              $('#minTemp').html(Math.round(result['data']['main']['temp_min'] * 10) / 10);
-              $('#maxTemp').html(Math.round(result['data']['main']['temp_max'] * 10) / 10);
-              $('#feelTemp').html(Math.round(result['data']['main']['feels_like'] * 10) / 10);
+              $('#temp').html(Math.round(result['data']['main']['temp']));
+              $('#minTemp').html(Math.round(result['data']['main']['temp_min']));
+              $('#maxTemp').html(Math.round(result['data']['main']['temp_max']));
+              $('#feelTemp').html(Math.round(result['data']['main']['feels_like']));
               $('#pressure').html(result['data']['main']['pressure']);
               $('#humid').html(result['data']['main']['humidity']);
-              $('#wind').html(result['data']['wind']['speed']);
+              $('#wind').html(Math.round(result['data']['wind']['speed'] * 3.6));
               $('#clouds').html(result['data']['clouds']['all']);
-              $('#vis').html(result['data']['visibility']);
+              $('#vis').html(Math.round(result['data']['visibility'] / 1000));
               let weatherIconUrl = `https://openweathermap.org/img/wn/${result['data']['weather'][0]['icon']}@2x.png`;
               $('#weatherIcon').attr('src', weatherIconUrl);
             }
@@ -520,38 +512,10 @@ function getInfo(countryName, alphaCode) {
           },
           success: function(result) {
             if (result.status.name == "ok") {
-              function dayOfTheWeek (timestamp) {
-                let date = new Date(timestamp * 1000);
-                let stringDate = date.toDateString();
-                let day = stringDate.slice(0, 3);
-                switch (day) {
-                  case 'Mon':
-                    return 'Monday';
-                    break;
-                  case 'Tue':
-                    return 'Tuesday';
-                    break;
-                  case 'Wed':
-                    return 'Wednesday';
-                    break;
-                  case 'Thu':
-                    return 'Thursday';
-                    break;
-                  case 'Fri':
-                    return 'Friday';
-                    break;
-                  case 'Sat':
-                    return 'Saturday';
-                    break;
-                  case 'Sun':
-                    return 'Sunday';
-                    break;
-                }
-              }
               for(let i = 1; i < 6; i++) {
-                $(`#day${i}`).html(dayOfTheWeek(result['data'][i]['dt']))
-                $(`#tempDay${i}`).html(Math.round(result['data'][i]['temp']['day'] * 10) / 10);
-                $(`#tempNight${i}`).html(Math.round(result['data'][i]['temp']['night'] * 10) / 10);
+                $(`#day${i}`).html(new Intl.DateTimeFormat('en-EN', {weekday: 'long'}).format(result['data'][i]['dt'] * 1000));
+                $(`#tempDay${i}`).html(Math.round(result['data'][i]['temp']['day']));
+                $(`#tempNight${i}`).html(Math.round(result['data'][i]['temp']['night']));
                 let weatherIconUrl = `https://openweathermap.org/img/wn/${result['data'][i]['weather'][0]['icon']}.png`;
               $(`#weatherIconDay${i}`).attr('src', weatherIconUrl);
               }
@@ -645,7 +609,7 @@ function getInfo(countryName, alphaCode) {
         states: [{
         stateName: 'show-geographic-modal',
         icon: '<i class="fa-solid fa-info fa-xl"></i>',
-        title: 'show modal',
+        title: 'show info modal',
         onClick: function() {
           $('#infoModal').modal('show');
         }
@@ -659,7 +623,7 @@ function getInfo(countryName, alphaCode) {
         states: [{
         stateName: 'show-weather-modal',
         icon: '<i class="fa-solid fa-cloud-sun-rain fa-xl"></i>',
-        title: 'show modal',
+        title: 'show weather modal',
         onClick: function() {
           $('#weatherModal').modal('show');
         }
@@ -673,7 +637,7 @@ function getInfo(countryName, alphaCode) {
         states: [{
         stateName: 'show-wiki-modal',
         icon: '<i class="fa-solid fa-smog fa-xl"></i>',
-        title: 'show modal',
+        title: 'show air pollution modal',
         onClick: function() {
           $('#aqModal').modal('show');
         }
@@ -687,7 +651,7 @@ function getInfo(countryName, alphaCode) {
         states: [{
         stateName: 'show-news-modal',
         icon: '<i class="fa-solid fa-newspaper fa-xl"></i>',
-        title: 'show modal',
+        title: 'show news modal',
         onClick: function() {
           $('#newsModal').modal('show');
         }
