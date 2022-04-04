@@ -1,0 +1,49 @@
+body {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(86,86,255,0.8) 0%, rgba(0,212,255,1) 100%);
+}
+
+.btn-custom {
+    height: 100px;
+    width: 100px;
+}
+
+.buttons {
+    width: 100px !important;
+    max-height: 38px !important;
+}
+
+.modal-content {
+    background-color: #fffff5;
+} 
+
+i {
+    --fa-animation-iteration-count: 1;
+}
+
+.table-success {
+    --bs-table-bg: #aed1c2 !important;
+    --bs-table-striped-bg: #52ca94 !important;
+    --bs-table-hover-bg: #205ffd !important;
+    --bs-table-hover-color: #fff !important;
+    --bs-table-active-bg: #205ffd !important;
+    --bs-table-active-color: #fff !important;
+  }
+
+.c-head-colour, .table-head-colour {
+    background-color: #009879 !important;
+}
+
+.c-body-colour, #locationTableBody tr:nth-child(even), #departmentTableBody tr:nth-child(even), #personnelTableBody tr:nth-child(even){
+    background-color: rgb(224, 248, 255) !important;
+}
+
+#locationTableBody tr:nth-child(odd), #departmentTableBody tr:nth-child(odd),  #personnelTableBody tr:nth-child(odd) {
+    background-color: white !important;
+}
+
+@media (max-width: 543px) { 
+    #personnelTableBody td {
+        height: 60px !important;
+    }
+}
