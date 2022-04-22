@@ -4,343 +4,474 @@
     <head>
         <meta charset="UTF-8">
         <title>Company Directory</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
         <meta name="author" content="Maciej Telega">
         <meta name="description" content="">
 
         <link rel="shortcut icon" href="css/images/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="vendors/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="vendors/fontawesome-free/css/fontawesome.min.css">
-        <link rel="stylesheet" href="vendors/bootstrap/bootstrap-table/dist/bootstrap-table.min.css">
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <div class="container-fluid sticky-top border-bottom rounded-bottom border-dark bg-success bg-gradient">
+        <div class="container-fluid border-bottom rounded-bottom border-dark bg-success bg-gradient">
             <div class="navbar-header text-center text-white p-1">
-                <h3>Company Directory<span id="barSpan"> - Personnel</span></h3>
+                <h3>Company Directory<span id="barSpan" class="d-none d-md-inline"> - Personnel</span></h3>
             </div>
         </div>
         <div class="container-fluid">
+                    <!--BIG BUTTONS-->
 
-
-            <!--BIG BUTTONS-->
-
-            <div class="row py-3">
-                <div class="col-4 col-md-5 d-flex justify-content-end">
-                    <button type="button" id="personnelButton" class="btn btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-user fa-4x"></i></button>
-                </div>
-                <div class="col-4 col-md-2 d-flex justify-content-evenly">
-                    <button type="button" id="departmentButton" class="btn btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-sitemap fa-4x"></i></button>
-                </div>
-                <div class="col-4 col-md-5 d-flex justify-content-start">
-                    <button type="button" id="locationButton" class="btn btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-location-pin fa-4x"></i></button>
-                </div>
+          <div class="row py-2 d-none d-md-flex">
+            <div class="col-4 col-md-5 d-flex justify-content-end">
+                <button type="button" class="btn personnelButton btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-user fa-2xl"></i></button>
             </div>
-
-            <!--PRESONEL-->
-
-            <div class="row d-flex justify-content-center m-1" id="personnel">
-                    <div class="col-12 col-lg-8 col-xl-7 d-flex my-3">
-                    <div class="col-6 col-md-5 col-xl-4">
-                        <form class="d-flex  justify-content-start">
-                            <input class="form-control me-2" id="personnelInputSearch" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                    </div>
-                    <div class="col-6 col-md-7 col-xl-8 d-flex justify-content-end">
-                        <button type="button" id="addEmplModalButton" class="btn btn-success border border-dark rounded-3 me-2" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus fa-beat"></i></button>
-                        <div class="dropdown">
-                            <button class="btn btn-success border border-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                              Sort By
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                              <li><a class="dropdown-item" id="sortID">ID <i class="fa-solid fa-arrow-down-1-9"></i></a></li>
-                              <li><a class="dropdown-item" id="sortFirstName">First name <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                              <li><a class="dropdown-item" id="sortLastName">Last name <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                              <li><a class="dropdown-item" id="sortDepartment">Department <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                              <li><a class="dropdown-item d-none d-md-block" id="sortLocation">Location <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-xl-9">
-                  <table class="table table-hover rounded-3 shadow text-center align-middle table-sm">
-                    <thead class="table-head-colour">
-                      <tr>
-                        <th scope="col">id </th>
-                        <th scope="col">Full name</th>
-                        <th scope="col">Department</th>
-                        <th scope="col" class="d-none d-md-table-cell">Location</th>
-                        <th scope="col" class="d-none d-xl-table-cell">Email</th>
-                        <th scope="col">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="personnelTableBody">
-                    </tbody>
-                  </table>
-                  <nav id="pageButtons" aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-
-                    </ul>
-                  </nav>
-                </div>
-                
-                </div>
-
-               
-            <!--DEPARTMENT-->
-
-            <div class="row d-flex justify-content-evenly d-none" id="department">
-                <div class="col-12 col-md-9 col-lg-8 col-xl-7">
-                    <div class="col-12 d-flex justify-content-end my-3">
-                        <button type="button" id="addDepartmentModalButton" class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                    <div class="col-12">
-                        <table class="table table-hover rounded-3 shadow text-center">
-                            <thead class="table-head-colour">
-                              <tr>
-                                <th scope="col">#ID</th>
-                                <th scope="col">Department</th>
-                                <th class="d-none d-md-table-cell" scope="col">Location</th>
-                                <th scope="col">Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody id="departmentTableBody">
-                            </tbody>
-                          </table>
-                    </div>
-                </div>
+            <div class="col-4 col-md-2 d-flex justify-content-evenly">
+                <button type="button" class="btn departmentButton btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-sitemap fa-2xl"></i></button>
             </div>
-
-            <!--LOCATION-->
-
-            <div class="row d-flex justify-content-evenly d-none" id="location">
-                <div class="col-12 col-md-7 col-lg-6 col-xl-4">
-                    <div class="col-12 d-flex justify-content-end my-3">
-                        <button type="button" id="addLocationModalButton" class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createLocationModal"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                
-                    <div class="col-12">
-                        <table class="table table-hover rounded-3 shadow text-center">
-                            <thead class="table-head-colour">
-                              <tr>
-                                <th scope="col">#ID</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody id="locationTableBody">
-                            </tbody>
-                          </table>
-                    </div>
-                </div>
+            <div class="col-4 col-md-5 d-flex justify-content-start">
+                <button type="button" class="btn locationButton btn-custom btn-success border border-dark rounded-3 shadow"><i class="fas fa-location-pin fa-2xl"></i></button>
             </div>
+        </div>
 
+        <!--PRESONEL-->
 
-            <!--ADD EMPLOYEE MODAL-->
-
-            <div class="modal" id="createEmployeeModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                      <h5 class="modal-title">Add Personel</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addPersonelForm">
-                            <label for="addEmplFirstName" class="form-label my-1"><i class="fas fa-user"></i> First name</label>
-                            <input type="text" class="form-control" id="addEmplFirstName">
-
-                            <label for="addEmplLastName" class="form-label my-1"><i class="fas fa-user"></i> Last name</label>
-                            <input type="text" class="form-control" id="addEmplLastName">
-
-                            <label for="addEmplJobTitle" class="form-label my-1"><i class="fas fa-briefcase"></i> Job Title</label>
-                            <input type="text" class="form-control" id="addEmplJobTitle">
-
-                            <label for="addEmplDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
-                            <select id="addEmplDepartment" class="form-select">
-                            </select>
-
-                            <label for="addEmplEmail" class="form-label my-1"><i class="fas fa-at"></i> Email</label>
-                            <input type="email" class="form-control" id="addEmplEmail">
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="button" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-plus"></i> Add</button>
-                        <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                    </div>
-                  </div>
-                </div>
+          <div class="row d-flex justify-content-center m-1 personnel">
+            <div class="col-12 col-lg-9 d-flex my-3">
+            <div class="col-12 col-md-4 d-flex justify-content-center">
+                <form class="w-100">
+                    <input class="form-control me-2" id="personnelInputSearch" type="search" placeholder="Search" aria-label="Search">
+                </form>
+                <div class="dropdown">
+                  <button class="btn border border-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-filter"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" id="sortFirstName">First name <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                    <li><a class="dropdown-item" id="sortLastName">Last name <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                    <li></li>
+                    <li><a class="dropdown-item" id="sortLocation">Location <i class="fa-solid fa-arrow-down-a-z"></i></a></li>
+                  </ul>
               </div>
+            </div>
+            <div class="col-md-8 d-flex justify-content-end ms-2">
+              <button type="button" class="btn btn-success border border-dark addEmplModalButton rounded-3 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center m-1 personnel">
+        <div class="col-12 col-lg-9 d-flex">
+          <div id="personnelContent" class="col-12 col-md-4 rounded-3 shadow bg-light">
+            <div class="align-middle text-center p-1">
+              <h4>Personnel</h4> 
+            </div>
+            <div id="tableWrapper" class="w-100 d-inline-block">
+              <table id="personnelTable" class="table table-hover align-middle">
+                <tbody id="personnelTableBody" class="overflow-hidden">
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-center align-middle">
+              <nav id="pageButtons" aria-label="Page navigation">
+                <ul class="pagination justify-content-center m-0">
+                </ul>
+              </nav>
+            </div>
+            <button type="button" id="addEmplSm" class="btn btn-success d-md-none position-absolute border border-dark addEmplModalButton rounded-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        <div id="personnelInfo" class="d-none d-md-block col-md-8 ms-2 rounded-3 shadow bg-white">
+          <div class="align-middle text-center p-1 bg-light rounded-3">
+            <h4>Info</h4> 
+          </div>
+          <div class="d-inline align-top">
+            <img id="personalDataImage" src="css/images/personalData.png" alt="personal data image">
+          </div>
+          <div class="d-inline-block p-2 fw-bold">
+            <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-user"></i> Full name:</small></p>
+            <p class="fullName mb-0 ms-3"></p>
+            <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-sitemap"></i> Department:</small></p>
+            <p class="depart mb-0 ms-3"></p>
+            <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-location-pin"></i> Location:</small></p>
+            <p class="loc mb-0 ms-3"></p>
+            <p class="fs-6 jTitleP d-none text-decoration-underline text-muted m-0"><small><i class="fas fa-briefcase"></i> Job title:</small></p>
+            <p class="jobT jTitleP d-none mb-0 ms-3"></p>
+            <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-at"></i> Email:</small></p>
+            <p class="mail mb-0 ms-3"></p>
+          </div>
+          <div class="border-bottom"></div>
+          <div class="d-flex justify-content-evenly mt-4">
+            <button type="button" class="btn btn-primary border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal"><i class="fas fa-pen-to-square"></i> Update</button>
+            <button type="button" class="btn btn-danger border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"><i class="fas fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!--UPDATE PERSONEL MODAL-->
+    <div class="modal d-md-none" tabindex="-1" id="personnelInfoModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center mx-auto">Info</h5>
+            <button type="button" class="btn-close mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-inline align-top">
+              <img id="personalDataImageTwo" src="css/images/personalData.png" alt="personal data image">
+            </div>
+            <div class="d-inline-block fw-bold">
+              <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-user"></i> Full name:</small></p>
+              <p class="fullName mb-0 ms-3"></p>
+              <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-sitemap"></i> Department:</small></p>
+              <p class="depart mb-0 ms-3"></p>
+              <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-location-pin"></i> Location:</small></p>
+              <p class="loc mb-0 ms-3"></p>
+              <p class="fs-6 jTitleP d-none text-decoration-underline text-muted m-0"><small><i class="fas fa-briefcase"></i> Job title:</small></p>
+              <p class="jobT jTitleP d-none mb-0 ms-3"></p>
+              <p class="fs-6 text-decoration-underline text-muted m-0"><small><i class="fas fa-at"></i> Email:</small></p>
+              <p class="mail mb-0 ms-3"></p>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-evenly">
+            <button type="button" class="btn btn-primary border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal"><i class="fas fa-pen-to-square"></i> Update</button>
+            <button type="button" class="btn btn-danger border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"><i class="fas fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="modal" id="updateEmployeeModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                      <h5 class="modal-title">Update Personel</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="updatePersonbelForm">
-                            <label for="updatePersonelFirstName" class="form-label my-1"><i class="fas fa-user"></i> First name</label>
-                            <input type="text" class="form-control" id="updatePersonelFirstName">
-
-                            <label for="updatePersonelLastName" class="form-label my-1"><i class="fas fa-user"></i> Last name</label>
-                            <input type="text" class="form-control" id="updatePersonelLastName">
-
-                            <label for="updatePersonelJobTitle" class="form-label my-1"><i class="fas fa-briefcase"></i> Job Title</label>
-                            <input type="text" class="form-control" id="updatePersonelJobTitle">
-
-                            <label for="updatePersonelDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
-                            <select id="updatePersonelDepartment" class="form-select">
-                            </select>
-
-                            <label for="updatePersonelEmail" class="form-label my-1"><i class="fas fa-at"></i> Email</label>
-                            <input type="email" class="form-control" id="updatePersonelEmail">
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="button" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-pen-to-square"></i> Update</button>
-                        <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <!--DELETE MODAL
-
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content  border border-dark rounded-3">
-                    <div class="modal-header">
-                      <h5 class="modal-title text-center" id="deleteModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
-                    </div>
-                    <div class="modal-body text-center fw-bold">
-                      <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="submit" form="updateForm" id="deleteButton"  class="btn btn-success border border-dark rounded-3">Delete</button>
-                        <button type="button" class="btn btn-danger border border-dark rounded-3" data-bs-dismiss="modal">No (close)</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                            -->
-
-             <!--ADD DEPARTMENT MODAL-->
-
-              <div class="modal" id="createDepartmentModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                      <h5 class="modal-title">Add Department</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addDepartmentForm">
-                            <label for="addDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
-                            <input type="text" class="form-control" id="addDepartment">
-
-                            <label for="addDepartmentLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
-                            <select id="addDepartmentLocation" class="form-select">
-                            </select>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="submit" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-plus"></i> Add</button>
-                        <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              
-             <!--UPDATE DEPARTMENT MODAL-->
-
-             <div class="modal" id="updateDepartmentModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                      <h5 class="modal-title">Add Department</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="updateDepartmentForm">
-                            <label for="updateDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
-                            <input type="text" class="form-control" id="updateDepartment">
-
-                            <label for="updateDepartmentLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
-                            <select id=" " class="form-select">
-                            </select>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="submit" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-pen-to-square"></i> Update</button>
-                        <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              
-              <!-- ADD LOCATION MODAL-->
-              <div class="modal" id="createLocationModal" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header d-flex justify-content-center">
-                      <h5 class="modal-title">Add Location</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addLocationForm">
-                            <label for="addLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
-                            <input type="text" class="form-control" name="addLocation" id="addLocation" required>
-                        </form>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-evenly">
-                        <button type="submit" id="addLocationB" class="btn btn-success border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#submissionModal"><i class="fas fa-plus"></i> Add</button>
-                        <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <!-- UPDATE LOCATION MODAL-->
+    <div class="row d-md-none mt-3 fixed-bottom mb-4">
+      <div class="col-4 col-md-5 d-flex justify-content-end">
+        <button type="button" id="refreshBtn" class="btn btn-customTwo btn-success border border-dark rounded-3 shadow"><i class="fas fa-arrows-rotate fa-xl"></i></button>
+      </div>
+      <div class="col-4 col-md-5 d-flex justify-content-center">
+        <button type="button" class="btn btn-customTwo btn-success border border-dark rounded-3 shadow" data-bs-toggle="modal" data-bs-target="#departmentsModal"><i class="fas fa-sitemap fa-xl"></i></button>
+      </div>
+      <div class="col-4 col-md-5 d-flex justify-content-start">
+        <button type="button" class="btn btn-customTwo btn-success border border-dark rounded-3 shadow"><i class="fas fa-location-pin fa-xl"></i></button>
+      </div>
+  </div>
         
-                <div class="modal" id="updateLocationModal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header d-flex justify-content-center">
-                              <h5 class="modal-title">Update Location</h5>
-                            </div>
-                            <div class="modal-body">
-                                <form id="updateLocationForm">
-                                    <label for="updateLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
-                                    <input type="text" class="form-control" id="updateLocation">
-                                </form>
-                            </div>
-                            <div class="modal-footer d-flex justify-content-evenly">
-                                <button type="button" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-pen-to-square"></i> Update</button>
-                                <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-                            </div>
-                        </div>
-                    </div>
+          <!--ADD EMPLOYEE MODAL-->
+
+          <div class="modal" id="createEmployeeModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                  <h5 class="modal-title">Add Personel</h5>
                 </div>
+                <div class="modal-body">
+                    <form id="addPersonnelForm">
+                        <label for="addEmplFirstName" class="form-label my-1"><i class="fas fa-user"></i> First name</label>
+                        <input type="text" class="form-control" id="addEmplFirstName" name="addEmplFirstName">
 
-                <!--SUBMISSION MODAL-->
+                        <label for="addEmplLastName" class="form-label my-1"><i class="fas fa-user"></i> Last name</label>
+                        <input type="text" class="form-control" id="addEmplLastName" name="addEmplLastName">
 
-                <div class="modal" id="submissionModal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog  modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-body text-center">
-                          <p id="confirmationMSG" class="fw-bold"></p>
+                        <label for="addEmplJobTitle" class="form-label my-1"><i class="fas fa-briefcase"></i> Job Title</label>
+                        <input type="text" class="form-control" id="addEmplJobTitle" name="addEmplJobTitle">
+
+                        <label for="addEmplDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department - <i class="fas fa-location-pin"></i> Location</label>
+                        <select id="addEmplDepartment" class="form-select" name="addEmplDepartment">
+                        </select>
+
+                        <label for="addEmplEmail" class="form-label my-1"><i class="fas fa-at"></i> Email</label>
+                        <input type="email" class="form-control" id="addEmplEmail" name="addEmplEmail">
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="button" class="btn btn-success border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#confirmAddPersonnelModal"><i class="fas fa-plus"></i> Add</button>
+                    <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!--UPDATE PERSONEL MODAL-->
+
+        <div class="modal" id="updateEmployeeModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                  <h5 class="modal-title">Update Personel</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="updatePersonnelForm">
+                        <label for="updatePersonnelFirstName" class="form-label my-1"><i class="fas fa-user"></i> First name</label>
+                        <input type="text" class="form-control" id="updatePersonnelFirstName">
+
+                        <label for="updatePersonnelLastName" class="form-label my-1"><i class="fas fa-user"></i> Last name</label>
+                        <input type="text" class="form-control" id="updatePersonnelLastName">
+
+                        <label for="updatePersonnelJobTitle" class="form-label my-1"><i class="fas fa-briefcase"></i> Job Title</label>
+                        <input type="text" class="form-control" id="updatePersonnelJobTitle">
+
+                        <label for="updatePersonnelDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
+                        <select id="updatePersonnelDepartment" class="form-select">
+                        </select>
+
+                        <label for="updatePersonnelEmail" class="form-label my-1"><i class="fas fa-at"></i> Email</label>
+                        <input type="email" class="form-control" id="updatePersonnelEmail">
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="button" class="btn btn-success border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#confirmUpdatePersonnelModal"><i class="fas fa-pen-to-square"></i> Update</button>
+                    <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!--DELETE EMPLOYEE MODAL  -->
+
+        <div class="modal fade" id="deletePersonnelModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content  border border-dark rounded-3">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="deleteModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
+                </div>
+                <div class="modal-body text-center fw-bold">
+                  <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="button" id="deletePersonnelButton"  class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''>YES</button>
+                    <button type="button" class="btn btn-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--ADD PERSONNEL CONFIRMATION-->
+
+          <div class="modal fade" id="confirmAddPersonnelModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content  border border-dark rounded-3">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="deleteModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
+                </div>
+                <div class="modal-body text-center fw-bold">
+                  <p>Are you sure you wish to add a new personnel record?</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="button" id="addPersonnelButton"  class="btn btn-success border border-dark rounded-3">YES</button>
+                    <button type="button" class="btn btn-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--UPDATE PERSONNEL CONFIRMATION-->
+
+          <div class="modal fade" id="confirmUpdatePersonnelModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content  border border-dark rounded-3">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="deleteModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
+                </div>
+                <div class="modal-body text-center fw-bold">
+                  <p>Are you sure you wish to update this record?</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="button" id="updatePersonnelButton"  class="btn btn-success border border-dark rounded-3">YES</button>
+                    <button type="button" class="btn btn-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
+                </div>
+              </div>
+            </div>
+          </div>
+                     
+    
+        <!--DEPARTMENT-->
+
+        <div class="row d-none d-md-flex justify-content-evenly d-md-none m-0" id="department">
+            <div class="col-12 col-md-9 col-lg-8 col-xl-7">
+                <div class="col-12 d-flex justify-content-end my-3">
+                    <button type="button" class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="col-12 rounded-3 shadow bg-light d-inline-block p-0">
+                  <div class="align-middle text-center p-1">
+                    <h4>Department</h4> 
+                  </div>
+                  <table class="table table-hover table-small text-center">
+                      <tbody class="departmentTableBody align-middle">
+                      </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="departmentsModal" class="modal d-md-none" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-center mx-auto">Department</h5>
+                <button type="button" class="btn-close mx-0" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-hover text-center">
+                  <tbody class="departmentTableBody align-middle">
+                  </tbody>
+              </table>
+              </div>
+              <div class="modal-footer d-flex justify-content-end">
+                <button type="button" class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--UPDATE DEPARTMENT MODAL-->
+
+        <div class="modal" id="updateDepartmentModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header d-flex justify-content-center">
+                <h5 class="modal-title">Add Department</h5>
+              </div>
+              <div class="modal-body">
+                  <form id="updateDepartmentForm">
+                      <label for="updateDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
+                      <input type="text" class="form-control" id="updateDepartment">
+
+                      <label for="updateDepartmentLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
+                      <select id="updateDepartmentLocation" class="form-select">
+                      </select>
+                  </form>
+              </div>
+              <div class="modal-footer d-flex justify-content-evenly">
+                  <button type="submit" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-pen-to-square"></i> Update</button>
+                  <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content  border border-dark rounded-3">
+              <div class="modal-header">
+                <h5 class="modal-title text-center" id="deleteModalLabel"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
+              </div>
+              <div class="modal-body text-center fw-bold">
+                <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
+              </div>
+              <div class="modal-footer d-flex justify-content-evenly">
+                  <button type="button" id="deleteDepartmentButton"  class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''>YES</button>
+                  <button type="button" class="btn btn-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--LOCATION-->
+
+        <div class="row d-none d-md-flex justify-content-evenly d-md-none m-0" id="location">
+            <div class="col-12 col-md-7 col-lg-6 col-xl-4">
+                <div class="col-12 d-flex justify-content-end my-3">
+                    <button type="button"  class="btn btn-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createLocationModal"><i class="fa-solid fa-plus"></i></button>
+                </div>
+            
+                <div class="col-12 rounded-3 shadow bg-light d-inline-block p-0">
+                  <div class="align-middle text-center p-1">
+                    <h4>Location</h4> 
+                  </div>
+                    <table class="table table-hover text-center">
+                        <tbody id="locationTableBody">
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+
+   
+
+          <!--ADD DEPARTMENT MODAL-->
+
+          <div class="modal" id="createDepartmentModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                  <h5 class="modal-title">Add Department</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addDepartmentForm">
+                        <label for="addDepartment" class="form-label my-1"><i class="fas fa-sitemap"></i> Department</label>
+                        <input type="text" class="form-control" id="addDepartment">
+
+                        <label for="addDepartmentLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
+                        <select id="addDepartmentLocation" class="form-select">
+                        </select>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="submit" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-plus"></i> Add</button>
+                    <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+
+
+          
+          <!-- ADD LOCATION MODAL-->
+          <div class="modal" id="createLocationModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                  <h5 class="modal-title">Add Location</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addLocationForm">
+                        <label for="addLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
+                        <input type="text" class="form-control" name="addLocation" id="addLocation" required>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <button type="submit" id="addLocationB" class="btn btn-success border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#submissionModal"><i class="fas fa-plus"></i> Add</button>
+                    <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- UPDATE LOCATION MODAL-->
+    
+            <div class="modal" id="updateLocationModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-center">
+                          <h5 class="modal-title">Update Location</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateLocationForm">
+                                <label for="updateLocation" class="form-label my-1"><i class="fas fa-location-pin"></i> Location</label>
+                                <input type="text" class="form-control" id="updateLocation">
+                            </form>
                         </div>
                         <div class="modal-footer d-flex justify-content-evenly">
-                            <button type="submit" form="" id="subButton" class="btn buttons btn-success">YES</button>
-                            <button type="button" class="btn buttons btn-danger" data-bs-dismiss="modal" aria-label="Close">NO</button>
+                            <button type="button" class="btn btn-success border border-dark rounded-3 buttons"><i class="fas fa-pen-to-square"></i> Update</button>
+                            <button type="button" class="btn btn-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
                         </div>
-                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--LAST MESSAGE MODAL-->
+
+            <div class="modal" id="lastModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body text-center">
+                      <p id="confirmationMSG" class="fw-bold"></p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" class="btn buttons btn-success" data-bs-dismiss="modal" aria-label="Close">OK</button>
                     </div>
                   </div>
-
-                
+                </div>
+              </div>
         </div>
+  
 
         <script src="vendors/jquery/dist/jquery.min.js"></script>
         <script src="vendors/jquery/dist/"></script>

@@ -1,16 +1,12 @@
-<?php
-
-	// example use from browser
-	// use insertDepartment.php first to create new dummy record and then specify it's id in the command below
-	// http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
-
-	// remove next two lines for production
+<?php 
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
-
+	
+	// this includes the login details
+	
 	include("config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
@@ -32,13 +28,15 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM department';
+    $countBefore = 'SELECT COUNT(*) FROM personnel';
 
 	$countResultOne = $conn->query($countBefore);
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ? AND NOT EXISTS (SELECT * FROM personnel WHERE departmentID = ?)');
-	
-	$query->bind_param("ii", $_POST['id'], $_POST['id']);
+	$countOne = mysqli_fetch_assoc($countResultOne);
+
+	$query = $conn->prepare('INSERT INTO personnel (firstName, lastName, jobTitle, email, departmentID) VALUES(?,?,?,?,?)');
+
+	$query->bind_param('ssssi', $_POST['firstName'], $_POST['lastName'], $_POST['jobTitle'], $_POST['email'], $_POST['departmentID']);
 
 	$query->execute();
 	
@@ -55,22 +53,21 @@
 
 		exit;
 
-	} 
+	}
 
-	$countAfter = 'SELECT COUNT(*) FROM department';
+    
+    $countAfter = 'SELECT COUNT(*) FROM personnel';
 
 	$countResultTwo = $conn->query($countAfter);
 
-	$countOne = mysqli_fetch_assoc($countResultOne);
+    $countTwo = mysqli_fetch_assoc($countResultTwo);
 
-	$countTwo = mysqli_fetch_assoc($countResultTwo);
-
-	if ($countOne['COUNT(*)'] === $countTwo['COUNT(*)']) {
+	if ($countOne['COUNT(*)'] < $countTwo['COUNT(*)']) {
 		$output['status']['code'] = "200";
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = ['The record cannot be deleted because it is associated with another record.'];
+		$output['data'] = ['A new record has been added.'];
 		
 		mysqli_close($conn);
 	
@@ -82,13 +79,11 @@
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = ['Record has been deleted.'];
+		$output['data'] = ['Something went wrong!'];
 		
 		mysqli_close($conn);
 	
 		echo json_encode($output); 
 	}
-
-
 
 ?>

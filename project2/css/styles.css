@@ -1,11 +1,16 @@
-body {
+body, html {
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(86,86,255,0.8) 0%, rgba(0,212,255,1) 100%);
+    height: 100% !important;
 }
 
 .btn-custom {
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
+}
+.btn-customTwo {
+    height: 50px;
+    width: 50px;
 }
 
 .buttons {
@@ -34,16 +39,78 @@ i {
     background-color: #009879 !important;
 }
 
-.c-body-colour, #locationTableBody tr:nth-child(even), #departmentTableBody tr:nth-child(even), #personnelTableBody tr:nth-child(even){
+.c-body-colour, #locationTableBody tr:nth-child(even), .departmentTableBody tr:nth-child(even), #personnelTableBody tr:nth-child(even){
     background-color: rgb(224, 248, 255) !important;
 }
 
-#locationTableBody tr:nth-child(odd), #departmentTableBody tr:nth-child(odd),  #personnelTableBody tr:nth-child(odd) {
+#locationTableBody tr:nth-child(odd), .departmentTableBody tr:nth-child(odd),  #personnelTableBody tr:nth-child(odd) {
     background-color: white !important;
 }
 
-@media (max-width: 543px) { 
-    #personnelTableBody td {
-        height: 60px !important;
+#personnelInfo {
+    height: 75vh !important;
+}
+
+#personnelInfoHead {
+    background-color: #009879 !important;
+}
+.circleDiv {
+    height: 40px !important;
+    width: 40px !important;
+}
+
+#personnelInputSearch {
+    border-radius: 50px 0px 0px 50px !important;
+}
+
+#dropdownMenuButton1 {
+    border-radius: 0px 50px 50px 0px !important;
+    background-color: azure !important;
+}
+
+#tableWrapper {
+    height: calc(100% - 90px) !important;
+    overflow-y: scroll !important;
+  }
+
+#personnelContent{
+    height: 75vh !important;
+}
+
+.circleDiv{
+    border-radius: 50% !important;
+    height: 35px !important;
+    width: auto !important;
+    font-size: smaller !important;
+    }
+
+@media (max-width: 766px) { 
+    #department, #location {
+        margin: 0 !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        -ms-transform: translateY(-50%) !important;
+        transform: translateY(-50%) !important;
     }
 }
+
+#addEmplSm {
+    right: 60px;
+    bottom: 22vh;
+}
+
+
+
+#personalDataImage {
+    width: 35%;
+    height: auto;
+}
+#personalDataImageTwo {
+    width: 30%;
+    height: auto;
+}
+
+.personnelRowClick { 
+    cursor: pointer; 
+} 

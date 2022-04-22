@@ -32,11 +32,11 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM department';
+	$countBefore = 'SELECT COUNT(*) FROM location';
 
 	$countResultOne = $conn->query($countBefore);
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ? AND NOT EXISTS (SELECT * FROM personnel WHERE departmentID = ?)');
+	$query = $conn->prepare('DELETE FROM location WHERE id = ? AND NOT EXISTS (SELECT * FROM department WHERE locationID = ?)');
 	
 	$query->bind_param("ii", $_POST['id'], $_POST['id']);
 
@@ -57,7 +57,7 @@
 
 	} 
 
-	$countAfter = 'SELECT COUNT(*) FROM department';
+	$countAfter = 'SELECT COUNT(*) FROM location';
 
 	$countResultTwo = $conn->query($countAfter);
 

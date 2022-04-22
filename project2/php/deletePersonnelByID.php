@@ -1,10 +1,4 @@
 <?php
-
-	// example use from browser
-	// use insertDepartment.php first to create new dummy record and then specify it's id in the command below
-	// http://localhost/companydirectory/libs/php/deleteDepartmentByID.php?id=<id>
-
-	// remove next two lines for production
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -32,13 +26,13 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM department';
+	$countBefore = 'SELECT COUNT(*) FROM personnel';
 
 	$countResultOne = $conn->query($countBefore);
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ? AND NOT EXISTS (SELECT * FROM personnel WHERE departmentID = ?)');
+	$query = $conn->prepare('DELETE FROM personnel WHERE id = ?');
 	
-	$query->bind_param("ii", $_POST['id'], $_POST['id']);
+	$query->bind_param("i", $_POST['id']);
 
 	$query->execute();
 	
@@ -57,7 +51,7 @@
 
 	} 
 
-	$countAfter = 'SELECT COUNT(*) FROM department';
+	$countAfter = 'SELECT COUNT(*) FROM personnel';
 
 	$countResultTwo = $conn->query($countAfter);
 
@@ -70,7 +64,7 @@
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = ['The record cannot be deleted because it is associated with another record.'];
+		$output['data'] = ['Something went wrong!'];
 		
 		mysqli_close($conn);
 	
