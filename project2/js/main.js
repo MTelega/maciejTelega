@@ -44,7 +44,7 @@ $( document ).ready(function() {
 
             let personnelRow =
             `<tr class="personnelRowClick" href=${employee.id}>
-                <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
             </tr>`;
             array.push(personnelRow);
         });
@@ -253,7 +253,7 @@ function locationGetAll() {
                         let firstLetterLName = employee.lastName.charAt(0);
                         let personnelRow =
                         `<tr class="personnelRowClick" href=${employee.id}>
-                        <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                        <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
                         </tr>`;
                         
                         $('#personnelTableBody').append(personnelRow);
@@ -329,7 +329,7 @@ function locationGetAll() {
                             let firstLetterLName = employee.lastName.charAt(0);
                             let personnelRow =
                             `<tr class="personnelRowClick" href=${employee.id}>
-                            <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                            <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
                             </tr>`;
                             
                             $('#personnelTableBody').append(personnelRow);
@@ -386,7 +386,7 @@ function locationGetAll() {
                                 let firstLetterLName = employee.lastName.charAt(0);
                                 let personnelRow =
                                 `<tr class="personnelRowClick" href=${employee.id}>
-                                <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                                <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
                                 </tr>`;
                                 
                                 $('#personnelTableBody').append(personnelRow);

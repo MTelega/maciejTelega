@@ -54,9 +54,14 @@ i {
 #personnelInfoHead {
     background-color: #009879 !important;
 }
-.circleDiv {
-    height: 40px !important;
-    width: 40px !important;
+.firstLetter {
+    color: #009879;
+    font-size: large;
+}
+
+.secondLetter {
+    color:#205ffd;
+    font-size: large;
 }
 
 #personnelInputSearch {
