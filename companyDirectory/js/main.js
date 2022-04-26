@@ -1,5 +1,7 @@
 $( document ).ready(function() {
 
+    $('.loader').fadeOut(1500);
+
     //BIG BUTTONS FUNCTIONALITY
 
     $(".personnelButton").click(function (){
