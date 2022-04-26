@@ -1,10 +1,12 @@
-<?php
+<?php 
 	
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
-
+	
+	// this includes the login details
+	
 	include("config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
@@ -27,11 +29,13 @@
 
 	}	
 
-	$query = 'SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, p.departmentID, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) ORDER BY p.firstName';
+	$query = $conn->prepare('UPDATE department SET name = ?, locationID = ? WHERE id = ?');
 
-	$result = $conn->query($query);
+	$query->bind_param('sii', $_POST['departmentName'], $_POST['location'], $_POST['id']);
+
+	$query->execute();
 	
-	if (!$result) {
+	if (false === $query) {
 
 		$output['status']['code'] = "400";
 		$output['status']['name'] = "executed";
@@ -45,23 +49,15 @@
 		exit;
 
 	}
-   
-   	$data = [];
 
-	while ($row = mysqli_fetch_assoc($result)) {
-
-		array_push($data, $row);
-
-	}
-
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = $data;
+		$output['status']['code'] = "200";
+		$output['status']['name'] = "ok";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = ['Record has been updated.'];
+		
+		mysqli_close($conn);
 	
-	mysqli_close($conn);
-
-	echo json_encode($output); 
+		echo json_encode($output); 
 
 ?>

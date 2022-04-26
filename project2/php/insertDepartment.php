@@ -29,6 +29,12 @@
 
 	}	
 
+	$countBefore = 'SELECT COUNT(*) FROM department';
+
+	$countResultOne = $conn->query($countBefore);
+
+	$countOne = mysqli_fetch_assoc($countResultOne);
+
 	$query = $conn->prepare('INSERT INTO department (name, locationID) VALUES(?,?)');
 
 	$query->bind_param("si", $_POST['name'], $_POST['locationID']);
@@ -50,14 +56,34 @@
 
 	}
 
-	$output['status']['code'] = "200";
-	$output['status']['name'] = "ok";
-	$output['status']['description'] = "success";
-	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-	$output['data'] = [];
-	
-	mysqli_close($conn);
+	$countAfter = 'SELECT COUNT(*) FROM department';
 
-	echo json_encode($output); 
+	$countResultTwo = $conn->query($countAfter);
+
+    $countTwo = mysqli_fetch_assoc($countResultTwo);
+
+	if ($countOne['COUNT(*)'] < $countTwo['COUNT(*)']) {
+		$output['status']['code'] = "200";
+		$output['status']['name'] = "ok";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = ['A new record has been added.'];
+		
+		mysqli_close($conn);
+	
+		echo json_encode($output); 
+
+	} else {
+
+		$output['status']['code'] = "200";
+		$output['status']['name'] = "ok";
+		$output['status']['description'] = "success";
+		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+		$output['data'] = ['Something went wrong!'];
+		
+		mysqli_close($conn);
+	
+		echo json_encode($output); 
+	}
 
 ?>

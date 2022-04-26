@@ -8,10 +8,7 @@ $( document ).ready(function() {
             $("#department").addClass("d-md-none");
             $("#location").addClass("d-md-none");
             $("#barSpan").html(" - Personnel");
-        } else {
-            $(".personnel").addClass("d-none");
-            $("#barSpan").html("");
-        }
+        } 
     });
 
     $(".departmentButton").click(function (){
@@ -22,7 +19,7 @@ $( document ).ready(function() {
             $("#barSpan").html(" - Department");
         } else {
             $("#department").addClass("d-md-none");
-            $("#barSpan").html("");
+            $(".personnelButton").trigger('click');
         }
     })
 
@@ -34,11 +31,11 @@ $( document ).ready(function() {
             $("#barSpan").html(" - Location");
         } else {
             $("#location").addClass("d-md-none");
-            $("#barSpan").html("");
+            $(".personnelButton").trigger('click');
         }
     });
 
-    //P.DATA OUTPUT
+    //P.DATA
 
     function personnelDataOutput(data, array) {
         data.forEach(employee => {
@@ -105,6 +102,7 @@ $( document ).ready(function() {
 function personnelGetAll(url) {
     $('#personnelTableBody').empty();
     $('#pagination').empty();
+    $('#pageButtons').removeClass("d-none");
     $.ajax({
         url: url,
         type: 'GET',
@@ -140,8 +138,11 @@ function personnelGetAll(url) {
         });
     }
 
+    //GET ALL DEPARTMENTS
+
     function departmentGetAll() {
     $('.departmentTableBody').empty();
+    $('.dapartmentsSort').empty();
     $.ajax({
         url: "php/getAllDepartments.php",
         type: 'GET',
@@ -158,7 +159,9 @@ function personnelGetAll(url) {
                                 <button type="button" class="btn btn-danger btn-sm deleteDepBtn" value=${department.id}><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>`;
+                        let sortDepartments = `<button type="button" class="list-group-item list-group-item-action departmentSelect" value="${department.id}">${department.name}</button>`
                             $('.departmentTableBody').append(departmentRow);
+                            $('.dapartmentsSort').append(sortDepartments);
 
                     })
                 }
@@ -173,8 +176,11 @@ function personnelGetAll(url) {
         });
     }
 
+    //GET ALL LOCATIONS
+
 function locationGetAll() {
-    $('#locationTableBody').empty();
+    $('.locationTableBody').empty();
+    $('.locationsSort').empty();
     $.ajax({
         url: "php/getAllLocations.php",
         type: 'GET',
@@ -186,12 +192,17 @@ function locationGetAll() {
                         let locationRow = `<tr>
                             <td>${location.name}</td>
                             <td>
-                            <button type="button" class="btn btn-success btn-sm mx-1"><i class="fas fa-pen-to-square"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                            <button type="button" class="btn btn-success btn-sm mx-1 updateLocationBtn" value=${location.id}><i class="fas fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-danger btn-sm  deleteLocationBtn" value=${location.id}><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>`;
+
+                        let sortLocations = `<button type="button" class="list-group-item list-group-item-action locationSelect" value="${location.id}">${location.name}</button>`;
+
                     $('#addDepartmentLocation, #updateDepartmentLocation').append(`<option value="${location.id}">${location.name}</option>`);
-                    $('#locationTableBody').append(locationRow);
+                    $('.locationTableBody').append(locationRow);
+                    $('.locationsSort').append(sortLocations);
+
                     })
                 }  
                 }
@@ -207,17 +218,16 @@ function locationGetAll() {
 
     //CALLING ALL DATA
     function callAll () {
+        $('#addEmplDepartment, #updatePersonnelDepartment, #addDepartmentLocation, #updateDepartmentLocation').empty();
+        $('#addEmplFirstName, #addEmplLastName, #addEmplJobTitle, #addEmplEmail, #addDepartment, #addLocation').val('');
         locationGetAll();
         departmentGetAll();
         let getAllUrl = "php/getAll.php";
         personnelGetAll(getAllUrl);
+        $('#pHeader').text('Personnel');
     }
 
     callAll();
-
-
-
-
 
     //SEARCH
 
@@ -227,7 +237,7 @@ function locationGetAll() {
         $('#personnelTableBody').empty();
         $('#pagination').empty();
         $('#pageButtons').addClass("d-none");
-        
+        $('#pHeader').text('Personnel');
         $.ajax({
         url: "php/getAllSearch.php",
         type: 'GET',
@@ -265,6 +275,8 @@ function locationGetAll() {
                 $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
                 $('#updatePersonnelEmail').val(result.data[0].email);
                 $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+
+                
             }
             }
     },
@@ -287,49 +299,119 @@ function locationGetAll() {
     $('#sortFirstName').click(function () {
         let url = "php/getAllByFirstName.php";
         personnelGetAll(url);
+        $('#pHeader').text('Personnel');
     })
 
     $('#sortLastName').click(function () {
         let url = "php/getAllByLastName.php";
         personnelGetAll(url);
+        $('#pHeader').text('Personnel');
     })
 
-    $('#sortDepartment').click(function () {
-        let url = "php/getAllByDepartment.php";
-        personnelGetAll(url);
-        $('.dep-row').removeClass('d-none');
-        $('.loc-row').addClass('d-none');
-    })
+    $(document).on('click', '.departmentSelect', function() {
+        $('#personnelTableBody').empty();
+        $('#pagination').empty();
+        $('#pageButtons').addClass("d-none");
+        $('#allByDepartmentModal').modal('hide');
+        $.ajax({
+            url: "php/getAllByDepartment.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                departmentID:  $(this).val(),
+            },
+            success: function(result) {
+                if (result.status.name == "ok") {
+                    if (result['data'].length > 0){
 
-    $('#sortLocation').click(function () {
-        let url = "php/getAllByLocation.php";
-        personnelGetAll(url);
-        $('.dep-row').addClass('d-none');
-        $('.loc-row').removeClass('d-none');
-    })
-  
-
-  $('#addLocationB').click(function () {
-       $('#confirmationMSG').html("Are you shure you wish to create a new location?");
-       $('#subButton').attr('form', 'addLocationForm');
-  })
-
-$('#subButton').click(function () {
-    if($('#subButton').attr('form') == 'addLocationForm') {
-        $('#addLocationForm').submit(function(e) {
-            e.preventDefault();
+                        result['data'].forEach(employee => {
+                            let firstLetterFName = employee.firstName.charAt(0);
+                            let firstLetterLName = employee.lastName.charAt(0);
+                            let personnelRow =
+                            `<tr class="personnelRowClick" href=${employee.id}>
+                            <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                            </tr>`;
+                            
+                            $('#personnelTableBody').append(personnelRow);
+                    });
+                    $('#deletePersonnelButton').val(result.data[0].id)
+                    $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
+                    $('.depart').html(result.data[0].department);
+                    $('.loc').html(result.data[0].location);
+                    if(result.data[0].jobTitle != ''){
+                        $('.jTitleP').removeClass('d-none');
+                        $('.jobT').html(result.data[0].jobTitle);
+                    } else {
+                        $('.jTitleP').addClass('d-none');
+                    }
+                    $('.mail').html(result.data[0].email);
+                    $('#updatePersonnelButton').val(result.data[0].id)
+                    $('#updatePersonnelFirstName').val(result.data[0].firstName);
+                    $('#updatePersonnelLastName').val(result.data[0].lastName);
+                    $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
+                    $('#updatePersonnelEmail').val(result.data[0].email);
+                    $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+                    $('#pHeader').text(result.data[0].department);
+                }
+    
+                
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // your error code
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR);      
+            }
+            });
+        });
+        $(document).on('click', '.locationSelect', function() {
+            $('#personnelTableBody').empty();
+            $('#pagination').empty();
+            $('#pageButtons').addClass("d-none");
+            $('#allByLocationModal').modal('hide');
             $.ajax({
-                url: "php/insertLocation.php",
+                url: "php/getAllByLocation.php",
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    name: $(this).find('input[name="addLocation"]').val(),
+                    locationID:  $(this).val(),
                 },
                 success: function(result) {
                     if (result.status.name == "ok") {
-                     
-                          
-                        
+                        if (result['data'].length > 0){
+    
+                            result['data'].forEach(employee => {
+                                let firstLetterFName = employee.firstName.charAt(0);
+                                let firstLetterLName = employee.lastName.charAt(0);
+                                let personnelRow =
+                                `<tr class="personnelRowClick" href=${employee.id}>
+                                <td class="fw-bold p-2"><div class="circleDiv d-inline border border-2 p-1">${firstLetterFName}${firstLetterLName}</div> ${employee.firstName} ${employee.lastName}</td>
+                                </tr>`;
+                                
+                                $('#personnelTableBody').append(personnelRow);
+                        });
+                        $('#deletePersonnelButton').val(result.data[0].id)
+                        $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
+                        $('.depart').html(result.data[0].department);
+                        $('.loc').html(result.data[0].location);
+                        if(result.data[0].jobTitle != ''){
+                            $('.jTitleP').removeClass('d-none');
+                            $('.jobT').html(result.data[0].jobTitle);
+                        } else {
+                            $('.jTitleP').addClass('d-none');
+                        }
+                        $('.mail').html(result.data[0].email);
+                        $('#updatePersonnelButton').val(result.data[0].id)
+                        $('#updatePersonnelFirstName').val(result.data[0].firstName);
+                        $('#updatePersonnelLastName').val(result.data[0].lastName);
+                        $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
+                        $('#updatePersonnelEmail').val(result.data[0].email);
+                        $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+                        $('#pHeader').text(result.data[0].location);
+                    }
+        
+                    
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -338,85 +420,10 @@ $('#subButton').click(function () {
                     console.log(textStatus);
                     console.log(jqXHR);      
                 }
-              });
-        })
-        $('#confirmationMSG').modal('hide');
-    }
-    
-    })
-   /*
-
-    $.ajax({
-        url: "php/insertLocation.php",
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            name: 'Cardiff',
-        },
-        success: function(result) {
-            console.log(result)
-            if (result.status.name == "ok") {
-             
-                  
-                
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // your error code
-            console.log(errorThrown);
-            console.log(textStatus);
-            console.log(jqXHR);      
-        }
-      });
-
-$.ajax({
-    url: "php/insertDepartment.php",
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        name: 'hgdjhfh',
-        locationID: 2
-    },
-    success: function(result) {
-        console.log(result)
-        if (result.status.name == "ok") {
-         
-              
+                });
+            });
             
-        }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        // your error code
-        console.log(errorThrown);
-        console.log(textStatus);
-        console.log(jqXHR);      
-    }
-  });
-*/
-
-
-    $.ajax({
-    url: "php/deleteLocationByID.php",
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        id: 36,
-    },
-    success: function(result) {
-        if (result.status.name == "ok") {
-            
-                
-            
-        }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        // your error code
-        console.log(errorThrown);
-        console.log(textStatus);
-        console.log(jqXHR);      
-    }
-    });
-            
+    // PERSONNEL \\
 
     $(document).on('click', '.personnelRowClick', function() {
     $.ajax({
@@ -449,9 +456,6 @@ $.ajax({
                 if (window.innerWidth < 768) {
                     $('#personnelInfoModal').modal('show');
                   }
-                
-            
-                
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -489,6 +493,8 @@ $.ajax({
                         if (result.status.name == "ok") {
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmAddPersonnelModal").modal('hide');
+                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -498,8 +504,6 @@ $.ajax({
                         console.log(jqXHR);      
                     }
                     });
-            $("#confirmAddPersonnelModal").modal('hide');
-            callAll();
         }
     })
 
@@ -531,6 +535,8 @@ $.ajax({
                         if (result.status.name == "ok") {
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmUpdatePersonnelModal").modal('hide');
+                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -540,8 +546,7 @@ $.ajax({
                         console.log(jqXHR);      
                     }
                     });
-            $("#confirmUpdatePersonnelModal").modal('hide');
-            callAll();
+
         }
     })
     
@@ -570,6 +575,8 @@ $.ajax({
             });
         });
 
+        //DEPARTMENTS\\
+
 $(document).on('click', '.updateDepBtn', function() {
     $.ajax({
         url: "php/getDepartmentByID.php",
@@ -593,6 +600,43 @@ $(document).on('click', '.updateDepBtn', function() {
         }
         });
     });
+
+    $('#addDepartmentButton').click(function () {
+        let departmentName = $('#addDepartment').val();
+        let location = $('#addDepartmentLocation').val();
+        if(departmentName === '') {
+            $("#createDepartmentModal").modal('hide');
+            $("#confirmAddDepartmentModal").modal('hide');
+            $("#lastModal").modal('show');
+            $('#confirmationMSG').html('Please provide name and location of a new department.');
+        } else {
+                $.ajax({
+                    url: "php/insertDepartment.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       name: departmentName,
+                       locationId: location,
+                    },
+                    success: function(result) {
+                        if (result.status.name == "ok") {
+                            $("#createDepartmentModal").modal('hide');
+                            $("#lastModal").modal('show');
+                            $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmAddDepartmentModal").modal('hide');
+                            callAll();
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // your error code
+                        console.log(errorThrown);
+                        console.log(textStatus);
+                        console.log(jqXHR);      
+                    }
+                    });
+
+        }
+    })
 
     $(document).on('click', '.deleteDepBtn', function() {
         $('#deleteDepartmentButton').val($(this).val());
@@ -623,7 +667,181 @@ $(document).on('click', '.updateDepBtn', function() {
             });
     })
 
-    $('#refreshBtn').click(function () {
+    $(document).on('click', '.updateDepBtn', function() {
+        $('#updateDepartmentButton').val($(this).val());
+        $('#updateDepartmentModal').modal('show');
+        });
+    
+    $('#updateDepartmentButton').click(function () {
+        let departmentName = $('#updateDepartment').val();
+        let location = $('#updateDepartmentLocation').val();
+        let id = $('#updateDepartmentButton').val();
+        if(departmentName === '') {
+            $("#updateDepartmentModal").modal('hide');
+            $("#confirmUpdateDepartmentModal").modal('hide');
+            $("#lastModal").modal('show');
+            $('#confirmationMSG').html('Please provide the name of a modified department.');
+        } else {
+                $.ajax({
+                    url: "php/updateDepartment.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       departmentName: departmentName,
+                       location: location,
+                       id: id
+                    },
+                    success: function(result) {
+                        if (result.status.name == "ok") {
+                            $("#updateDepartmentModal").modal('hide');
+                            $("#lastModal").modal('show');
+                            $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmUpdateDepartmentModal").modal('hide');
+                            callAll();
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // your error code
+                        console.log(errorThrown);
+                        console.log(textStatus);
+                        console.log(jqXHR);      
+                    }
+                    });
+
+        }
+    })
+
+    //LOCATIONS\\
+
+    $('#addLocationButton').click(function () {
+        let locationName = $('#addLocation').val();
+        if(locationName === '') {
+            $("#createlocationModal").modal('hide');
+            $("#confirmAddLocationModal").modal('hide');
+            $("#lastModal").modal('show');
+            $('#confirmationMSG').html('Please provide the name of a new location.');
+        } else {
+                $.ajax({
+                    url: "php/insertLocation.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       name: locationName,
+                    },
+                    success: function(result) {
+                        if (result.status.name == "ok") {
+                            $("#createLocationModal").modal('hide');
+                            $("#lastModal").modal('show');
+                            $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmAddLocationModal").modal('hide');
+                            callAll();
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // your error code
+                        console.log(errorThrown);
+                        console.log(textStatus);
+                        console.log(jqXHR);      
+                    }
+                    });
+
+        }
+    })
+
+    $(document).on('click', '.deleteLocationBtn', function() {
+        $('#deleteLocationButton').val($(this).val());
+        $('#deleteLocationModal').modal('show');
+        });
+    
+    $('#deleteLocationButton').click(function () {
+        $('#deleteLocationModal').modal('hide');
+        $.ajax({
+            url: "php/deleteLocationByID.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id:  $(this).val(),
+            },
+            success: function(result) {
+                if (result.status.name == "ok") {
+                    callAll();
+                    $('#confirmationMSG').html(result.data[0]);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // your error code
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR);      
+            }
+            });
+    })
+
+
+    $(document).on('click', '.updateLocationBtn', function() {
+        $.ajax({
+            url: "php/getLocationsByID.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                locationID:  $(this).val(),
+            },
+            success: function(result) {
+                if (result.status.name == "ok") {
+                    $('#updateLocation').val(result.data[0].name);
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // your error code
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(jqXHR);      
+            }
+            });
+        $('#updateLocationButton').val($(this).val());
+        $('#updateLocationModal').modal('show');
+        });
+    
+    $('#updateLocationButton').click(function () {
+        let locationName = $('#updateLocation').val();
+        let id = $('#updateLocationButton').val();
+        if(locationName === '') {
+            $("#updateLocationModal").modal('hide');
+            $("#confirmUpdateLocationModal").modal('hide');
+            $("#lastModal").modal('show');
+            $('#confirmationMSG').html('Please provide the name of a modified location.');
+        } else {
+                $.ajax({
+                    url: "php/updateLocation.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       locationName: locationName,
+                       id: id
+                    },
+                    success: function(result) {
+                        if (result.status.name == "ok") {
+                            $("#updateLocationModal").modal('hide');
+                            $("#lastModal").modal('show');
+                            $('#confirmationMSG').html(result.data[0]);
+                            $("#confirmUpdateLocationModal").modal('hide');
+                            callAll();
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // your error code
+                        console.log(errorThrown);
+                        console.log(textStatus);
+                        console.log(jqXHR);      
+                    }
+                    });
+
+        }
+    })
+
+    //REFRESH BUTTON
+
+    $('.refreshBtn').click(function () {
         callAll();
     })
 
