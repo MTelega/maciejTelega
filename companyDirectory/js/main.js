@@ -418,9 +418,9 @@ function locationGetAll() {
                         } else {
                             $('.jTitleP, .jobT').addClass('d-none');
                         }
-                        if(data[0].email != ''){
+                        if(result.data[0].email != ''){
                             $('.mailP, .mail').removeClass('d-none');
-                            $('.mail').html(data[0].email);
+                            $('.mail').html(result.data[0].email);
                         } else {
                             $('.mailP, .mail').addClass('d-none');
                         }
@@ -430,6 +430,7 @@ function locationGetAll() {
                         $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
                         $('#updatePersonnelEmail').val(result.data[0].email);
                         $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+                        console.log(result);
                         $('#pHeader').text(result.data[0].location);
                     }
         
