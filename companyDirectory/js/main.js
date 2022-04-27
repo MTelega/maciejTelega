@@ -194,7 +194,7 @@ function locationGetAll() {
                         let locationRow = `<tr>
                             <td>${location.name}</td>
                             <td>
-                            <button type="button" class="btn btn-success btn-sm mx-1 updateLocationBtn" value=${location.id}><i class="fas fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-primary btn-sm mx-1 updateLocationBtn" value=${location.id}><i class="fas fa-pen-to-square"></i></button>
                             <button type="button" class="btn btn-danger btn-sm  deleteLocationBtn" value=${location.id}><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>`;
@@ -476,7 +476,7 @@ function locationGetAll() {
         let emailVal = $('#addEmplEmail').val();
         let departmentId = $('#addEmplDepartment').val();
         if(firstNameVal === '' || lastNameVal === '') {
-            $("#confirmAddPersonnelModal").modal('hide');
+            $('#createEmployeeModal').modal('hide');
             $("#lastModal").modal('show');
             $('#confirmationMSG').html('Please provide first and last name of a new personnel.');
         } else {
@@ -493,9 +493,9 @@ function locationGetAll() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#createEmployeeModal').modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmAddPersonnelModal").modal('hide');
                             callAll();
                         }
                     },
@@ -517,7 +517,7 @@ function locationGetAll() {
         let departmentId = $('#updatePersonnelDepartment').val();
         let id = $('#updatePersonnelButton').val()
         if(firstNameVal === '' || lastNameVal === '') {
-            $("#confirmUpdatePersonnelModal").modal('hide');
+            $('#updateEmployeeModal').modal('hide');
             $("#lastModal").modal('show');
             $('#confirmationMSG').html('Please provide first and last name of a modified personnel.');
         } else {
@@ -535,9 +535,9 @@ function locationGetAll() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#updateEmployeeModal').modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmUpdatePersonnelModal").modal('hide');
                             callAll();
                         }
                     },
@@ -608,7 +608,6 @@ $(document).on('click', '.updateDepBtn', function() {
         let location = $('#addDepartmentLocation').val();
         if(departmentName === '') {
             $("#createDepartmentModal").modal('hide');
-            $("#confirmAddDepartmentModal").modal('hide');
             $("#lastModal").modal('show');
             $('#confirmationMSG').html('Please provide name and location of a new department.');
         } else {
@@ -618,14 +617,13 @@ $(document).on('click', '.updateDepBtn', function() {
                     dataType: 'json',
                     data: {
                        name: departmentName,
-                       locationId: location,
+                       locationID: location,
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
                             $("#createDepartmentModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmAddDepartmentModal").modal('hide');
                             callAll();
                         }
                     },
@@ -680,9 +678,8 @@ $(document).on('click', '.updateDepBtn', function() {
         let id = $('#updateDepartmentButton').val();
         if(departmentName === '') {
             $("#updateDepartmentModal").modal('hide');
-            $("#confirmUpdateDepartmentModal").modal('hide');
             $("#lastModal").modal('show');
-            $('#confirmationMSG').html('Please provide the name of a modified department.');
+            $('#confirmationMSG').html('Please provide name of a modified department.');
         } else {
                 $.ajax({
                     url: "php/updateDepartment.php",
@@ -698,7 +695,6 @@ $(document).on('click', '.updateDepBtn', function() {
                             $("#updateDepartmentModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmUpdateDepartmentModal").modal('hide');
                             callAll();
                         }
                     },
@@ -718,10 +714,9 @@ $(document).on('click', '.updateDepBtn', function() {
     $('#addLocationButton').click(function () {
         let locationName = $('#addLocation').val();
         if(locationName === '') {
-            $("#createlocationModal").modal('hide');
-            $("#confirmAddLocationModal").modal('hide');
+            $("#createLocationModal").modal('hide');
             $("#lastModal").modal('show');
-            $('#confirmationMSG').html('Please provide the name of a new location.');
+            $('#confirmationMSG').html('Please provide name of a new location.');
         } else {
                 $.ajax({
                     url: "php/insertLocation.php",
@@ -735,7 +730,6 @@ $(document).on('click', '.updateDepBtn', function() {
                             $("#createLocationModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmAddLocationModal").modal('hide');
                             callAll();
                         }
                     },
@@ -809,9 +803,8 @@ $(document).on('click', '.updateDepBtn', function() {
         let id = $('#updateLocationButton').val();
         if(locationName === '') {
             $("#updateLocationModal").modal('hide');
-            $("#confirmUpdateLocationModal").modal('hide');
             $("#lastModal").modal('show');
-            $('#confirmationMSG').html('Please provide the name of a modified location.');
+            $('#confirmationMSG').html('Please provide name of a modified location.');
         } else {
                 $.ajax({
                     url: "php/updateLocation.php",
@@ -826,7 +819,6 @@ $(document).on('click', '.updateDepBtn', function() {
                             $("#updateLocationModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            $("#confirmUpdateLocationModal").modal('hide');
                             callAll();
                         }
                     },

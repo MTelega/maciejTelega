@@ -30,7 +30,7 @@
 
 	$countResultOne = $conn->query($countBefore);
 
-	$query = $conn->prepare('DELETE FROM personnel WHERE id = ?');
+	$query = $conn->prepare('DELETE FROM personnel WHERE id = ? AND departmentID = "" OR departmentID is NULL');
 	
 	$query->bind_param("i", $_POST['id']);
 
@@ -64,7 +64,7 @@
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = ['Something went wrong!'];
+		$output['data'] = ['The record cannot be deleted because it is associated with another record.'];
 		
 		mysqli_close($conn);
 	

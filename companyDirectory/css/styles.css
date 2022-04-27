@@ -78,7 +78,12 @@ i {
     overflow-y: scroll !important;
   }
 
-#personnelContent{
+.tableWrapperTwo {
+    overflow-y: scroll !important;
+    max-height: 63vh !important;
+  }
+
+#personnelContent {
     height: 70vh !important;
 }
 
@@ -104,8 +109,6 @@ i {
     right: 60px;
     bottom: 22vh;
 }
-
-
 
 #personalDataImage {
     width: 35%;
