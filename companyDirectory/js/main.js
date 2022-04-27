@@ -270,14 +270,14 @@ function locationGetAll() {
                 $('.depart').html(result.data[0].department);
                 $('.loc').html(result.data[0].location);
                 if(result.data[0].jobTitle != ''){
-                    $('.jTitleP').removeClass('d-none');
+                    $('.jTitleP, .jobT').removeClass('d-none');
                     $('.jobT').html(result.data[0].jobTitle);
                 } else {
-                    $('.jTitleP').addClass('d-none');
+                    $('.jTitleP, .jobT').addClass('d-none');
                 }
-                if(data[0].email != ''){
+                if(result.data[0].email != ''){
                     $('.mailP, .mail').removeClass('d-none');
-                    $('.mail').html(data[0].email);
+                    $('.mail').html(result.data[0].email);
                 } else {
                     $('.mailP, .mail').addClass('d-none');
                 }
@@ -351,12 +351,17 @@ function locationGetAll() {
                     $('.depart').html(result.data[0].department);
                     $('.loc').html(result.data[0].location);
                     if(result.data[0].jobTitle != ''){
-                        $('.jTitleP').removeClass('d-none');
+                        $('.jTitleP, .jobT').removeClass('d-none');
                         $('.jobT').html(result.data[0].jobTitle);
                     } else {
-                        $('.jTitleP').addClass('d-none');
+                        $('.jTitleP, .jobT').addClass('d-none');
                     }
-                    $('.mail').html(result.data[0].email);
+                    if(result.data[0].email != ''){
+                        $('.mailP, .mail').removeClass('d-none');
+                        $('.mail').html(result.data[0].email);
+                    } else {
+                        $('.mailP, .mail').addClass('d-none');
+                    }
                     $('#updatePersonnelButton').val(result.data[0].id)
                     $('#updatePersonnelFirstName').val(result.data[0].firstName);
                     $('#updatePersonnelLastName').val(result.data[0].lastName);
@@ -408,12 +413,17 @@ function locationGetAll() {
                         $('.depart').html(result.data[0].department);
                         $('.loc').html(result.data[0].location);
                         if(result.data[0].jobTitle != ''){
-                            $('.jTitleP').removeClass('d-none');
+                            $('.jTitleP, .jobT').removeClass('d-none');
                             $('.jobT').html(result.data[0].jobTitle);
                         } else {
-                            $('.jTitleP').addClass('d-none');
+                            $('.jTitleP, .jobT').addClass('d-none');
                         }
-                        $('.mail').html(result.data[0].email);
+                        if(data[0].email != ''){
+                            $('.mailP, .mail').removeClass('d-none');
+                            $('.mail').html(data[0].email);
+                        } else {
+                            $('.mailP, .mail').addClass('d-none');
+                        }
                         $('#updatePersonnelButton').val(result.data[0].id)
                         $('#updatePersonnelFirstName').val(result.data[0].firstName);
                         $('#updatePersonnelLastName').val(result.data[0].lastName);
@@ -452,12 +462,17 @@ function locationGetAll() {
                 $('.depart').html(result.data[0].department);
                 $('.loc').html(result.data[0].location);
                 if(result.data[0].jobTitle != ''){
-                    $('.jTitleP').removeClass('d-none');
+                    $('.jTitleP, .jobT').removeClass('d-none');
                     $('.jobT').html(result.data[0].jobTitle);
                 } else {
-                    $('.jTitleP').addClass('d-none');
+                    $('.jTitleP, .jobT').addClass('d-none');
                 }
-                $('.mail').html(result.data[0].email);
+                if(result.data[0].email != ''){
+                    $('.mailP, .mail').removeClass('d-none');
+                    $('.mail').html(result.data[0].email);
+                } else {
+                    $('.mailP, .mail').addClass('d-none');
+                }
                 $('#updatePersonnelButton').val(result.data[0].id)
                 $('#updatePersonnelFirstName').val(result.data[0].firstName);
                 $('#updatePersonnelLastName').val(result.data[0].lastName);
