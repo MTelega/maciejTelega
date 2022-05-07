@@ -39,16 +39,16 @@ $( document ).ready(function() {
 
     //P.DATA
 
-    function personnelDataOutput(data, array) {
+    function personnelDataOutput(data) {
         data.forEach(employee => {
             let firstLetterFName = employee.firstName.charAt(0);
             let firstLetterLName = employee.lastName.charAt(0);
 
             let personnelRow =
             `<tr class="personnelRowClick" href=${employee.id}>
-                <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
+                <td class="fw-bold p-2">${employee.lastName} ${employee.firstName}</td>
             </tr>`;
-            array.push(personnelRow);
+            $('#personnelTableBody').append(personnelRow);
         });
         $('#deletePersonnelButton').val(data[0].id)
         $('.fullName').html(data[0].firstName + ' ' + data[0].lastName);
@@ -75,35 +75,6 @@ $( document ).ready(function() {
 
     };
 
-
-    //PAGINATION
-
-    function accomodatePage(clickedPage, numberOfPages) {
-        if (clickedPage <= 1) { return clickedPage + 1}
-        if (clickedPage >= numberOfPages) { return clickedPage -1}
-        return clickedPage
-    }
-
-    function buildPagination(clickedPage, numberOfPages) {
-        $('.pagination').empty();
-        const currPageNum = accomodatePage(clickedPage, numberOfPages);
-        if (numberOfPages >= 3) {
-            for (let i=-1; i<2; i++) {
-                $('.pagination').append(`<li class="page-item"><button class="btn btn-primary border mb-1" value="${currPageNum+i}">${currPageNum+i}</button></li>`)
-            }
-        } else {
-            for (let i=0; i<numberOfPages; i++) {
-                $('.pagination').append(`<li class="page-item"><button class="btn btn-primary border mb-1" value="${i+1}">${i+1}</button></li>`)
-            }
-        }
-    }
-
-    function buildPage(currPage, numberPerPage, personnelArray) {
-        const trimStart = (currPage-1)*numberPerPage;
-        const trimEnd = trimStart + numberPerPage;
-        $('#personnelTableBody').empty().append(personnelArray.slice(trimStart, trimEnd));
-    }
-
     //GET ALL PERSONNEL
 
 function personnelGetAll(url) {
@@ -116,24 +87,7 @@ function personnelGetAll(url) {
         dataType: 'json',
         success: function(result) {
             if (result.status.name == "ok") {
-                const personnelArray = [];
-    
-                personnelDataOutput(result.data, personnelArray);
-                
-            const numberOfItems = personnelArray.length;
-            const numberPerPage = 20;
-            const currentPage = 1;
-            const numberOfPages = Math.ceil(numberOfItems/numberPerPage);
-    
-            buildPage(1, numberPerPage, personnelArray);
-            buildPagination(currentPage, numberOfPages);
-    
-            $('.pagination').on('click', 'button', function() {
-                let clickedPage = parseInt($(this).val());
-                buildPagination(clickedPage, numberOfPages);
-                buildPage(clickedPage, numberPerPage, personnelArray);
-            });
-                
+                personnelDataOutput(result.data);
                 }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -162,8 +116,8 @@ function personnelGetAll(url) {
                         let departmentRow = `<tr>
                             <td class="fw-bold">${department.name}</td>
                             <td class="d-none d-md-table-cell">${department.location}</td><td>
-                                <button type="button" class="btn btn-primary btn-sm mx-1 updateDepBtn" value=${department.id}><i class="fas fa-pen-to-square"></i></button>
-                                <button type="button" class="btn btn-danger btn-sm deleteDepBtn" value=${department.id}><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-outline-primary btn-sm mx-1 updateDepBtn" value=${department.id}><i class="fas fa-pen-to-square"></i></button>
+                                <button type="button" class="btn btn-outline-danger btn-sm deleteDepBtn" value=${department.id}><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>`;
                         let sortDepartments = `<button type="button" class="list-group-item list-group-item-action departmentSelect" value="${department.id}">${department.name}</button>`
@@ -199,8 +153,8 @@ function locationGetAll() {
                         let locationRow = `<tr>
                             <td>${location.name}</td>
                             <td>
-                            <button type="button" class="btn btn-primary btn-sm mx-1 updateLocationBtn" value=${location.id}><i class="fas fa-pen-to-square"></i></button>
-                            <button type="button" class="btn btn-danger btn-sm  deleteLocationBtn" value=${location.id}><i class="fas fa-trash"></i></button>
+                            <button type="button" class="btn btn-outline-primary btn-sm mx-1 updateLocationBtn" value=${location.id}><i class="fas fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-outline-danger btn-sm  deleteLocationBtn" value=${location.id}><i class="fas fa-trash"></i></button>
                             </td>
                             </tr>`;
 

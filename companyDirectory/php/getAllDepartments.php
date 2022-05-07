@@ -29,7 +29,7 @@
 
 	// SQL does not accept parameters and so is not prepared
 
-	$query = 'SELECT d.id, d.name, d.locationID, l.name as location FROM department d LEFT JOIN location l on (l.id = d.locationID) ORDER BY d.locationID';
+	$query = 'SELECT d.id, d.name, d.locationID, l.name as location FROM department d LEFT JOIN location l on (l.id = d.locationID) ORDER BY d.name';
 
 	$result = $conn->query($query);
 	

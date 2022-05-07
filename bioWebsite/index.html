@@ -1,188 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
-
-    <head>
-
-        <meta charset="UTF-8">
-        <title>Maciej Telega | Full Stack Developer | Bio Website</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <meta name="author" content="Maciej Telega">
-        <meta name="description" content="Bio Website">
-
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/styles.css">
-        
-
-    </head>     
-    <body id="top">
-        
-        <!-- Navigation-->
-
-      <nav class="navbar navbar-expand-lg navbar-light sticky-top navbar-custom">
-
-        <!-- Navbar brand -->
-        <a class="navbar-brand" href="#top">Maciej Telega</a>
-
-      <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
-        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-
-      <!-- Collapsible content -->
-        <div class="collapse navbar-collapse"></div>
-        <div class="collapse navbar-collapse" id="mainNav">
-
-        <!-- Links -->
-          <ul class="navbar-nav mr-auto d-flex justify-content-center">
-            <li class="nav-item active">
-              <a class="nav-link" href="#profile">Profile
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item pl-4">
-              <a class="nav-link" href="#skills">Skills</a>
-            </li>
-            <li class="nav-item pl-4">
-              <a class="nav-link" href="#experience">Experience</a>
-            </li>
-            <li class="nav-item pl-4">
-              <a class="nav-link" href="#projects">Projects</a>
-            </li>
-            <li class="nav-item pl-4">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li>
-            </ul>
-        </div>
-      </nav>
-
-
-      <!-- Jumbotron -->
-
-      <div class="jumbotron jumbotron-fluid" id="top">
-        <div class="bg-light text-center my-5">
-          <h1 class="font-weight-bold" id="jum-header1">Maciej Telega</h1>
-          <h3 class="font-weight-bold" id="jum-header2">Full Stack Developer</h3>   
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Maciej Telega - Full Stack Developer Portfolio</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Google fonts - Montserrat for headings, Cardo for copy-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Cardo:400,400italic,700">
+    <!-- Lightbox-->
+    <link rel="stylesheet" href="vendor/lightbox2/css/lightbox.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png">
+  </head>
+  <body>
+    <section id="intro" class="intro">       
+      <div class="overlay"></div>
+      <div class="content content-intro">
+        <div class="container clearfix">
+          <div class="row">
+            <div class="col-lg-8 col-md-12 mx-auto">
+              <h1>Maciej Telega</h1>
+              <p class="italic text-dark ml-5 bg-light">Full Stack Developer</p>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Main content -->
-
-      <div class="container-fluid">
-
-      <!--Profile-->
-
-        <div class="row d-flex justify-content-center" id="profile">
-          <div class="col">
-            <h1 class="w-100">Profile</h1>
-            <p class="w-100 pd-4 pl- pr-2">My name is Maciej Telega and I am a new graduate frontend and backend developer currently living in Cardiff, Wales, UK. I have recently completed a full stack developer course with ITCareerSwitch. I also hold Bachelor degree of Biological Sciences with specialization in Bioinformatics from Opole University in Poland. <br>
-              I have a keen interest in Web Development and technology. I am both driven and diligent. I constantly strive to further my knowledge in the field.<br>
-              In my free time I like to keep active by practicing Brasilian Jiu-Jitsu, mountain biking and road cycling.</p>
+    </section>
+    <!-- intro end-->
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container"><a href="#intro" class="navbar-brand link-scroll">Maciej Telega</a>
+          <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
+          <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a href="#intro" class="nav-link link-scroll">Home</a></li>
+              <li class="nav-item"><a href="#about" class="nav-link link-scroll">About </a></li>
+              <li class="nav-item"><a href="#skills" class="nav-link link-scroll">Skills</a></li>
+              <li class="nav-item"><a href="#experience" class="nav-link link-scroll">Experience</a></li>
+              <li class="nav-item"><a href="#projects" class="nav-link link-scroll">Projects</a></li>
+              <li class="nav-item"><a href="#contact" class="nav-link link-scroll">Contact</a></li>
+            </ul>
           </div>
-        </div>  
-
-      <!--Skills-->
-
-        <div class="row d-flex justify-content-center" id="skills">
-          <h1 class="w-100">Skills</h1>
-          <div class="col-sm-12 col-md-12 col-lg-6 d-flex align-items-stretch justify-content-center">
-            <div class="card align-items-center flex-row my-4 border-0 w-75">
-              <img class="img-fluid card-img w-50 collapse d-sm-block mr-4" src="css/images/frontend-badge.png" alt="frontend-badge">
-              <div class="card-block">
-                <h3 class="card-title pl-4 w-100">FRONTEND</h3>
-                <ul class="card-text pl-4">
-                  <li>HTML/HTML5</li>
-                  <li>CSS/CSS3</li>
-                  <li>JavaScript</li>
-                  <li>JQuery</li>
-                  <li>Ajax</li>
-                  <li>React.js</li>
-                  <li>Bootstrap</li>
-                </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- about-->
+    <section id="about" class="text">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <h2 class="heading">About me</h2>
+            <p>My name is Maciej Telega and I am a new graduate frontend and backend developer currently living in Cardiff, Wales, UK. I have recently completed a full stack developer course with ITCareerSwitch. I also hold Bachelor degree of Biological Sciences with specialization in Bioinformatics from Opole University in Poland. </p>
+            <p>I have a keen interest in Web Development and technology. I am both driven and diligent. I constantly strive to further my knowledge in the field. In my free time I like to keep active by practicing Brazilian Jiu-Jitsu, mountain biking and road cycling. </p>
+          </div>
+          <div class="col-lg-5 mx-auto">
+            <p><img src="img/myPhoto-min.jpg" alt="" class="img-fluid rounded-circle"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- about end-->
+    <!-- Skills-->
+    <section id="skills">
+      <div class="container">
+        <div class="row services">
+          <div class="col-lg-12">
+            <h2 class="heading">Skills</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 frontend">
+            <h4>Fronend</h4>
+            <div class="row">
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
               </div>
             </div>
           </div>
+          <div class="col-md-6">
+            <h4>Backend</h4>
+            <div class="row">
+              <div class="col-3 p-0"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3 p-0"> 
+                <img src="img/python logo.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3 p-0"> 
+                <img src="img/java logo.png" class="img-fluid" alt="c# logo">
+              </div>
+              <div class="col-3 p-0"> 
+                <img src="img/Csharp1.png" class="img-fluid" alt="c# logo">
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
 
-
-          <div class="col-sm-12 col-md-12 col-lg-6 d-flex align-items-stretch justify-content-center">
-            <div class="card align-items-center flex-row my-4 border-0 w-75">
-              <img class="card-img img-fluid w-50 collapse d-sm-block mr-4" src="css/images/backend-badge.png" alt="backend-badge">
-              <div class="card-block">
-                <h3 class="card-title pl-4">BACKEND</h3>
-                <ul class="card-text pl-4">
-                  <li>Python</li>
-                  <li>PHP</li>
-                  <li>Java</li>
-                  <li>C#</li>
-                </ul>
+    <!-- Skills end-->
+     <!--experience-->
+     <section id="experience"">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="heading">Experience</h2>
+            <div class="row">
+              <div class="col-md-10">
+                <p>In October 2021 I obtained Microsoft 98-383 certification: Introduction to Programming Using HTML and CSS.</p>
+                <p>Since starting the course in May 2020 I have completed various projects within my course on Codecademy platform and got familiar with industry coding standards and best practices.</p>
               </div>
             </div>
           </div>
         </div>
-
-      <!--Experience-->
-
-        <div class="row d-flex justify-content-center" id="experience">
-          <div class="col">
-            <h1 class="w-100">Experience</h1>
-            <p class="w-100 pd-4 pl-2 pr-2">In October 2021 I obtained Microsoft 98-383 certification: Introduction to Programming Using HTML and CSS. <br>
-             Since starting the course in May 2020 I have completed various projects within my course on Codecademy platform and got familiar with industry coding standards and best practices.</p>
-          </div>
-        </div>
-        
-      <!--Projects-->
-
-        
-
-      <!--Contact-->
-
-        <div class="contact1" id="contact">
-          <div class="container-contact1">
-            <div class="contact1-pic js-tilt" data-tilt>
-              <img src="css/images/img-01.png" alt="Mail">
+      </div>
+    </section>
+    <!-- experience end-->
+    
+    <!-- Portfolio / gallery-->
+    <section id="projects" class="gallery text-page section-inverse">
+      <div class="container clearfix">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-md-12 col-lg-8">
+                <h2 class="heading">Projects</h2>
+              </div>
             </div>
-            
-            <form class="contact1-form">
-              <span class="contact1-form-title">
-                Get in touch
-              </span>
-            
-              <div class="wrap-input1" data-validate = "Name is required">
-                <input class="input1" type="text" id="name" name="name" placeholder="Name" required>
-                <span class="shadow-input1"></span>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="icon"><i class="fa fa-desktop"></i></div>
+                  <h5>Webdesign</h5>
+                  <p>Fifth abundantly made Give sixth hath. Cattle creature i be don't them.</p>
                 </div>
-            
-              <div class="wrap-input1" data-validate = "Valid email is required: ex@abc.xyz">
-                <input class="input1" type="text" id="email" name="email" placeholder="Email" required>
-                <span class="shadow-input1"></span>
               </div>
-            
-              <div class="wrap-input1" data-validate = "Message is required">
-                <textarea class="input1" name="message" id="message" placeholder="Message" required></textarea>
-                <span class="shadow-input1"></span>
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="icon"><i class="fa fa-print"></i></div>
+                  <h5>Print</h5>
+                  <p>Advantage old had otherwise sincerity dependent additions. It in adapted natural.</p>
+                </div>
               </div>
-            
-              <div class="container-contact1-form-btn">
-                <button type="submit" class="contact1-form-btn">
-                  <span>
-                    Send Email
-                      <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-                  </span>
-                </button>
-              </div>
-            </form>
+            </div>
+            </div>
           </div>
         </div>
-     </div>
+      </div>
+    </section>
+    <!-- Portfolio / gallery end-->
+   
+    <!-- contact-->
+    <section id="contact" class="text-page pb-4"> 
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 class="heading">Contact</h2>
+            <div class="row">
+              <div class="col-lg-6  mx-auto">
+                <form id="contact-form" method="post" action="#" class="contact-form">
+                  <div class="controls">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="name">Your firstname *</label>
+                          <input type="text" name="name" placeholder="Enter your firstname" required="required" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="surname">Your lastname *</label>
+                          <input type="text" name="surname" placeholder="Enter your  lastname" required="required" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="surname">Your email *</label>
+                      <input type="email" name="email" placeholder="Enter your  email" required="required" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="surname">Your message for us *</label>
+                      <textarea rows="4" name="message" placeholder="Enter your message" required="required" class="form-control"></textarea>
+                    </div>
+                    <div class="text-center">
+                      <input type="submit" name="name" value="Send message" class="btn btn-outline-primary btn-block">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!--Preloader-->
-      <div class="preloader"></div>
-
-        <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
-        <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/script.js"></script>
-
-    </body>
+    <footer>
+      <div class="container"> 
+        <div class="row copyright">
+          <div class="col-md-6">
+            <p class="mb-md-0 text-center text-md-left">&copy;2022 Maciej Telega</p>
+          </div>
+          <div class="col-md-6">
+            <p class="credit mb-md-0 text-center text-md-right">Template by <a href="https://bootstrapious.com/p/how-to-build-a-working-bootstrap-contact-form">Bootstrapious</a></p>
+            <!-- Please do not remove the backlink to us. It is part of the licence conditions. Thanks for understanding :)-->
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/lightbox2/js/lightbox.min.js"></script>
+    <script src="js/front.js"></script>
+  </body>
 </html>

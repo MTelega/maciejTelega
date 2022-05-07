@@ -1,0 +1,29 @@
+
+@media (max-width: 767.98px) {
+    .content-intro {
+        top: 40% !important;
+        padding: 0px !important;
+    }
+}
+
+@media (min-width: 767.99px) {
+    .frontend {
+        border-right: 1px solid black !important;
+    }
+}
+
+#intro {
+    background-image: url('../img/intro.jpg');
+}
+
+footer {
+    background-color: #111;
+}
+
+#contact {
+    background-color: #fff;
+}
+
+#skills {
+    background-color: #eee;
+}
