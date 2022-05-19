@@ -26,11 +26,11 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM location';
+	$countQuery = 'SELECT COUNT(id) as lc FROM location';
 
-	$countResultOne = $conn->query($countBefore);
+	$countResultOne = $conn->query($countQuery);
 
-	$query = $conn->prepare('DELETE FROM location WHERE id = ? AND NOT EXISTS (SELECT * FROM department WHERE locationID = ?)');
+	$query = $conn->prepare('DELETE FROM location WHERE id = ? AND NOT EXISTS (SELECT id FROM department WHERE locationID = ?)');
 	
 	$query->bind_param("ii", $_POST['id'], $_POST['id']);
 
@@ -51,15 +51,14 @@
 
 	} 
 
-	$countAfter = 'SELECT COUNT(*) FROM location';
 
-	$countResultTwo = $conn->query($countAfter);
+	$countResultTwo = $conn->query($countQuery);
 
 	$countOne = mysqli_fetch_assoc($countResultOne);
 
 	$countTwo = mysqli_fetch_assoc($countResultTwo);
 
-	if ($countOne['COUNT(*)'] === $countTwo['COUNT(*)']) {
+	if ($countOne['lc'] === $countTwo['lc']) {
 		$output['status']['code'] = "200";
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";

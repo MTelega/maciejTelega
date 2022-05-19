@@ -34,7 +34,7 @@
 
 	$a = $b = "%" . $_GET['search'] . "%";
 
-	$query = $conn->prepare('SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, p.departmentID, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE (p.firstName LIKE ?) OR (p.lastName LIKE ?) ORDER BY p.id, p.lastName, p.firstName, d.name, l.name');
+	$query = $conn->prepare('SELECT p.id, p.lastName, p.firstName, p.jobTitle, p.email, p.departmentID, d.name as department, l.name as location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE (p.firstName LIKE ?) OR (p.lastName LIKE ?) ORDER BY p.lastName');
 	
     $query->bind_param("ss", $a, $b);
 

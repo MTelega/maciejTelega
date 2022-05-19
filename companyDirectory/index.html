@@ -35,7 +35,7 @@
 
 
         <!--PRESONEL-->
-
+          <div id="personnelDiv">
           <div class="row d-flex justify-content-center m-1 personnel">
             <div class="col-12 col-lg-9 d-flex my-3">
             <div class="col-12 col-md-4 d-flex justify-content-center">
@@ -61,26 +61,27 @@
         </div>
       
 
-      <div id="personnelContent" class="col-12 col-md-4 rounded-3 shadow">
-        <div class="align-middle text-center p-1">
-          <h4 id="pHeader" >Personnel</h4> 
-        </div>
-        <div class="d-inline-block w-100 h-auto tableWrapper">
-          <table id="personnelTable" class="table table-hover table-small table-striped ">
-            <tbody id="personnelTableBody" class="overflow-hidden">
-            </tbody>
-          </table>
-        </div>
-        <button type="button" id="addEmplSm" class="btn btn-outline-success d-md-none position-absolute border border-dark addEmplModalButton rounded-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
-      </div>
-
-        <div id="personnelInfo" class="d-none d-md-block col-md-8 ms-2 rounded-3 shadow bg-white">
-          <div class="align-middle text-center p-1 bg-light rounded-3">
-            <h4>Info</h4> 
-          </div>
-          <div class="d-inline align-top">
-            <img id="personalDataImage" src="css/images/personalData.png" alt="personal data image">
-          </div>
+        <div class="row d-flex justify-content-center m-1 personnel">
+          <div class="col-12 col-lg-9 d-flex p-0">
+            <div id="personnelContent" class="col-12 col-md-4 rounded-3 shadow bg-light">
+              <div class="align-middle text-center p-1">
+                <h4 id="pHeader">Personnel</h4> 
+              </div>
+              <div id="tableWrapper" class="w-100 d-inline-block tableWrapper">
+                <table id="personnelTable" class="table table-hover align-middle">
+                  <tbody id="personnelTableBody" class="overflow-hidden">
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" id="addEmplSm" class="btn btn-outline-success d-md-none bg-white position-absolute border border-dark addEmplModalButton rounded-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          <div id="personnelInfo" class="d-none d-md-block col-md-8 ms-2 rounded-3 shadow bg-white">
+            <div class="align-middle text-center p-1 bg-light rounded-3">
+              <h4>Info</h4> 
+            </div>
+            <div class="d-inline align-top">
+              <img id="personalDataImage" src="css/images/personalData.png" alt="personal data image">
+            </div>
           <div class="d-inline-block p-2 fw-bold">
             <p class="fullName mb-0 ms-3"></p>
             <p class="depart mb-0 ms-3 py-2"></p>
@@ -97,8 +98,9 @@
       </div>
     </div>
   </div>
+</div>
 
-    <div class="modal d-md-none" tabindex="-1" id="personnelInfoModal">
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="personnelInfoModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -129,7 +131,7 @@
         
           <!--ADD PERSONNEL MODAL-->
 
-          <div class="modal" id="createEmployeeModal" tabindex="-1">
+          <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="createEmployeeModal" >
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
@@ -164,7 +166,7 @@
 
         <!--UPDATE PERSONNEL MODAL-->
 
-        <div class="modal" id="updateEmployeeModal" tabindex="-1">
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true" id="updateEmployeeModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
@@ -199,18 +201,18 @@
 
         <!--DELETE PERSONNEL MODAL  -->
 
-        <div class="modal fade" id="deletePersonnelModal" tabindex="-1" aria-labelledby="deleteModalLabelOne" aria-hidden="true">
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="deletePersonnelModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content  border border-dark rounded-3">
                 <div class="modal-header">
-                  <h5 class="modal-title text-center" id="deleteModalLabelOne"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
+                  <h5 class="modal-title text-center"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
                 </div>
                 <div class="modal-body text-center fw-bold">
                   <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
                 </div>
                 <div class="modal-footer d-flex justify-content-evenly">
-                    <button type="button" id="deletePersonnelButton"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''>YES</button>
-                    <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
+                    <button type="button" id="deletePersonnelButton"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''><i class="fa-solid fa-check"></i> YES</button>
+                    <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> NO</button>
                 </div>
               </div>
             </div>
@@ -239,8 +241,8 @@
             </div>
 
 
-        <div id="departmentsModal" class="modal d-md-none" tabindex="-1">
-          <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade d-md-none" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true"  id="departmentsModal">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title text-center mx-auto">Department</h5>
@@ -261,7 +263,7 @@
 
         <!--ADD DEPARTMENT MODAL-->
 
-        <div class="modal" id="createDepartmentModal" tabindex="-1">
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="createDepartmentModal">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header d-flex justify-content-center">
@@ -288,11 +290,11 @@
 
         <!--UPDATE DEPARTMENT MODAL-->
 
-        <div class="modal" id="updateDepartmentModal" tabindex="-1">
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="updateDepartmentModal">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header d-flex justify-content-center">
-                <h5 class="modal-title">Add Department</h5>
+                <h5 class="modal-title">Update Department</h5>
               </div>
               <div class="modal-body">
                   <form id="updateDepartmentForm">
@@ -307,26 +309,6 @@
               <div class="modal-footer d-flex justify-content-evenly">
                   <button type="button" id="updateDepartmentButton" class="btn btn-outline-primary border border-dark rounded-3 buttons"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                   <button type="button" class="btn btn-outline-danger buttons border border-dark rounded-3" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-ban"></i> Cancel</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- DELETE DEPARTMENT MODAL-->
-
-        <div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-labelledby="deleteModalLabelTwo" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content  border border-dark rounded-3">
-              <div class="modal-header">
-                <h5 class="modal-title text-center" id="deleteModalLabelTwo"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
-              </div>
-              <div class="modal-body text-center fw-bold">
-                <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
-              </div>
-              <div class="modal-footer d-flex justify-content-evenly">
-                  <button type="button" id="deleteDepartmentButton"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''>YES</button>
-                  <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
               </div>
             </div>
           </div>
@@ -354,8 +336,8 @@
             </div>
         </div>
 
-        <div id="locationModal" class="modal d-md-none" tabindex="-1">
-          <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade d-md-none" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="locationModal">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title text-center mx-auto">Location</h5>
@@ -377,7 +359,7 @@
           
           <!-- ADD LOCATION MODAL-->
 
-          <div class="modal" id="createLocationModal" tabindex="-1">
+          <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="createLocationModal">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header d-flex justify-content-center">
@@ -400,7 +382,7 @@
 
         <!-- UPDATE LOCATION MODAL-->
     
-            <div class="modal" id="updateLocationModal" tabindex="-1">
+            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="updateLocationModal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header d-flex justify-content-center">
@@ -420,42 +402,23 @@
                 </div>
             </div>
 
-            <!-- DELETE LOCATION MODAL-->
-
-            <div class="modal fade" id="deleteLocationModal" tabindex="-1" aria-labelledby="deleteModalLabelThree" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content  border border-dark rounded-3">
-                  <div class="modal-header">
-                    <h5 class="modal-title text-center" id="deleteModalLabelThree"><i class="fa-solid fa-circle-exclamation"></i> Confirmation</h5>
-                  </div>
-                  <div class="modal-body text-center fw-bold">
-                    <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
-                  </div>
-                  <div class="modal-footer d-flex justify-content-evenly">
-                      <button type="button" id="deleteLocationButton"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal">YES</button>
-                      <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal">NO</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!--LAST MESSAGE MODAL-->
 
-            <div class="modal" id="lastModal" tabindex="-1" role="dialog">
+            <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="lastModal" role="dialog">
                 <div class="modal-dialog  modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-body text-center">
                       <p id="confirmationMSG" class="fw-bold"></p>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="submit" class="btn buttons btn-outline-success" data-bs-dismiss="modal" aria-label="Close">OK</button>
+                        <button type="submit" class="btn buttons btn-outline-success" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i>  Close</button>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="modal" id="allByDepartmentModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
                   <div class="modal-content">
                     <div class="modal-body text-center">
                       <div class="list-group dapartmentsSort">
@@ -466,7 +429,7 @@
               </div>
 
               <div class="modal" id="allByLocationModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
                   <div class="modal-content">
                     <div class="modal-body text-center">
                       <div class="list-group locationsSort">
@@ -482,9 +445,10 @@
 
 
         <footer class="d-md-none w-100 mx-auto p-0">
+
           <!--SM BUTTONS-->
   
-          <div class="row mobileButtons d-md-none mx-0 mt-3 mb-4 w-100 ">
+          <div class="row mobileButtons fixed-bottom d-md-none mx-0 mt-3 mb-4 w-100 ">
             <div class="col-4 col-md-5 d-flex justify-content-end">
               <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow refreshBtn"><i class="fas fa-arrows-rotate fa-xl"></i></button>
             </div>

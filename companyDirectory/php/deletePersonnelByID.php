@@ -26,11 +26,8 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM personnel';
 
-	$countResultOne = $conn->query($countBefore);
-
-	$query = $conn->prepare('DELETE FROM personnel WHERE id = ? AND departmentID = "" OR departmentID is NULL');
+	$query = $conn->prepare('DELETE FROM personnel WHERE id = ?');
 	
 	$query->bind_param("i", $_POST['id']);
 
@@ -51,27 +48,6 @@
 
 	} 
 
-	$countAfter = 'SELECT COUNT(*) FROM personnel';
-
-	$countResultTwo = $conn->query($countAfter);
-
-	$countOne = mysqli_fetch_assoc($countResultOne);
-
-	$countTwo = mysqli_fetch_assoc($countResultTwo);
-
-	if ($countOne['COUNT(*)'] === $countTwo['COUNT(*)']) {
-		$output['status']['code'] = "200";
-		$output['status']['name'] = "ok";
-		$output['status']['description'] = "success";
-		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-		$output['data'] = ['The record cannot be deleted because it is associated with another record.'];
-		
-		mysqli_close($conn);
-	
-		echo json_encode($output); 
-
-	} else {
-
 		$output['status']['code'] = "200";
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
@@ -81,8 +57,6 @@
 		mysqli_close($conn);
 	
 		echo json_encode($output); 
-	}
-
 
 
 ?>

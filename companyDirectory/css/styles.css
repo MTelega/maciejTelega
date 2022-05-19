@@ -1,5 +1,7 @@
 body, html {
-    height: 100vh !important;
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden;
 }
 
 .btn-custom {
@@ -17,8 +19,9 @@ body, html {
 }
 
 #personnelInfo {
-    height: 70vh !important;
+    height: calc(100vh - 250px) !important;
 }
+
 
 #personnelInputSearch {
     border-radius: 50px 0px 0px 50px !important;
@@ -26,36 +29,35 @@ body, html {
 
 #dropdownMenuButton1 {
     border-radius: 0px 50px 50px 0px !important;
+    background-color: azure !important;
 }
 
-.tableWrapper {
+.tableWrapper  {
+    height: calc(100% - 70px) !important;
     overflow-y: scroll !important;
-    max-height: 70vh !important;
   }
 
 .tableWrapperTwo {
-    overflow-y: scroll !important;
-    max-height: 63vh !important;
+    overflow: auto !important;
+    max-height: calc(100vh - 250px) !important;
   }
 
-#personnelContent {
-    height: 70vh !important;
+@media (max-width: 766px) { 
+    #personnelContent {
+        max-height: calc(100vh - 164px) !important;
+        min-height: 20vh !important;
+    }
 }
 
-@media (max-width: 766px) { 
-    #department, #location {
-        margin: 0 !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        -ms-transform: translateY(-50%) !important;
-        transform: translateY(-50%) !important;
+@media (min-width: 766px) { 
+    #personnelContent {
+        height: calc(100vh - 250px) !important;
     }
 }
 
 #addEmplSm {
     right: 60px;
-    bottom: 22vh;
+    bottom: 150px;
 }
 
 #personalDataImage {
@@ -79,6 +81,6 @@ body, html {
     margin: 0px;
     width: 100vw;
     height: 100vh;
-    background: black url('images/preloader.gif') no-repeat center center;
+    background: whitesmoke url('images/preloader.gif') no-repeat center center;
     z-index: 9999;
     }

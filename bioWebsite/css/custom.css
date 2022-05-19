@@ -7,8 +7,9 @@
 }
 
 @media (min-width: 767.99px) {
-    .frontend {
-        border-right: 1px solid black !important;
+
+    .project1 {
+        border-right: 1px solid white !important;
     }
 }
 
@@ -26,4 +27,19 @@ footer {
 
 #skills {
     background-color: #eee;
+}
+
+.logo {
+    height: 110px !important;
+    width: auto !important;
+    justify-content: center !important;
+}
+
+.logo img {
+    max-height: 110px !important;
+    width: auto !important;
+}
+
+.iframe {
+    min-height: 500px !important;
 }

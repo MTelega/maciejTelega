@@ -41,12 +41,10 @@ $( document ).ready(function() {
 
     function personnelDataOutput(data) {
         data.forEach(employee => {
-            let firstLetterFName = employee.firstName.charAt(0);
-            let firstLetterLName = employee.lastName.charAt(0);
-
             let personnelRow =
             `<tr class="personnelRowClick" href=${employee.id}>
-                <td class="fw-bold p-2">${employee.lastName} ${employee.firstName}</td>
+                <td class="fw-bold p-2">${employee.lastName}</td>
+                <td class="fw-bold p-2">${employee.firstName}</td>
             </tr>`;
             $('#personnelTableBody').append(personnelRow);
         });
@@ -72,7 +70,6 @@ $( document ).ready(function() {
         $('#updatePersonnelJobTitle').val(data[0].jobTitle);
         $('#updatePersonnelEmail').val(data[0].email);
         $('#updatePersonnelDepartment').val(data[0].departmentID).change();
-
     };
 
     //GET ALL PERSONNEL
@@ -209,38 +206,7 @@ function locationGetAll() {
         success: function(result) {
             if (result.status.name == "ok") {
                 if (result['data'].length > 0){
-                    result['data'].forEach(employee => {
-                        let firstLetterFName = employee.firstName.charAt(0);
-                        let firstLetterLName = employee.lastName.charAt(0);
-                        let personnelRow =
-                        `<tr class="personnelRowClick" href=${employee.id}>
-                        <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
-                        </tr>`;
-                        
-                        $('#personnelTableBody').append(personnelRow);
-                });
-                $('#deletePersonnelButton').val(result.data[0].id)
-                $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
-                $('.depart').html(result.data[0].department);
-                $('.loc').html(result.data[0].location);
-                if(result.data[0].jobTitle != ''){
-                    $('.jTitleP, .jobT').removeClass('d-none');
-                    $('.jobT').html(result.data[0].jobTitle);
-                } else {
-                    $('.jTitleP, .jobT').addClass('d-none');
-                }
-                if(result.data[0].email != ''){
-                    $('.mailP, .mail').removeClass('d-none');
-                    $('.mail').html(result.data[0].email);
-                } else {
-                    $('.mailP, .mail').addClass('d-none');
-                }
-                $('#updatePersonnelButton').val(result.data[0].id)
-                $('#updatePersonnelFirstName').val(result.data[0].firstName);
-                $('#updatePersonnelLastName').val(result.data[0].lastName);
-                $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
-                $('#updatePersonnelEmail').val(result.data[0].email);
-                $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+                    personnelDataOutput(result['data']);
 
                 
             }
@@ -254,7 +220,6 @@ function locationGetAll() {
     }
     });
         } else if (txt == '' || txt.trim() == ''){
-            $('#pageButtons').removeClass("d-none");
             let getAllUrl = "php/getAll.php";
             personnelGetAll(getAllUrl);
         }
@@ -289,39 +254,7 @@ function locationGetAll() {
             success: function(result) {
                 if (result.status.name == "ok") {
                     if (result['data'].length > 0){
-
-                        result['data'].forEach(employee => {
-                            let firstLetterFName = employee.firstName.charAt(0);
-                            let firstLetterLName = employee.lastName.charAt(0);
-                            let personnelRow =
-                            `<tr class="personnelRowClick" href=${employee.id}>
-                            <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
-                            </tr>`;
-                            
-                            $('#personnelTableBody').append(personnelRow);
-                    });
-                    $('#deletePersonnelButton').val(result.data[0].id)
-                    $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
-                    $('.depart').html(result.data[0].department);
-                    $('.loc').html(result.data[0].location);
-                    if(result.data[0].jobTitle != ''){
-                        $('.jTitleP, .jobT').removeClass('d-none');
-                        $('.jobT').html(result.data[0].jobTitle);
-                    } else {
-                        $('.jTitleP, .jobT').addClass('d-none');
-                    }
-                    if(result.data[0].email != ''){
-                        $('.mailP, .mail').removeClass('d-none');
-                        $('.mail').html(result.data[0].email);
-                    } else {
-                        $('.mailP, .mail').addClass('d-none');
-                    }
-                    $('#updatePersonnelButton').val(result.data[0].id)
-                    $('#updatePersonnelFirstName').val(result.data[0].firstName);
-                    $('#updatePersonnelLastName').val(result.data[0].lastName);
-                    $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
-                    $('#updatePersonnelEmail').val(result.data[0].email);
-                    $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
+                        personnelDataOutput(result['data']);
                     $('#pHeader').text(result.data[0].department);
                 }
     
@@ -351,40 +284,7 @@ function locationGetAll() {
                 success: function(result) {
                     if (result.status.name == "ok") {
                         if (result['data'].length > 0){
-    
-                            result['data'].forEach(employee => {
-                                let firstLetterFName = employee.firstName.charAt(0);
-                                let firstLetterLName = employee.lastName.charAt(0);
-                                let personnelRow =
-                                `<tr class="personnelRowClick" href=${employee.id}>
-                                <td class="fw-bold p-2"><span class='firstLetter'>${firstLetterFName}</span><span class='secondLetter'>${firstLetterLName}</span> ${employee.firstName} ${employee.lastName}</td>
-                                </tr>`;
-                                
-                                $('#personnelTableBody').append(personnelRow);
-                        });
-                        $('#deletePersonnelButton').val(result.data[0].id)
-                        $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
-                        $('.depart').html(result.data[0].department);
-                        $('.loc').html(result.data[0].location);
-                        if(result.data[0].jobTitle != ''){
-                            $('.jTitleP, .jobT').removeClass('d-none');
-                            $('.jobT').html(result.data[0].jobTitle);
-                        } else {
-                            $('.jTitleP, .jobT').addClass('d-none');
-                        }
-                        if(result.data[0].email != ''){
-                            $('.mailP, .mail').removeClass('d-none');
-                            $('.mail').html(result.data[0].email);
-                        } else {
-                            $('.mailP, .mail').addClass('d-none');
-                        }
-                        $('#updatePersonnelButton').val(result.data[0].id)
-                        $('#updatePersonnelFirstName').val(result.data[0].firstName);
-                        $('#updatePersonnelLastName').val(result.data[0].lastName);
-                        $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
-                        $('#updatePersonnelEmail').val(result.data[0].email);
-                        $('#updatePersonnelDepartment').val(result.data[0].departmentID).change();
-                        console.log(result);
+                            personnelDataOutput(result['data'])
                         $('#pHeader').text(result.data[0].location);
                     }
         
@@ -619,12 +519,6 @@ $(document).on('click', '.updateDepBtn', function() {
     })
 
     $(document).on('click', '.deleteDepBtn', function() {
-        $('#deleteDepartmentButton').val($(this).val());
-        $('#deleteDepartmentModal').modal('show');
-        });
-    
-    $('#deleteDepartmentButton').click(function () {
-        $('#deleteDepartmentModal').modal('hide');
         $.ajax({
             url: "php/deleteDepartmentByID.php",
             type: 'POST',
@@ -635,6 +529,7 @@ $(document).on('click', '.updateDepBtn', function() {
             success: function(result) {
                 if (result.status.name == "ok") {
                     callAll();
+                    $("#lastModal").modal('show');
                     $('#confirmationMSG').html(result.data[0]);
                 }
             },
@@ -645,7 +540,8 @@ $(document).on('click', '.updateDepBtn', function() {
                 console.log(jqXHR);      
             }
             });
-    })
+        });
+    
 
     $(document).on('click', '.updateDepBtn', function() {
         $('#updateDepartmentButton').val($(this).val());
@@ -725,12 +621,6 @@ $(document).on('click', '.updateDepBtn', function() {
     })
 
     $(document).on('click', '.deleteLocationBtn', function() {
-        $('#deleteLocationButton').val($(this).val());
-        $('#deleteLocationModal').modal('show');
-        });
-    
-    $('#deleteLocationButton').click(function () {
-        $('#deleteLocationModal').modal('hide');
         $.ajax({
             url: "php/deleteLocationByID.php",
             type: 'POST',
@@ -739,9 +629,11 @@ $(document).on('click', '.updateDepBtn', function() {
                 id:  $(this).val(),
             },
             success: function(result) {
+                console.log(result)
                 if (result.status.name == "ok") {
                     callAll();
                     $('#confirmationMSG').html(result.data[0]);
+                    $("#lastModal").modal('show');
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -751,7 +643,7 @@ $(document).on('click', '.updateDepBtn', function() {
                 console.log(jqXHR);      
             }
             });
-    })
+        });
 
 
     $(document).on('click', '.updateLocationBtn', function() {

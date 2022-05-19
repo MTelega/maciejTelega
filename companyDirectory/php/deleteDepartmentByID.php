@@ -26,11 +26,11 @@
 		exit;
 
 	}	
-	$countBefore = 'SELECT COUNT(*) FROM department';
+	$countQuery = 'SELECT COUNT(id) as pc FROM department';
 
-	$countResultOne = $conn->query($countBefore);
+	$countResultOne = $conn->query($countQuery);
 
-	$query = $conn->prepare('DELETE FROM department WHERE id = ? AND NOT EXISTS (SELECT * FROM personnel WHERE departmentID = ?)');
+	$query = $conn->prepare('DELETE FROM department WHERE id = ? AND NOT EXISTS (SELECT id FROM personnel WHERE departmentID = ?)');
 	
 	$query->bind_param("ii", $_POST['id'], $_POST['id']);
 
@@ -51,15 +51,13 @@
 
 	} 
 
-	$countAfter = 'SELECT COUNT(*) FROM department';
-
-	$countResultTwo = $conn->query($countAfter);
+	$countResultTwo = $conn->query($countQuery);
 
 	$countOne = mysqli_fetch_assoc($countResultOne);
 
 	$countTwo = mysqli_fetch_assoc($countResultTwo);
 
-	if ($countOne['COUNT(*)'] === $countTwo['COUNT(*)']) {
+	if ($countOne['pc'] === $countTwo['pc']) {
 		$output['status']['code'] = "200";
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";

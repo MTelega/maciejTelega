@@ -28,9 +28,9 @@
 		exit;
 
 	}	
-    $countBefore = 'SELECT COUNT(*) FROM personnel';
+    $countQuery = 'SELECT COUNT(id) as pc FROM personnel';
 
-	$countResultOne = $conn->query($countBefore);
+	$countResultOne = $conn->query($countQuery);
 
 	$countOne = mysqli_fetch_assoc($countResultOne);
 
@@ -55,14 +55,12 @@
 
 	}
 
-    
-    $countAfter = 'SELECT COUNT(*) FROM personnel';
 
-	$countResultTwo = $conn->query($countAfter);
+	$countResultTwo = $conn->query($countQuery);
 
     $countTwo = mysqli_fetch_assoc($countResultTwo);
 
-	if ($countOne['COUNT(*)'] < $countTwo['COUNT(*)']) {
+	if ($countOne['pc'] < $countTwo['pc']) {
 		$output['status']['code'] = "200";
 		$output['status']['name'] = "ok";
 		$output['status']['description'] = "success";
