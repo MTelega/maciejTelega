@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="vendors/fontawesome-free/css/all.css">
         <link rel="stylesheet" href="css/styles.css">
     </head>
-    <body class="container-fluid p-0">
+    <body class="p-0">
             <div class="navbar-header d-none d-md-block border-bottom rounded-bottom border-dark bg-dark bg-gradient text-center text-white p-1">
                 <h3>Company Directory<span id="barSpan" class="d-none d-md-inline"> - Personnel</span></h3>
             </div>
@@ -21,7 +21,7 @@
 
                     <!--BIG BUTTONS-->
 
-          <div class="row py-2 d-none d-md-flex">
+          <div class="row py-2 d-none d-md-flex mb-4">
             <div class="col-4 col-md-5 d-flex justify-content-end">
                 <button type="button" class="btn personnelButton btn-custom btn-outline-dark border border-dark rounded-3 shadow"><i class="fas fa-user fa-2xl"></i></button>
             </div>
@@ -35,70 +35,69 @@
 
 
         <!--PRESONEL-->
-          <div id="personnelDiv">
-          <div class="row d-flex justify-content-center m-1 personnel">
-            <div class="col-12 col-lg-9 d-flex my-3">
-            <div class="col-12 col-md-4 d-flex justify-content-center">
-                <form class="w-100">
-                    <input class="form-control border me-2 shadow" id="personnelInputSearch" type="search" placeholder="Search" aria-label="Search">
-                </form>
-                <div class="dropdown">
-                  <button class="btn btn-outline-dark border shadow dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-sliders"></i>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" id="sortFirstName">First name</a></li>
-                    <li><a class="dropdown-item" id="sortLastName">Last name</a></li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#allByDepartmentModal">Department</i></a></li>
-                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#allByLocationModal">Location</i></a></li>
-                  </ul>
-              </div>
+        <div class="container personnel d-flex justify-content-center mt-2 mx-auto">
+          <div class="row row-cols-2 justify-content-center">
+            <div class="col-12 col-md-4 d-flex justify-content-center topHeight p-0">
+              <form class="w-100">
+                  <input class="form-control border me-2 shadow" id="personnelInputSearch" type="search" placeholder="Search" aria-label="Search">
+              </form>
+              <div class="dropdown">
+                <button class="btn btn-outline-dark border shadow dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-sliders"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" id="sortFirstName">First name</a></li>
+                  <li><a class="dropdown-item" id="sortLastName">Last name</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#allByDepartmentModal">Department</i></a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#allByLocationModal">Location</i></a></li>
+                </ul>
             </div>
-            <div class="col-md-8 d-flex justify-content-end ms-2">
-              <button type="button" class="btn btn-outline-dark border border-dark rounded-3 shadow refreshBtn me-2 d-none d-md-block"><i class="fas fa-arrows-rotate"></i></button>
-              <button type="button" class="btn btn-outline-success border border-dark addEmplModalButton rounded-3 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
-            </div>
-        </div>
-      
+          </div>
+          <div class="d-none d-md-flex col-md-7 justify-content-end ms-2 topHeight p-0">
+            <button type="button" class="btn btn-outline-dark border border-dark rounded-3 shadow refreshBtn me-2 d-none d-md-block"><i class="fas fa-arrows-rotate"></i></button>
+            <button type="button" class="btn btn-outline-success border border-dark addEmplModalButton shadow rounded-3 d-none d-md-block" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
+          </div>
 
-        <div class="row d-flex justify-content-center m-1 personnel">
-          <div class="col-12 col-lg-9 d-flex p-0">
-            <div id="personnelContent" class="col-12 col-md-4 rounded-3 shadow bg-light">
+            <div class="col-12 col-md-4 rounded-3 shadow bg-light personnelContent p-0 mt-2">
               <div class="align-middle text-center p-1">
                 <h4 id="pHeader">Personnel</h4> 
               </div>
-              <div id="tableWrapper" class="w-100 d-inline-block tableWrapper">
-                <table id="personnelTable" class="table table-hover align-middle">
+              <div class="w-100 d-inline-block tableWrapper mb-4">
+                <table id="personnelTable" class="table table-hover bg-white align-middle">
                   <tbody id="personnelTableBody" class="overflow-hidden">
                   </tbody>
                 </table>
               </div>
-              <button type="button" id="addEmplSm" class="btn btn-outline-success d-md-none bg-white position-absolute border border-dark addEmplModalButton rounded-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
+              <div class="d-md-none w-100 d-flex justify-content-evenly">
+                <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow refreshBtn"><i class="fas fa-arrows-rotate fa-xl"></i></button>
+                <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow" data-bs-toggle="modal" data-bs-target="#departmentsModal"><i class="fas fa-sitemap fa-xl"></i></button>
+                <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow" data-bs-toggle="modal" data-bs-target="#locationModal"><i class="fas fa-location-pin fa-xl"></i></button>
+              </div>
+              <button type="button" id="addEmplSm" class="btn btn-outline-success d-md-none bg-white position-absolute border border-dark shadow addEmplModalButton rounded-3" data-bs-toggle="modal" data-bs-target="#createEmployeeModal"><i class="fa-solid fa-plus"></i></button>
             </div>
-          <div id="personnelInfo" class="d-none d-md-block col-md-8 ms-2 rounded-3 shadow bg-white">
-            <div class="align-middle text-center p-1 bg-light rounded-3">
-              <h4>Info</h4> 
+              
+            <div class="d-none d-md-block col-md-7 ms-2 rounded-3 shadow bg-white personnelContent p-0 mt-2">
+              <div class="align-middle text-center p-1 bg-light rounded-3">
+                <h4>Info</h4> 
+              </div>
+              <div class="d-inline align-top">
+                <img id="personalDataImage" src="css/images/personalData.png" alt="personal data image">
+              </div>
+            <div class="d-inline-block p-2 fw-bold">
+              <p class="fullName mb-0 ms-3"></p>
+              <p class="depart mb-0 ms-3 py-2"></p>
+              <p class="loc mb-0 ms-3"></p>
+              <p class="jobT jTitleP d-none mb-0 ms-3 pt-2"></p>
+              <p class="mail d-none mb-0 ms-3 pt-2"></p>
             </div>
-            <div class="d-inline align-top">
-              <img id="personalDataImage" src="css/images/personalData.png" alt="personal data image">
+            <div class="border-bottom"></div>
+            <div class="d-flex justify-content-evenly mt-4">
+              <button type="button" class="btn btn-outline-primary border border-dark rounded-3 buttons pEdit" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+              <button type="button" class="btn btn-outline-danger border border-dark rounded-3 buttons pDelete" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"><i class="fas fa-trash"></i> Delete</button>
             </div>
-          <div class="d-inline-block p-2 fw-bold">
-            <p class="fullName mb-0 ms-3"></p>
-            <p class="depart mb-0 ms-3 py-2"></p>
-            <p class="loc mb-0 ms-3"></p>
-            <p class="jobT jTitleP d-none mb-0 ms-3 pt-2"></p>
-            <p class="mail d-none mb-0 ms-3 pt-2"></p>
-          </div>
-          <div class="border-bottom"></div>
-          <div class="d-flex justify-content-evenly mt-4">
-            <button type="button" class="btn btn-outline-primary border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-            <button type="button" class="btn btn-outline-danger border border-dark rounded-3 buttons" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal"><i class="fas fa-trash"></i> Delete</button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="personnelInfoModal">
       <div class="modal-dialog modal-dialog-centered">
@@ -211,8 +210,8 @@
                   <p>This record will be permamently deleted. Are you sure you wish to continue?</p>
                 </div>
                 <div class="modal-footer d-flex justify-content-evenly">
-                    <button type="button" id="deletePersonnelButton"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''><i class="fa-solid fa-check"></i> YES</button>
-                    <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> NO</button>
+                    <button type="button" id="deletePersonnelButton" class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#lastModal" value=''><i class="fa-solid fa-check"></i> Yes</button>
+                    <button type="button" class="btn btn-outline-danger border border-dark rounded-3" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> No</button>
                 </div>
               </div>
             </div>
@@ -221,24 +220,24 @@
     
         <!--DEPARTMENT-->
 
-          <div class="row d-none d-md-flex justify-content-evenly d-md-none m-0" id="department">
-            <div class="col-12 col-md-9 col-lg-8 col-xl-7">
-                <div class="col-12 d-flex justify-content-end my-3">
-                    <button type="button" class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"><i class="fa-solid fa-plus"></i></button>
+          <div id="department" class="container d-none d-md-none d-md-flex justify-content-center mt-2 mx-auto w-100">
+            <div class="row row-cols-2 justify-content-center w-75">
+              <div class="col-12 d-flex justify-content-end topHeight p-0">
+                  <button type="button" class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createDepartmentModal"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <div class="col-12 rounded-3 shadow bg-light departmentContent p-0 mt-2">
+                <div class="align-middle text-center p-1">
+                  <h4 id="pHeader">Department</h4> 
                 </div>
-                <div class="col-12 rounded-3 shadow bg-light d-inline-block p-0">
-                  <div class="align-middle text-center p-1">
-                    <h4>Department</h4> 
-                  </div>
-                  <div class="w-100 d-inline-block tableWrapperTwo">
-                    <table class="table table-hover table-small">
-                      <tbody class="departmentTableBody overflow-hidden">
-                      </tbody>
-                    </table>
-                  </div>   
+                <div class="w-100 d-inline-block tableWrapperTwo mb-4">
+                  <table class="table table-hover bg-white align-middle">
+                    <tbody class="departmentTableBody overflow-hidden">
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
+          </div>
 
 
         <div class="modal fade d-md-none" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true"  id="departmentsModal">
@@ -316,24 +315,25 @@
 
         <!--LOCATION-->
 
-        <div class="row d-none d-md-flex justify-content-evenly d-md-none m-0" id="location">
-            <div class="col-12 col-md-7 col-lg-6 col-xl-4">
-                <div class="col-12 d-flex justify-content-end my-3">
-                    <button type="button"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createLocationModal"><i class="fa-solid fa-plus"></i></button>
-                </div>
-            
-                <div class="col-12 rounded-3 shadow bg-light d-inline-block p-0">
-                  <div class="align-middle text-center p-1">
-                    <h4>Location</h4> 
-                  </div>
-                  <div class="w-100 d-inline-block tableWrapperTwo">
-                    <table class="table table-hover text-center">
-                      <tbody class="locationTableBody">
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+
+
+        <div id="location" class="container d-none d-md-none d-md-flex justify-content-center mt-2 mx-auto">
+          <div class="row justify-content-center locationWidh">
+            <div class="col-12 d-flex justify-content-end topHeight p-0">
+              <button type="button"  class="btn btn-outline-success border border-dark rounded-3" data-bs-toggle="modal" data-bs-target="#createLocationModal"><i class="fa-solid fa-plus"></i></button>
             </div>
+            <div class="col-12 rounded-3 shadow bg-light locationContent p-0 mt-2">
+              <div class="align-middle text-center p-1">
+                <h4 id="pHeader">Location</h4> 
+              </div>
+              <div class="w-100 d-inline-block tableWrapperTwo mb-4"> 
+                <table class="table table-hover bg-white align-middle">
+                  <tbody class="locationTableBody overflow-hidden">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="modal fade d-md-none" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" id="locationModal">
@@ -411,7 +411,7 @@
                       <p id="confirmationMSG" class="fw-bold"></p>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <button type="submit" class="btn buttons btn-outline-success" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i>  Close</button>
+                        <button type="submit" id="confirmationButton" class="btn buttons btn-outline-success" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i>  Close</button>
                     </div>
                   </div>
                 </div>
@@ -440,26 +440,6 @@
               </div>
 
               <div class="loader"></div>
-              
-
-
-
-        <footer class="d-md-none w-100 mx-auto p-0">
-
-          <!--SM BUTTONS-->
-  
-          <div class="row mobileButtons fixed-bottom d-md-none mx-0 mt-3 mb-4 w-100 ">
-            <div class="col-4 col-md-5 d-flex justify-content-end">
-              <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow refreshBtn"><i class="fas fa-arrows-rotate fa-xl"></i></button>
-            </div>
-            <div class="col-4 col-md-5 d-flex justify-content-center">
-              <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow" data-bs-toggle="modal" data-bs-target="#departmentsModal"><i class="fas fa-sitemap fa-xl"></i></button>
-            </div>
-            <div class="col-4 col-md-5 d-flex justify-content-start">
-              <button type="button" class="btn btn-customTwo btn-outline-dark border border-dark rounded-3 shadow" data-bs-toggle="modal" data-bs-target="#locationModal"><i class="fas fa-location-pin fa-xl"></i></button>
-            </div>
-        </div>
-      </footer>
 
 
         <script src="vendors/jquery/dist/jquery.min.js"></script>
@@ -467,6 +447,6 @@
         <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/main.js"></script>
 
-    </body>
+  </body>
     
 </html>

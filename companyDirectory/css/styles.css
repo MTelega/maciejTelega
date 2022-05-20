@@ -19,7 +19,7 @@ body, html {
 }
 
 #personnelInfo {
-    height: calc(100vh - 250px) !important;
+    height: auto !important;
 }
 
 
@@ -33,31 +33,61 @@ body, html {
 }
 
 .tableWrapper  {
-    height: calc(100% - 70px) !important;
-    overflow-y: scroll !important;
+    height: calc(100% - 50px) !important;
+    overflow: auto !important;
   }
 
-.tableWrapperTwo {
+  .tableWrapperTwo  {
+    height: calc(100% - 50px) !important;
     overflow: auto !important;
-    max-height: calc(100vh - 250px) !important;
   }
+
+#department {
+    max-height: calc(100% - 250px);
+    width: 100%;
+    min-height: 300px;
+}
+
+#location {
+    max-height: calc(100% - 150px);
+    min-height: 200px;
+}
+
+.locationContent {
+    height: calc(100% - 70px);
+} 
+
+.locationWidh {
+    min-width: 400px;
+    max-width: 100%;
+}
 
 @media (max-width: 766px) { 
-    #personnelContent {
-        max-height: calc(100vh - 164px) !important;
-        min-height: 20vh !important;
+    .personnel {
+        height: calc(100% - 150px);
+    }
+    .personnelContent {
+        height: 100%
     }
 }
 
 @media (min-width: 766px) { 
-    #personnelContent {
-        height: calc(100vh - 250px) !important;
+
+    .personnel {
+        max-height: calc(100% - 200px);
+        width: 100%;
+        min-height: 500px;
     }
+    .personnelContent, .departmentContent {
+        height: calc(100% - 50px);
+    }   
 }
 
 #addEmplSm {
-    right: 60px;
+    right: 45px;
     bottom: 150px;
+    height: 45px;
+    width: 45px;
 }
 
 #personalDataImage {
@@ -72,7 +102,9 @@ body, html {
 .personnelRowClick { 
     cursor: pointer; 
 } 
-
+ .topHeight {
+     height: 40px;
+ }
 .loader {
     position: fixed;
     top: 0px;

@@ -2,6 +2,8 @@ $( document ).ready(function() {
 
     $('.loader').fadeOut(1500);
 
+
+
     //BIG BUTTONS FUNCTIONALITY
 
     $(".personnelButton").click(function (){
@@ -10,6 +12,9 @@ $( document ).ready(function() {
             $("#department").addClass("d-md-none");
             $("#location").addClass("d-md-none");
             $("#barSpan").html(" - Personnel");
+            $(".personnelButton").addClass('active');
+            $(".locationButton").removeClass('active');
+            $(".departmentButton").removeClass('active');
         } 
     });
 
@@ -19,9 +24,14 @@ $( document ).ready(function() {
             $("#location").addClass("d-md-none");
             $(".personnel").addClass("d-none");
             $("#barSpan").html(" - Department");
+            $(".departmentButton").addClass('active');
+            $(".personnelButton").removeClass('active');
+            $(".locationButton").removeClass('active');
         } else {
             $("#department").addClass("d-md-none");
             $(".personnelButton").trigger('click');
+            $(".personnelButton").addClass('active');
+            $(".departmentButton").removeClass('active');
         }
     })
 
@@ -31,9 +41,14 @@ $( document ).ready(function() {
             $("#department").addClass("d-md-none");
             $(".personnel").addClass("d-none");
             $("#barSpan").html(" - Location");
+            $(".locationButton").addClass('active');
+            $(".personnelButton").removeClass('active');
+            $(".departmentButton").removeClass('active');
         } else {
             $("#location").addClass("d-md-none");
             $(".personnelButton").trigger('click');
+            $(".personnelButton").addClass('active');
+            $(".locationButton").removeClass('active');
         }
     });
 
@@ -48,7 +63,7 @@ $( document ).ready(function() {
             </tr>`;
             $('#personnelTableBody').append(personnelRow);
         });
-        $('#deletePersonnelButton').val(data[0].id)
+        $('#deletePersonnelButton').attr('value', data[0].id)
         $('.fullName').html(data[0].firstName + ' ' + data[0].lastName);
         $('.depart').html(data[0].department);
         $('.loc').html(data[0].location);
@@ -64,7 +79,7 @@ $( document ).ready(function() {
         } else {
             $('.mailP, .mail').addClass('d-none');
         }
-        $('#updatePersonnelButton').val(data[0].id)
+        $('#updatePersonnelButton').attr('value', data[0].id)
         $('#updatePersonnelFirstName').val(data[0].firstName);
         $('#updatePersonnelLastName').val(data[0].lastName);
         $('#updatePersonnelJobTitle').val(data[0].jobTitle);
@@ -312,7 +327,7 @@ function locationGetAll() {
         },
         success: function(result) {
             if (result.status.name == "ok") {
-                $('#deletePersonnelButton').val(result.data[0].id)
+                $('#deletePersonnelButton').attr('value', result.data[0].id);
                 $('.fullName').html(result.data[0].firstName + ' ' + result.data[0].lastName);
                 $('.depart').html(result.data[0].department);
                 $('.loc').html(result.data[0].location);
@@ -328,7 +343,7 @@ function locationGetAll() {
                 } else {
                     $('.mailP, .mail').addClass('d-none');
                 }
-                $('#updatePersonnelButton').val(result.data[0].id)
+                $('#updatePersonnelButton').attr('value', result.data[0].id)
                 $('#updatePersonnelFirstName').val(result.data[0].firstName);
                 $('#updatePersonnelLastName').val(result.data[0].lastName);
                 $('#updatePersonnelJobTitle').val(result.data[0].jobTitle);
@@ -376,7 +391,6 @@ function locationGetAll() {
                             $('#createEmployeeModal').modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -418,7 +432,6 @@ function locationGetAll() {
                             $('#updateEmployeeModal').modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -443,7 +456,6 @@ function locationGetAll() {
             },
             success: function(result) {
                 if (result.status.name == "ok") {
-                    callAll();
                     $('#confirmationMSG').html(result.data[0]);
 
                 }
@@ -501,10 +513,10 @@ $(document).on('click', '.updateDepBtn', function() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#departmentsModal').modal('hide');
                             $("#createDepartmentModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -528,7 +540,7 @@ $(document).on('click', '.updateDepBtn', function() {
             },
             success: function(result) {
                 if (result.status.name == "ok") {
-                    callAll();
+                    $('#departmentsModal').modal('hide');
                     $("#lastModal").modal('show');
                     $('#confirmationMSG').html(result.data[0]);
                 }
@@ -568,10 +580,10 @@ $(document).on('click', '.updateDepBtn', function() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#departmentsModal').modal('hide');
                             $("#updateDepartmentModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -603,10 +615,10 @@ $(document).on('click', '.updateDepBtn', function() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#locationModal').modal('hide');
                             $("#createLocationModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -631,7 +643,7 @@ $(document).on('click', '.updateDepBtn', function() {
             success: function(result) {
                 console.log(result)
                 if (result.status.name == "ok") {
-                    callAll();
+                    $('#locationModal').modal('hide');
                     $('#confirmationMSG').html(result.data[0]);
                     $("#lastModal").modal('show');
                 }
@@ -688,10 +700,10 @@ $(document).on('click', '.updateDepBtn', function() {
                     },
                     success: function(result) {
                         if (result.status.name == "ok") {
+                            $('#locationModal').modal('hide');
                             $("#updateLocationModal").modal('hide');
                             $("#lastModal").modal('show');
                             $('#confirmationMSG').html(result.data[0]);
-                            callAll();
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -707,7 +719,7 @@ $(document).on('click', '.updateDepBtn', function() {
 
     //REFRESH BUTTON
 
-    $('.refreshBtn').click(function () {
+    $('.refreshBtn, #confirmationButton').click(function () {
         callAll();
     })
 
