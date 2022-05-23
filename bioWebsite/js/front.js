@@ -47,9 +47,23 @@ $(function () {
     
             },
             success: function(result) {
-                console.log(result);
+                $('#name').val('');
+                $('#surname').val('');
+                $('#email').val('');
+                $('#message').val('');
+                $('#confirm').text(result.message);
+                $('#confirmation').modal('show');
             },
+            error: function(err) {
+                console.log(err);
+            }
         });
+        return false;
     });
 
+    $('.close').click(function() {
+        $('#confirmation').modal('hide');
+    });
+
+    $('.loader').hide();
 });

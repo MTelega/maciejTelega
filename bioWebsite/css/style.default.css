@@ -207,59 +207,8 @@ SERVICES SECTION
   margin-bottom: 10px;
 }
 
-/*
-*
-=====================
-MAP SECTION
-=====================
-*
-*/
-#map {
-  height: 400px;
-}
-
-.map-custom-popup .leaflet-popup-content-wrapper {
-  overflow: hidden;
-  padding: 0;
-  border-radius: 0;
-  font-family: "Cardo", "Times New Roman", Times, serif;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.map-custom-popup .leaflet-popup-content {
-  margin: 0;
-  background: #fff;
-}
-
-.map-custom-popup .leaflet-popup-tip {
-  background: #fff;
-}
-
-.map-custom-popup a.leaflet-popup-close-button {
-  display: inline-block;
-  width: 30px !important;
-  height: 30px !important;
-  padding: 0 !important;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  color: #fff !important;
-  background: #343a40 !important;
-  font-weight: bold;
-  line-height: 30px !important;
-}
-
-.map-custom-popup .leaflet-popup-content p {
-  margin: 0 0 1rem;
-}
-
-.map-custom-popup .leaflet-popup-content a {
-  color: #333;
-}
 
 /*
-*
 =====================
 CONTACT SECTION
 =====================

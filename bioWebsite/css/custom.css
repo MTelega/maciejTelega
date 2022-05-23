@@ -29,6 +29,10 @@ footer {
     background-color: #eee;
 }
 
+.bg-btn {
+    background-color: #eee;
+}
+
 .logo {
     height: 110px !important;
     width: auto !important;
@@ -40,6 +44,20 @@ footer {
     width: auto !important;
 }
 
-.iframe {
-    min-height: 500px !important;
+
+.loader {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    padding: 0px;
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: black url('../img/preloader.gif') no-repeat center center;
+    z-index: 9999;
+    }
+
+.customFont {
+    font-family: "Times New Roman", Times, serif !important;
+    padding-left: 7px;
 }

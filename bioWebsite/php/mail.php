@@ -1,49 +1,51 @@
 <?php
 $configs = include('config.php');
 
-require "../vendor/phpmailer/phpmailer/src/PHPMailer.php";
-require "../vendor/phpmailer/phpmailer/src/SMTP.php";
-require "../vendor/phpmailer/phpmailer/src/Exception.php";
-require '../vendor/autoload.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+require '../vendor/autoload.php';
+
+$response_array = array();
 $from = $_REQUEST['email'];
 $name = $_REQUEST['name'];
 $surname = $_REQUEST['surname'];
 $msg = $_REQUEST['message'];
-$subject = 'email from www.maciejtelega.co.uk';
+$subject = 'email from bio website';
 
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
-try {
-    //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                        //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = $configs['gmail'];                      //SMTP username
-    $mail->Password   = $configs['password'];                   //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-    //Recipients
     $mail->setFrom($from);
-    $mail->addAddress($configs['email']);     //Add a recipient
-
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->addAddress($configs['email']);
     $mail->Subject = $subject;
-    $mail->Body    = '<p>From: ' . $from . '</p><p> Name: ' . $name . '</p><p>Subject: ' . $subject . '</p><p>Message: ' . $msg . '</p>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->isHTML(TRUE);
+    $mail->Body = 'Sent from bioWebsite: ' . $msg . '<br>Sent by: ' . $name . ' ' . $surname . '<br>Email address: ' . $from;
 
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = TRUE;
+    $mail->SMTPSecure = 'tls';
+    $mail->Username = $configs['gmail'];
+    $mail->Password = $configs['password'];
+    $mail->Port = 587;
+ 
+    /* Finally send the mail. */
+    if(!$mail->Send()) {
+        $message = 'Mail error: '.$mail->ErrorInfo;
+        $response_array = array("success"=> false,
+                                "status" => false,
+                                "message" => $message);
+        header('Content-Type: application/json');
+        echo json_encode($response_array);die();
+    } else {
+        $message = "Message has beed sent.";
+        $response_array = array("success"=> true,
+                                "status" => true,
+                                "message" => $message);
+        header('Content-Type: application/json');
+        echo json_encode($response_array);die();
+    }
 
 ?>

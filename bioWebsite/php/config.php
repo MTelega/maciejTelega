@@ -2,6 +2,6 @@
     return array (
         'email' => 'm.telega@outlook.com',
         'gmail' => 'm.telega.bio@gmail.com',
-        'password' => 'MaciekBio1'
+        'password' => 'epkdwzfsxgcnkkej'
     )
 ?>
