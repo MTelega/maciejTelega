@@ -57,7 +57,36 @@ footer {
     z-index: 9999;
     }
 
-.customFont {
-    font-family: "Times New Roman", Times, serif !important;
-    padding-left: 7px;
-}
+
+    .cv-item {
+        padding: 0 0 20px 20px;
+        margin-top: -2px;
+        border-left: 3px dashed rgb(101, 60, 151);
+        position: relative;
+    }
+    
+    .cv-item::before {
+        content:'';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50px;
+        left: -9px;
+        top: 0;
+        background: #fff;
+        border: 3px solid rgb(101, 60, 151);
+    }
+
+    .cv-item-border {
+        border-left: 3px solid white !important;
+    }
+
+    .resume-item-color {
+        color: rgb(101, 60, 151);
+    }
+
+    .contact-img-link {
+        height: 50px;
+        width: 50px;
+
+    }

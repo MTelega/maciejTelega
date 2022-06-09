@@ -1,17 +1,5 @@
 $(function () {
 
-    // ---------------------------------------------- //
-    // Navbar
-    // ---------------------------------------------- //
-
-    $(document).scroll(function () {
-        if ($(window).scrollTop() >= $('header').offset().top) {
-            $('nav').addClass('sticky');
-        } else {
-            $('nav').removeClass('sticky');
-        }
-    });
-
 
     // ---------------------------------------------- //
     // Scroll Spy
@@ -34,21 +22,19 @@ $(function () {
         e.preventDefault();
     });
 
-    $('#mailButton').click(function() {
+    $('#contact-form').submit(function() {
         $.ajax({
             url: "php/mail.php",
             type: 'POST',
             dataType: 'json',
             data: {
                 name: $('#name').val(),
-                surname: $('#surname').val(),
                 email: $('#email').val(),
                 message: $('#message').val(),
     
             },
             success: function(result) {
                 $('#name').val('');
-                $('#surname').val('');
                 $('#email').val('');
                 $('#message').val('');
                 $('#confirm').text(result.message);

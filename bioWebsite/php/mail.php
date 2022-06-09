@@ -9,7 +9,6 @@ require '../vendor/autoload.php';
 $response_array = array();
 $from = $_REQUEST['email'];
 $name = $_REQUEST['name'];
-$surname = $_REQUEST['surname'];
 $msg = $_REQUEST['message'];
 $subject = 'email from bio website';
 
@@ -21,7 +20,7 @@ $mail = new PHPMailer(true);
     $mail->addAddress($configs['email']);
     $mail->Subject = $subject;
     $mail->isHTML(TRUE);
-    $mail->Body = 'Sent from bioWebsite: ' . $msg . '<br>Sent by: ' . $name . ' ' . $surname . '<br>Email address: ' . $from;
+    $mail->Body = 'Sent from maciejtelega.co.uk: <br><br>' . $msg . '<br><br>Sent by: <br>' . $name . '<br><br>Email address: <br>' . $from;
 
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
