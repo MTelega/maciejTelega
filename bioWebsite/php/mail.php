@@ -12,7 +12,7 @@ $name = $_REQUEST['name'];
 $msg = $_REQUEST['message'];
 $subject = 'email from bio website';
 
-//Create an instance; passing `true` enables exceptions
+
 $mail = new PHPMailer(true);
 
 
@@ -30,7 +30,7 @@ $mail = new PHPMailer(true);
     $mail->Password = $configs['password'];
     $mail->Port = 587;
  
-    /* Finally send the mail. */
+  
     if(!$mail->Send()) {
         $message = 'Mail error: '.$mail->ErrorInfo;
         $response_array = array("success"=> false,
@@ -39,7 +39,7 @@ $mail = new PHPMailer(true);
         header('Content-Type: application/json');
         echo json_encode($response_array);die();
     } else {
-        $message = "Message has beed sent.";
+        $message = "Message has been sent.";
         $response_array = array("success"=> true,
                                 "status" => true,
                                 "message" => $message);
